@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import {
+  closeIcon,
+  commentIcon,
+  likeFalseIcon,
+  likeTrueIcon,
+  sendMessageIcon,
+} from '../assets/icons'
 
 const Feed = () => {
   const [posts, setPosts] = useState([
@@ -14,7 +21,7 @@ const Feed = () => {
       caption: 'What a cutie',
     },
   ])
-  const user = { id: 'a' }
+  const user = { id: '633b49bfe168285a6a1ce74d' }
 
   useEffect(() => {
     axios
@@ -55,14 +62,14 @@ const Feed = () => {
                         undefined ? (
                           <img
                             className=""
-                            src="/assets/icons/like-true.svg"
+                            src={likeTrueIcon}
                             height="24px"
                             width="24px"
                           />
                         ) : (
                           <img
                             className=""
-                            src="/assets/icons/like-false-600.svg"
+                            src={likeFalseIcon}
                             height="24px"
                             width="24px"
                           />
@@ -75,7 +82,7 @@ const Feed = () => {
                     <p className="caption">{post.caption}</p>
                     <button className="open-comments" data-id={post._id}>
                       <img
-                        src="/assets/icons/comment_FILL0_wght600_GRAD0_opsz48.svg"
+                        src={commentIcon}
                         alt=""
                         height="24px"
                         width="24px"
