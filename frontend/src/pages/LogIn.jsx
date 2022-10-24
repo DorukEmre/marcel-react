@@ -37,12 +37,10 @@ const LogIn = () => {
           // withCredentials: true,
         },
       )
-      // console.log(JSON.stringify(response?.data))
-      //console.log(JSON.stringify(response));
-      // const accessToken = response?.data?.accessToken
-      // const roles = response?.data?.roles
+      // console.log(response.data)
+      const accessToken = response?.data?.accessToken
 
-      // setAuth({ email, password, accessToken })
+      setAuth({ email, password, accessToken })
 
       setEmail('')
       setPassword('')
