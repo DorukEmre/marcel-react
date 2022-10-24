@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User.model')
+require('dotenv').config()
 
 // exports.getLogin = (req, res) => {
 //   if (req.user) {
@@ -27,39 +28,37 @@ exports.postLogin = async (req, res) => {
   console.log('match', match)
 
   if (match) {
-    // const roles = Object.values(foundUser.roles).filter(Boolean)
     // create JWTs
     const accessToken = jwt.sign(
-      {
-        UserInfo: {
-          email: foundUser.email,
-          // roles: roles,
-        },
-      },
+      // {
+      //   UserInfo: {
+      //     email: foundUser.email,
+      //   },
+      // },
+      { email: foundUser.email },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '10s' },
+      { expiresIn: '15m' },
     )
     const refreshToken = jwt.sign(
       { email: foundUser.email },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: '1d' },
+      { expiresIn: '5d' },
     )
     // Saving refreshToken with current user
     foundUser.refreshToken = refreshToken
+    // const currentUser = { ...foundUser, refreshToken}
     const result = await foundUser.save()
     console.log(result.userName)
-    // console.log(roles)
 
-    // Creates Secure Cookie with refresh token
+    // Creates Secure Cookie with refresh token (httpOnly -> not available to JS)
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'None',
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 5 * 24 * 60 * 60 * 1000,
     })
 
-    // Send authorization roles and access token to user
-    // res.json({ roles, accessToken })
+    // Send access token to user
     res.json({ accessToken })
   } else {
     console.log('else res.sendStatus(401)')
@@ -115,6 +114,7 @@ exports.postSignup = async (req, res) => {
     // const hashedPassword = await bcrypt.hash(password, 10)
 
     //create and store the new user
+    // Password is encrypted in user.model
     const result = await User.create({
       userName: username,
       email: email,

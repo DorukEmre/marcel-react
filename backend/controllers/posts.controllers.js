@@ -24,13 +24,25 @@ module.exports = {
   },
   getPost: async (req, res) => {
     const active = ['active', 'mid', 'mid', 'mid', 'mid']
-    const post = await Post.findById(req.params.id).populate('user').lean()
-    const comments = await Comment.find({ postId: req.params.id })
-      .sort({ createdAt: 'asc' })
-      .populate('user')
-      .lean()
 
-    res.render('post.ejs', { post, comments, user: req.user, active })
+    if (!req?.params?.id)
+      return res.status(400).json({ message: 'Post ID required.' })
+
+    const post = await Post.findById(req.params.id).populate('user').lean()
+
+    if (!post) {
+      return res
+        .status(204)
+        .json({ message: `No post matches ID ${req.params.id}.` })
+    }
+
+    // const comments = await Comment.find({ postId: req.params.id })
+    //   .sort({ createdAt: 'asc' })
+    //   .populate('user')
+    //   .lean()
+
+    res.json(post)
+    // res.render('post.ejs', { post, comments, user: req.user, active })
   },
   createPost: async (req, res) => {
     try {

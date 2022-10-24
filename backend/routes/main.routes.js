@@ -7,12 +7,15 @@ const exploreController = require('../controllers/explore.controllers')
 const postsController = require('../controllers/posts.controllers')
 const profileController = require('../controllers/profile.controllers')
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
+const verifyJWT = require('../middleware/verifyJWT')
 
 router.post('/signup', authController.postSignup)
 router.post('/login', authController.postLogin)
 
 // GET posts from all users
-// router.get('/feed', ensureAuth, postsController.getFeed)
+/////////////////////////
+// router.get('/feed', verifyJWT, postsController.getFeed)
+/////////////////////////
 router.get('/feed', postsController.getFeed)
 
 // //////////////

@@ -9,9 +9,7 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:9191'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  </React.StrictMode>,
+  <AuthProvider>
+    <App />
+  </AuthProvider>,
 )
