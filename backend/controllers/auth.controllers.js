@@ -1,5 +1,6 @@
 const passport = require('passport')
 const validator = require('validator')
+const bcrypt = require('bcrypt')
 const User = require('../models/User.model')
 
 exports.getLogin = (req, res) => {
@@ -57,61 +58,49 @@ exports.logout = (req, res, next) => {
   })
 }
 
-exports.getSignup = (req, res) => {
-  if (req.user) {
-    return res.redirect('/')
-  }
-  res.render('signup', { title: 'Create Account' })
-}
+// exports.getSignup = (req, res) => {
+// if (req.user) {
+//   return res.redirect('/')
+// }
+// res.render('signup', { title: 'Create Account' })
+// }
 
-exports.postSignup = (req, res, next) => {
-  const validationErrors = []
-  if (!validator.isEmail(req.body.email))
-    validationErrors.push({ msg: 'Please enter a valid email address.' })
-  if (!validator.isLength(req.body.password, { min: 8 }))
-    validationErrors.push({
-      msg: 'Password must be at least 8 characters long',
+exports.postSignup = async (req, res) => {
+  const { username, email, password } = req.body
+  if (!username || !email || !password)
+    return res
+      .status(400)
+      .json({ message: 'Username, email and password are required.' })
+
+  // check for duplicate usernames in the db
+  const duplicateUsername = await User.findOne({
+    userName: username,
+  }).exec()
+  if (duplicateUsername) {
+    return res.status(409).json({ message: 'Username already in use.' })
+  }
+
+  // check for duplicate emails in the db
+  const duplicateEmail = await User.findOne({ email }).exec()
+  if (duplicateEmail) {
+    return res.status(409).json({ message: 'Email already in use.' })
+  }
+
+  try {
+    //encrypt the password
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    //create and store the new user
+    const result = await User.create({
+      userName: username,
+      email: email,
+      password: hashedPassword,
     })
-  if (req.body.password !== req.body.confirmPassword)
-    validationErrors.push({ msg: 'Passwords do not match' })
 
-  if (validationErrors.length) {
-    req.flash('errors', validationErrors)
-    return res.redirect('../signup')
+    // console.log('User created', result)
+
+    res.status(201).json({ success: `New user ${username} created!`, username })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
   }
-  req.body.email = validator.normalizeEmail(req.body.email, {
-    gmail_remove_dots: false,
-  })
-
-  const user = new User({
-    userName: req.body.userName,
-    email: req.body.email,
-    password: req.body.password,
-  })
-
-  User.findOne(
-    { $or: [{ email: req.body.email }, { userName: req.body.userName }] },
-    (err, existingUser) => {
-      if (err) {
-        return next(err)
-      }
-      if (existingUser) {
-        req.flash('errors', {
-          msg: 'Account with that email address or username already exists.',
-        })
-        return res.redirect('../signup')
-      }
-      user.save((err) => {
-        if (err) {
-          return next(err)
-        }
-        req.logIn(user, (err) => {
-          if (err) {
-            return next(err)
-          }
-          res.redirect('/')
-        })
-      })
-    },
-  )
 }

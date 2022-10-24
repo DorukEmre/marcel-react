@@ -539,7 +539,7 @@
     flex-direction: column;
     max-width: 430px;
     margin: 0 auto 2rem;
-    text-align: center;
+    text-align: left;
   }
   .login-container,
   .signup-container {
@@ -612,9 +612,13 @@
     cursor: pointer;
     transition-duration: 0.2s;
   }
-  .form-panel button:hover {
+  .form-panel button:hover:not(.disabled) {
     background-color: var(--clr-accent-400);
   }
+  .form-panel button.disabled:hover {
+    cursor: not-allowed;
+  }
+  disabled
   .form-panel a {
     color: var(--clr-accent-300);
   }
@@ -623,6 +627,54 @@
     color: var(--clr-compl-450);
     padding-bottom: 1.5rem;
   }
+ 
+  .form-group .form-help {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+  }
+  .form-group ul.form-help {
+    list-style: disc inside;
+  }
+
+  .form-group .instructions {
+    font-size: 0.9rem;
+    color: var(--clr-compl-450);
+    padding: 0.25rem 0;
+  }
+
+  .form-group .instructions > svg {
+    margin-right: 0.25rem;
+  }
+
+  .form-group .offscreen {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .form-group .hide {
+    display: none;
+  }
+
+  .form-group .valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+  }
+
+  .form-group .invalid {
+    color: red;
+    margin-left: 0.25rem;
+  }
+
+  .form-panel .errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    border: 2px solid firebrick;
+    font-weight: bold;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+  }
+
   
   /* ////////// */
   /*   Footer   */
