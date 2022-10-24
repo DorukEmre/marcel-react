@@ -566,6 +566,7 @@
     padding-bottom: 2rem;
     font-size: 1.5rem;
     font-weight: 400;
+    text-align: center;
   }
   .form-panel form,
   .form-panel form {
@@ -618,7 +619,7 @@
   .form-panel button.disabled:hover {
     cursor: not-allowed;
   }
-  disabled
+  
   .form-panel a {
     color: var(--clr-accent-300);
   }

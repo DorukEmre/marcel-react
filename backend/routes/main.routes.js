@@ -8,19 +8,22 @@ const postsController = require('../controllers/posts.controllers')
 const profileController = require('../controllers/profile.controllers')
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
-// router.get('/', homeController.getIndex)
-
-router.get('/demo', homeController.getDemo)
-
-router.get('/login', authController.getLogin)
-router.post('/login', authController.postLogin)
-router.get('/logout', authController.logout)
-// router.get('/signup', authController.getSignup)
 router.post('/signup', authController.postSignup)
+router.post('/login', authController.postLogin)
 
 // GET posts from all users
 // router.get('/feed', ensureAuth, postsController.getFeed)
 router.get('/feed', postsController.getFeed)
+
+// //////////////
+
+// router.get('/', homeController.getIndex)
+
+router.get('/demo', homeController.getDemo)
+
+// router.get('/login', authController.getLogin)
+router.get('/logout', authController.logout)
+// router.get('/signup', authController.getSignup)
 
 // GET specific post
 // router.get('/posts/:id', ensureAuth, postsController.getPost)

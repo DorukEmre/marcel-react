@@ -1,46 +1,70 @@
-const passport = require('passport')
-const validator = require('validator')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const User = require('../models/User.model')
 
-exports.getLogin = (req, res) => {
-  if (req.user) {
-    return res.redirect('/')
+// exports.getLogin = (req, res) => {
+//   if (req.user) {
+//     return res.redirect('/')
+//   }
+//   res.render('login', { title: 'Login' })
+// }
+
+exports.postLogin = async (req, res) => {
+  const { email, password } = req.body
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' })
   }
-  res.render('login', { title: 'Login' })
-}
 
-exports.postLogin = (req, res, next) => {
-  const validationErrors = []
-  if (!validator.isEmail(req.body.email))
-    validationErrors.push({ msg: 'Please enter a valid email address.' })
-  if (validator.isEmpty(req.body.password))
-    validationErrors.push({ msg: 'Password cannot be blank.' })
+  const foundUser = await User.findOne({ email }).exec()
 
-  if (validationErrors.length) {
-    req.flash('errors', validationErrors)
-    return res.redirect('/login')
-  }
-  req.body.email = validator.normalizeEmail(req.body.email, {
-    gmail_remove_dots: false,
-  })
+  if (!foundUser) {
+    return res.sendStatus(401)
+  } //Unauthorized
 
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      return next(err)
-    }
-    if (!user) {
-      req.flash('errors', info)
-      return res.redirect('/login')
-    }
-    req.logIn(user, (err) => {
-      if (err) {
-        return next(err)
-      }
-      req.flash('success', { msg: 'Success! You are logged in.' })
-      res.redirect(req.session.returnTo || '/')
+  // evaluate password
+  const match = await bcrypt.compare(password, foundUser.password)
+  console.log('match', match)
+
+  if (match) {
+    // const roles = Object.values(foundUser.roles).filter(Boolean)
+    // create JWTs
+    const accessToken = jwt.sign(
+      {
+        UserInfo: {
+          email: foundUser.email,
+          // roles: roles,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '10s' },
+    )
+    const refreshToken = jwt.sign(
+      { email: foundUser.email },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: '1d' },
+    )
+    // Saving refreshToken with current user
+    foundUser.refreshToken = refreshToken
+    const result = await foundUser.save()
+    console.log(result.userName)
+    // console.log(roles)
+
+    // Creates Secure Cookie with refresh token
+    res.cookie('jwt', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None',
+      maxAge: 24 * 60 * 60 * 1000,
     })
-  })(req, res, next)
+
+    // Send authorization roles and access token to user
+    // res.json({ roles, accessToken })
+    res.json({ accessToken })
+  } else {
+    console.log('else res.sendStatus(401)')
+    res.sendStatus(401)
+  }
 }
 
 exports.logout = (req, res, next) => {
@@ -88,13 +112,14 @@ exports.postSignup = async (req, res) => {
 
   try {
     //encrypt the password
-    const hashedPassword = await bcrypt.hash(password, 10)
+    // const hashedPassword = await bcrypt.hash(password, 10)
 
     //create and store the new user
     const result = await User.create({
       userName: username,
       email: email,
-      password: hashedPassword,
+      // password: hashedPassword,
+      password: password,
     })
 
     // console.log('User created', result)

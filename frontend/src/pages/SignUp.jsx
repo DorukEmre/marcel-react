@@ -129,7 +129,34 @@ const SignUp = () => {
             >
               {errMsg}
             </p>
+
             <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="email">Email address</label>
+                <input
+                  type="email"
+                  id="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  aria-describedby="emailalert"
+                  aria-invalid={validEmail ? 'false' : 'true'}
+                  onFocus={() => setEmailFocus(true)}
+                  onBlur={() => setEmailFocus(false)}
+                  required
+                  autoFocus
+                />
+                <p
+                  id="emailalert"
+                  className={
+                    !emailFocus && email && !validEmail
+                      ? 'instructions'
+                      : 'offscreen'
+                  }
+                >
+                  Please check you have entered your email correctly.
+                </p>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="username">Username (public)</label>
                 <input
@@ -163,32 +190,6 @@ const SignUp = () => {
                 </p>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="email">Email address</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  aria-describedby="emailalert"
-                  aria-invalid={validEmail ? 'false' : 'true'}
-                  onFocus={() => setEmailFocus(true)}
-                  onBlur={() => setEmailFocus(false)}
-                  required
-                />
-                <p
-                  id="emailalert"
-                  className={
-                    !emailFocus && email && !validEmail
-                      ? 'instructions'
-                      : 'offscreen'
-                  }
-                >
-                  Please check you have entered your email correctly.
-                </p>
-              </div>
               <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input
