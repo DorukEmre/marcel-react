@@ -6,6 +6,7 @@ const MongoStore = require('connect-mongo')
 const logger = require('morgan')
 const cors = require('cors')
 const connectDB = require('./config/database')
+const authRoutes = require('./routes/auth.routes')
 const mainRoutes = require('./routes/main.routes')
 const postsRoutes = require('./routes/posts.routes')
 const groupsRoutes = require('./routes/groups.routes')
@@ -29,6 +30,7 @@ connectDB()
 app.use(express.static('public'))
 
 //Body Parsing
+// extended option: false to parse the URL-encoded data with the query string library; true allows to parse nested JSON like objects and arrays (qs library)
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use(express.json())
@@ -61,6 +63,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //Setup Routes For Which The Server Is Listening
+app.use('/', authRoutes)
 app.use('/', mainRoutes)
 app.use(verifyJWT) // Every route after will use verifyJWT
 app.use('/posts', postsRoutes)

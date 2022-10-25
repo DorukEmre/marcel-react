@@ -3,25 +3,15 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User.model')
 require('dotenv').config()
 
-// exports.getLogin = (req, res) => {
-//   if (req.user) {
-//     return res.redirect('/')
-//   }
-//   res.render('login', { title: 'Login' })
-// }
-
 exports.postLogin = async (req, res) => {
   const { email, password } = req.body
 
-  if (!email || !password) {
+  if (!email || !password)
     return res.status(400).json({ message: 'Email and password are required.' })
-  }
 
   const foundUser = await User.findOne({ email }).exec()
 
-  if (!foundUser) {
-    return res.sendStatus(401)
-  } //Unauthorized
+  if (!foundUser) return res.sendStatus(401) //Unauthorized
 
   // evaluate password
   const match = await bcrypt.compare(password, foundUser.password)
@@ -81,13 +71,6 @@ exports.logout = (req, res, next) => {
   })
 }
 
-// exports.getSignup = (req, res) => {
-// if (req.user) {
-//   return res.redirect('/')
-// }
-// res.render('signup', { title: 'Create Account' })
-// }
-
 exports.postSignup = async (req, res) => {
   const { username, email, password } = req.body
   if (!username || !email || !password)
@@ -110,18 +93,13 @@ exports.postSignup = async (req, res) => {
   }
 
   try {
-    //encrypt the password
-    // const hashedPassword = await bcrypt.hash(password, 10)
-
     //create and store the new user
     // Password is encrypted in user.model
     const result = await User.create({
       userName: username,
       email: email,
-      // password: hashedPassword,
       password: password,
     })
-
     // console.log('User created', result)
 
     res.status(201).json({ success: `New user ${username} created!`, username })
