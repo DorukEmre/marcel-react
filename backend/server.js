@@ -5,6 +5,9 @@ const MongoStore = require('connect-mongo')
 const logger = require('morgan')
 const cors = require('cors')
 const connectDB = require('./config/database')
+const corsOptions = require('./config/corsOptions')
+const credentials = require('./middleware/credentials')
+
 const authRoutes = require('./routes/auth.routes')
 const mainRoutes = require('./routes/main.routes')
 const postsRoutes = require('./routes/posts.routes')
@@ -31,12 +34,11 @@ app.use(express.urlencoded({ extended: true }))
 
 // Handle options credentials check - before CORS!
 // and fetch cookies credentials requirement
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true)
-  next()
-})
+app.use(credentials)
 
-app.use(cors())
+// Cross Origin Resource Sharing
+app.use(cors(corsOptions))
+
 app.use(express.json())
 
 //Logging

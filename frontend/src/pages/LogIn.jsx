@@ -39,7 +39,7 @@ const LogIn = () => {
         JSON.stringify({ email, password }),
         {
           headers: { 'Content-Type': 'application/json' },
-          // withCredentials: true,
+          withCredentials: true,
         },
       )
       console.log('response.data', response.data)

@@ -77,9 +77,8 @@ exports.postLogin = async (req, res) => {
     // Creates Secure Cookie with refresh token (httpOnly -> not available to JS)
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
-      // sameSite: 'None',
-      sameSite: 'Lax',
-      // secure: true,
+      sameSite: 'None',
+      secure: true,
       // secure: false, // for development localhost
       maxAge: 5 * 24 * 60 * 60 * 1000,
     })
@@ -141,9 +140,8 @@ exports.logout = async (req, res) => {
     console.log('Cookie found, but on user')
     res.clearCookie('jwt', {
       httpOnly: true,
-      // sameSite: 'None',
-      sameSite: 'Lax',
-      // secure: true,
+      sameSite: 'None',
+      secure: true,
       // secure: false, // for development localhost
     })
     return res.sendStatus(204)
@@ -156,9 +154,8 @@ exports.logout = async (req, res) => {
 
   res.clearCookie('jwt', {
     httpOnly: true,
-    // sameSite: 'None',
-    sameSite: 'Lax',
-    // secure: true,
+    sameSite: 'None',
+    secure: true,
     // secure: false, // for development localhost
   })
   console.log('Cookie cleared')

@@ -15,7 +15,7 @@ const LogOut = () => {
   const logoutUser = async () => {
     try {
       const response = await axios.get(LOGOUT_URL, {
-        // withCredentials: true,
+        withCredentials: true,
       })
       console.log('response', response)
 
