@@ -3,6 +3,45 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User.model')
 require('dotenv').config()
 
+exports.postSignup = async (req, res) => {
+  const { username, email, password } = req.body
+  if (!username || !email || !password)
+    return res
+      .status(400)
+      .json({ message: 'Username, email and password are required.' })
+
+  // check for duplicate usernames in the db
+  const duplicateUsername = await User.findOne({
+    userName: username,
+  }).exec()
+  if (duplicateUsername) {
+    return res.status(409).json({ message: 'Username already in use.' })
+  }
+
+  // check for duplicate emails in the db
+  const duplicateEmail = await User.findOne({ email }).exec()
+  if (duplicateEmail) {
+    return res.status(409).json({ message: 'Email already in use.' })
+  }
+
+  try {
+    //create and store the new user
+    // Password is encrypted in user.model
+    const result = await User.create({
+      userName: username,
+      email: email,
+      password: password,
+    })
+    // console.log('User created', result)
+
+    res.status(201).json({ success: `New user ${username} created!`, username })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
+// ////////////////
+
 exports.postLogin = async (req, res) => {
   const { email, password } = req.body
 
@@ -43,9 +82,9 @@ exports.postLogin = async (req, res) => {
     // Creates Secure Cookie with refresh token (httpOnly -> not available to JS)
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
-      secure: true,
-      // secure: false, // for POSTMAN localhost
       sameSite: 'None',
+      secure: true,
+      // secure: false, // for development localhost
       maxAge: 5 * 24 * 60 * 60 * 1000,
     })
 
@@ -57,57 +96,7 @@ exports.postLogin = async (req, res) => {
   }
 }
 
-exports.logout = (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err)
-    }
-    console.log('User has logged out.')
-    req.session.destroy((err) => {
-      if (err)
-        console.log('Error : Failed to destroy the session during logout.', err)
-      req.user = null
-      res.redirect('/')
-    })
-  })
-}
-
-exports.postSignup = async (req, res) => {
-  const { username, email, password } = req.body
-  if (!username || !email || !password)
-    return res
-      .status(400)
-      .json({ message: 'Username, email and password are required.' })
-
-  // check for duplicate usernames in the db
-  const duplicateUsername = await User.findOne({
-    userName: username,
-  }).exec()
-  if (duplicateUsername) {
-    return res.status(409).json({ message: 'Username already in use.' })
-  }
-
-  // check for duplicate emails in the db
-  const duplicateEmail = await User.findOne({ email }).exec()
-  if (duplicateEmail) {
-    return res.status(409).json({ message: 'Email already in use.' })
-  }
-
-  try {
-    //create and store the new user
-    // Password is encrypted in user.model
-    const result = await User.create({
-      userName: username,
-      email: email,
-      password: password,
-    })
-    // console.log('User created', result)
-
-    res.status(201).json({ success: `New user ${username} created!`, username })
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-}
+// //////////////////////
 
 exports.handleRefreshToken = async (req, res) => {
   console.log('req.cookies', req.cookies)
@@ -135,4 +124,44 @@ exports.handleRefreshToken = async (req, res) => {
     )
     res.json({ accessToken })
   })
+}
+
+// //////////////////
+
+exports.logout = async (req, res) => {
+  // On client, also delete the accessToken
+
+  // console.log('req.cookies', req.cookies)
+  const cookies = req.cookies
+  if (!cookies?.jwt) {
+    // console.log('No cookie found')
+    return res.sendStatus(204)
+  } //No content
+  const refreshToken = cookies.jwt
+
+  // Is refreshToken in db?
+  const foundUser = await User.findOne({ refreshToken }).exec()
+  if (!foundUser) {
+    // console.log('Cookie found, but on user')
+    res.clearCookie('jwt', {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+      // secure: false, // for development localhost
+    })
+    return res.sendStatus(204)
+  }
+
+  // Delete refreshToken in db
+  foundUser.refreshToken = ''
+  const result = await foundUser.save()
+  console.log('User refresh token deleted:', result)
+
+  res.clearCookie('jwt', {
+    httpOnly: true,
+    sameSite: 'None',
+    secure: true,
+    // secure: false, // for development localhost
+  })
+  res.sendStatus(204)
 }

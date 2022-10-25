@@ -28,6 +28,14 @@ app.use(express.static('public'))
 //Body Parsing
 // extended option: false to parse the URL-encoded data with the query string library; true allows to parse nested JSON like objects and arrays (qs library)
 app.use(express.urlencoded({ extended: true }))
+
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', true)
+  next()
+})
+
 app.use(cors())
 app.use(express.json())
 
