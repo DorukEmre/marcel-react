@@ -44,6 +44,7 @@ exports.postLogin = async (req, res) => {
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
       secure: true,
+      // secure: false, // for POSTMAN localhost
       sameSite: 'None',
       maxAge: 5 * 24 * 60 * 60 * 1000,
     })
@@ -106,4 +107,32 @@ exports.postSignup = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
+}
+
+exports.handleRefreshToken = async (req, res) => {
+  console.log('req.cookies', req.cookies)
+  const cookies = req.cookies
+  if (!cookies?.jwt) {
+    console.log('No cookies')
+    return res.sendStatus(401)
+  }
+  console.log('cookies.jwt', cookies.jwt)
+  const refreshToken = cookies.jwt
+
+  const foundUser = await User.findOne({ refreshToken }).exec()
+  console.log('foundUser', foundUser)
+  if (!foundUser) return res.sendStatus(403) //Forbidden
+  // evaluate jwt
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+    if (err || foundUser.username !== decoded.username)
+      return res.sendStatus(403)
+
+    console.log('decoded', decoded)
+    const accessToken = jwt.sign(
+      { username: decoded.username },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '10m' },
+    )
+    res.json({ accessToken })
+  })
 }
