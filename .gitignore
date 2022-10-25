@@ -8,3 +8,6 @@ node_modules
 # misc
 desktop.ini
 .vscode
+
+*.pem
+https_test
