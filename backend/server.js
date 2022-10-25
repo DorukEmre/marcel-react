@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const logger = require('morgan')
@@ -16,9 +15,6 @@ const cookieParser = require('cookie-parser')
 
 //Use .env file
 require('dotenv').config()
-
-// Passport config
-require('./config/passport')(passport)
 
 //Connect To Database
 connectDB()
@@ -51,16 +47,12 @@ app.use(
   }),
 )
 //
-app.use((req, res, next) => {
-  res.locals.currentUser = req.session.passport
-    ? req.session.passport.user
-    : undefined
-  next()
-})
-
-// Passport middleware
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use((req, res, next) => {
+//   res.locals.currentUser = req.session.passport
+//     ? req.session.passport.user
+//     : undefined
+//   next()
+// })
 
 //Setup Routes For Which The Server Is Listening
 app.use('/', authRoutes)
