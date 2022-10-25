@@ -1,21 +1,24 @@
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-  const userLoggedIn = false
-  const logInAndSignUp = false
+  const isUserLoggedIn = false
+  const logInOrSignUpPage = false
 
   return (
     <header>
-      {logInAndSignUp ? (
+      {logInOrSignUpPage ? (
         <></>
       ) : (
         <nav className="header-navbar">
-          {userLoggedIn ? (
+          {isUserLoggedIn ? (
             <></>
           ) : (
             <ul className="header-list new-session">
               <li className="header-item login">
                 <Link to="/feed">Feed</Link>
+              </li>
+              <li className="header-item login">
+                <Link to="/logout">Log Out</Link>
               </li>
               <li className="header-item login">
                 <Link to="/login">Log in</Link>

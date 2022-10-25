@@ -1,20 +1,25 @@
 import { catMediumLogo } from '../assets/images'
-import { Link } from 'react-router-dom'
-import { useRef, useState, useEffect, useContext } from 'react'
-import AuthContext from '../context/AuthProvider'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useRef, useState, useEffect } from 'react'
 import axios from 'axios'
+import useAuth from '../hooks/useAuth'
 
 const LOGIN_URL = '/login'
 
 const LogIn = () => {
-  const { setAuth } = useContext(AuthContext)
+  const { setAuth } = useAuth()
+
+  // To take the user back to where they came from after log in
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
+
   const emailRef = useRef()
   const errRef = useRef()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg, setErrMsg] = useState('')
-  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
     emailRef.current.focus()
@@ -37,14 +42,17 @@ const LogIn = () => {
           // withCredentials: true,
         },
       )
-      // console.log(response.data)
+      console.log('response.data', response.data)
       const accessToken = response?.data?.accessToken
 
       setAuth({ email, password, accessToken })
 
       setEmail('')
       setPassword('')
-      setSuccess(true)
+
+      // Take user back where they came from
+      // navigate(from, { replace: true })
+      navigate('/feed')
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response')
@@ -67,57 +75,47 @@ const LogIn = () => {
             <img src={catMediumLogo} alt="cat logo" />
           </Link>
         </section>
-        {success ? (
-          <section>
-            <h1>You are logged in!</h1>
-            <br />
-            <p>
-              <a href="#">Go to Home</a>
-            </p>
-          </section>
-        ) : (
-          <section className="form-panel">
-            <h1>Log in to Marcel</h1>
-            <p
-              ref={errRef}
-              className={errMsg ? 'errmsg' : 'offscreen'}
-              aria-live="assertive"
-            >
-              {errMsg}
-            </p>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  ref={emailRef}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  value={email}
-                  autoFocus
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                  required
-                />
-              </div>
-              <button>Log In</button>
-            </form>
-            <p>
-              New to Marcel?{' '}
-              <Link to="/signup" className="">
-                Sign up
-              </Link>
-            </p>
-          </section>
-        )}
+        <section className="form-panel">
+          <h1>Log in to Marcel</h1>
+          <p
+            ref={errRef}
+            className={errMsg ? 'errmsg' : 'offscreen'}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                ref={emailRef}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                value={email}
+                autoFocus
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                required
+              />
+            </div>
+            <button>Log In</button>
+          </form>
+          <p>
+            New to Marcel?{' '}
+            <Link to="/signup" className="">
+              Sign up
+            </Link>
+          </p>
+        </section>
       </div>
     </main>
   )

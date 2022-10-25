@@ -59,11 +59,6 @@ exports.postLogin = async (req, res) => {
   if (match) {
     // create JWTs
     const accessToken = jwt.sign(
-      // {
-      //   UserInfo: {
-      //     email: foundUser.email,
-      //   },
-      // },
       { email: foundUser.email },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '15m' },
@@ -82,8 +77,9 @@ exports.postLogin = async (req, res) => {
     // Creates Secure Cookie with refresh token (httpOnly -> not available to JS)
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
-      sameSite: 'None',
-      secure: true,
+      // sameSite: 'None',
+      sameSite: 'Lax',
+      // secure: true,
       // secure: false, // for development localhost
       maxAge: 5 * 24 * 60 * 60 * 1000,
     })
@@ -116,7 +112,7 @@ exports.handleRefreshToken = async (req, res) => {
     if (err || foundUser.username !== decoded.username)
       return res.sendStatus(403)
 
-    console.log('decoded', decoded)
+    console.log('decoded in handleRefreshToken', decoded)
     const accessToken = jwt.sign(
       { username: decoded.username },
       process.env.ACCESS_TOKEN_SECRET,
@@ -131,10 +127,10 @@ exports.handleRefreshToken = async (req, res) => {
 exports.logout = async (req, res) => {
   // On client, also delete the accessToken
 
-  // console.log('req.cookies', req.cookies)
+  console.log('req.cookies', req.cookies)
   const cookies = req.cookies
   if (!cookies?.jwt) {
-    // console.log('No cookie found')
+    console.log('No cookie found')
     return res.sendStatus(204)
   } //No content
   const refreshToken = cookies.jwt
@@ -142,11 +138,12 @@ exports.logout = async (req, res) => {
   // Is refreshToken in db?
   const foundUser = await User.findOne({ refreshToken }).exec()
   if (!foundUser) {
-    // console.log('Cookie found, but on user')
+    console.log('Cookie found, but on user')
     res.clearCookie('jwt', {
       httpOnly: true,
-      sameSite: 'None',
-      secure: true,
+      // sameSite: 'None',
+      sameSite: 'Lax',
+      // secure: true,
       // secure: false, // for development localhost
     })
     return res.sendStatus(204)
@@ -159,9 +156,11 @@ exports.logout = async (req, res) => {
 
   res.clearCookie('jwt', {
     httpOnly: true,
-    sameSite: 'None',
-    secure: true,
+    // sameSite: 'None',
+    sameSite: 'Lax',
+    // secure: true,
     // secure: false, // for development localhost
   })
+  console.log('Cookie cleared')
   res.sendStatus(204)
 }
