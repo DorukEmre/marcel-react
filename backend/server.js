@@ -68,6 +68,7 @@ app.use(
 app.use('/', authRoutes)
 app.use('/', mainRoutes)
 app.use(verifyJWT) // Every route after will use verifyJWT
+app.use('/users', require('./routes/users.routes'))
 app.use('/posts', postsRoutes)
 app.use('/groups', groupsRoutes)
 
