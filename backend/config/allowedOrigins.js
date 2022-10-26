@@ -17,6 +17,8 @@ const allowedOrigins = [
   'https://long-blue-sawfish-cuff.cyclic.app',
   // railway.app
   'https://marcel-the-outdoor-cat.up.railway.app/',
+  // Heroku
+  'https://marcel-the-outdoor-cat-react.herokuapp.com/',
 ]
 
 module.exports = allowedOrigins
