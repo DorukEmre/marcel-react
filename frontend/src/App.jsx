@@ -8,6 +8,7 @@ import LogOut from './pages/LogOut'
 import SignUp from './pages/SignUp'
 import Feed from './pages/Feed'
 import Missing from './pages/Missing'
+import Users from './components/Users'
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
           {/* protected routes */}
           <Route element={<RequireAuth />}>
             <Route path="/feed" element={<Feed />}></Route>
+          </Route>
+
+          <Route element={<RequireAuth />}>
+            <Route path="/users" element={<Users />}></Route>
           </Route>
 
           {/* catch all */}

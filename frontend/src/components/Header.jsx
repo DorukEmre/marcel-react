@@ -18,6 +18,9 @@ const Header = () => {
                 <Link to="/feed">Feed</Link>
               </li>
               <li className="header-item login">
+                <Link to="/users">Users</Link>
+              </li>
+              <li className="header-item login">
                 <Link to="/logout">Log Out</Link>
               </li>
               <li className="header-item login">
