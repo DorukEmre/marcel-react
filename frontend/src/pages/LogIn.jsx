@@ -45,7 +45,7 @@ const LogIn = () => {
       console.log('response.data', response.data)
       const accessToken = response?.data?.accessToken
 
-      setAuth({ email, password, accessToken })
+      setAuth({ email, accessToken })
 
       setEmail('')
       setPassword('')

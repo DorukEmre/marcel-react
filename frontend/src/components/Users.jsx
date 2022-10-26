@@ -20,7 +20,8 @@ const Users = () => {
           // To cancel request if we need to
           signal: controller.signal,
         })
-        isMounted && setUsers(response.data)
+        const userNames = response.data.map((user) => user.username)
+        isMounted && setUsers(userNames)
       } catch (err) {
         console.error('Login again err', err)
         navigate('/login', { state: { from: location }, replace: true })
@@ -43,7 +44,7 @@ const Users = () => {
         <ul>
           {console.log('users', users)}
           {users.map((user, i) => (
-            <li key={i}>{user?.username}</li>
+            <li key={i}>{user}</li>
           ))}
         </ul>
       ) : (
