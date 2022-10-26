@@ -676,6 +676,13 @@
     border-radius: 5px;
   }
 
+  .form-panel .persistCheck {
+    margin-top: 8px;
+  }
+  .form-panel .persistCheck input {
+    margin-right: 8px;
+  }
+
   
   /* ////////// */
   /*   Footer   */

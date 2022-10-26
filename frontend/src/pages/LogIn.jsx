@@ -7,7 +7,7 @@ import useAuth from '../hooks/useAuth'
 const LOGIN_URL = '/login'
 
 const LogIn = () => {
-  const { setAuth } = useAuth()
+  const { setAuth, persist, setPersist } = useAuth()
 
   // To take the user back to where they came from after log in
   const navigate = useNavigate()
@@ -67,6 +67,14 @@ const LogIn = () => {
     }
   }
 
+  const togglePersist = () => {
+    setPersist((prev) => !prev)
+  }
+
+  useEffect(() => {
+    localStorage.setItem('persist', persist)
+  }, [persist])
+
   return (
     <main id="login-page">
       <div className="login-container">
@@ -108,6 +116,17 @@ const LogIn = () => {
               />
             </div>
             <button>Log In</button>
+            <div className="persistCheck">
+              <label htmlFor="persist">
+                <input
+                  type="checkbox"
+                  id="persist"
+                  onChange={togglePersist}
+                  checked={persist}
+                />
+                Remember me
+              </label>
+            </div>
           </form>
           <p>
             New to Marcel?{' '}

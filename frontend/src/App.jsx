@@ -4,11 +4,11 @@ import RequireAuth from './components/RequireAuth'
 
 import Home from './pages/Home'
 import LogIn from './pages/LogIn'
-import LogOut from './pages/LogOut'
 import SignUp from './pages/SignUp'
 import Feed from './pages/Feed'
 import Missing from './pages/Missing'
 import Users from './components/Users'
+import PersistLogin from './components/PersistLogin'
 
 function App() {
   return (
@@ -19,15 +19,16 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<LogIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/logout" element={<LogOut />}></Route>
 
           {/* protected routes */}
-          <Route element={<RequireAuth />}>
-            <Route path="/feed" element={<Feed />}></Route>
-          </Route>
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth />}>
+              <Route path="/feed" element={<Feed />}></Route>
+            </Route>
 
-          <Route element={<RequireAuth />}>
-            <Route path="/users" element={<Users />}></Route>
+            <Route element={<RequireAuth />}>
+              <Route path="/users" element={<Users />}></Route>
+            </Route>
           </Route>
 
           {/* catch all */}

@@ -5,9 +5,9 @@ const RequireAuth = () => {
   const { auth } = useAuth()
   const location = useLocation()
   // Navigate 'state' and 'replace' allows user to go back to their previous page with browser go back button
-  console.log(auth)
+  console.log('auth in RequireAuth', auth)
 
-  return auth?.email ? (
+  return auth?.accessToken ? (
     <>
       {console.log('authenticated')}
       <Outlet />

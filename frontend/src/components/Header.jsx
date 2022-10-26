@@ -1,8 +1,17 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import useLogout from '../hooks/useLogout'
 
 const Header = () => {
   const isUserLoggedIn = false
   const logInOrSignUpPage = false
+
+  const navigate = useNavigate()
+  const logout = useLogout()
+
+  const signOut = async () => {
+    await logout()
+    navigate('/')
+  }
 
   return (
     <header>
@@ -21,7 +30,9 @@ const Header = () => {
                 <Link to="/users">Users</Link>
               </li>
               <li className="header-item login">
-                <Link to="/logout">Log Out</Link>
+                <button className="logout-button" onClick={signOut}>
+                  Log Out
+                </button>
               </li>
               <li className="header-item login">
                 <Link to="/login">Log in</Link>
