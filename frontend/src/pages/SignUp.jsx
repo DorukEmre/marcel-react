@@ -114,9 +114,9 @@ const SignUp = () => {
         </section>
         {success ? (
           <section>
-            <h1>Success!</h1>
+            <h1>Account created!</h1>
             <p>
-              <a href="#">Sign In</a>
+              <Link to="/login">Please sign In</Link>
             </p>
           </section>
         ) : (

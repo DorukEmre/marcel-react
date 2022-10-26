@@ -13,7 +13,7 @@ const Feed = () => {
   const [posts, setPosts] = useState([
     {
       catName: 'Kandinsky',
-      user: { userName: 'Bob' },
+      user: { username: 'Bob' },
       _id: '63454b056ca805a1ed32063e',
       imageUrl:
         'https://res.cloudinary.com/dgphdac21/image/upload/v1665485572/n1ktk1gkeixs8xbn0k0r.png',
@@ -42,7 +42,7 @@ const Feed = () => {
                 <li className="card" key={post._id}>
                   <section className="card--title-container">
                     <h4>
-                      {post.catName} by {post.user.userName}
+                      {post.catName} by {post.user.username}
                     </h4>
                   </section>
                   <a

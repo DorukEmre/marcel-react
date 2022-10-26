@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User.model')
-require('dotenv').config()
 
 exports.postSignup = async (req, res) => {
   const { username, email, password } = req.body
@@ -12,7 +11,7 @@ exports.postSignup = async (req, res) => {
 
   // check for duplicate usernames in the db
   const duplicateUsername = await User.findOne({
-    userName: username,
+    username,
   }).exec()
   if (duplicateUsername) {
     return res.status(409).json({ message: 'Username already in use.' })
@@ -28,9 +27,9 @@ exports.postSignup = async (req, res) => {
     //create and store the new user
     // Password is encrypted in user.model
     const result = await User.create({
-      userName: username,
-      email: email,
-      password: password,
+      username,
+      email,
+      password,
     })
     // console.log('User created', result)
 
@@ -54,14 +53,14 @@ exports.postLogin = async (req, res) => {
 
   // evaluate password
   const match = await bcrypt.compare(password, foundUser.password)
-  console.log('match', match)
+  // console.log('match', match)
 
   if (match) {
     // create JWTs
     const accessToken = jwt.sign(
       { email: foundUser.email },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '15s' },
+      { expiresIn: '10m' },
     )
     const refreshToken = jwt.sign(
       { email: foundUser.email },
@@ -72,7 +71,7 @@ exports.postLogin = async (req, res) => {
     foundUser.refreshToken = refreshToken
     // const currentUser = { ...foundUser, refreshToken}
     const result = await foundUser.save()
-    console.log(result.userName)
+    console.log(result.username)
 
     // Creates Secure Cookie with refresh token (httpOnly -> not available to JS)
     res.cookie('jwt', refreshToken, {
@@ -115,7 +114,7 @@ exports.handleRefreshToken = async (req, res) => {
     const accessToken = jwt.sign(
       { username: decoded.username },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '10m' },
+      { expiresIn: '15m' },
     )
     res.json({ accessToken })
   })

@@ -43,7 +43,7 @@ const Users = () => {
         <ul>
           {console.log('users', users)}
           {users.map((user, i) => (
-            <li key={i}>{user?.userName}</li>
+            <li key={i}>{user?.username}</li>
           ))}
         </ul>
       ) : (

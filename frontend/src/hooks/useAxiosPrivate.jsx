@@ -6,6 +6,9 @@ import useAuth from './useAuth'
 // Hook to attach interceptors to axios instance. It works with the JWT tokens to refresh the token if the initial request is denied due to an expired token
 // The hook will return an axiosPrivate instance and it will have the interceptors added to handle the JWT tokens that we need to request our data and possibly retry to get a new access token
 
+// Error with axios update
+// axios >= 1.0.0 will cause the response interceptor to reject an error when retrying. There are a few lines in the axios source code that, when trying to normalize values, ends up returning any unknown value via toString, which ends up spitting out an entire function being toStringed as the error passed into the response interceptor.
+
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken()
   const { auth } = useAuth()

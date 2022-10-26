@@ -73,6 +73,7 @@ app.use('/posts', postsRoutes)
 app.use('/groups', groupsRoutes)
 
 //Server Running
-app.listen(process.env.PORT || 9191, () => {
-  console.log(`Server is running, http://localhost:${process.env.PORT}/`)
+const port = process.env.PORT || 9191
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`)
 })
