@@ -158,7 +158,7 @@ const SignUp = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="username">Username (public)</label>
+                <label htmlFor="username">Display name</label>
                 <input
                   type="text"
                   id="username"
