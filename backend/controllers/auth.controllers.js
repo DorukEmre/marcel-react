@@ -49,7 +49,9 @@ exports.postLogin = async (req, res) => {
 
   const foundUser = await User.findOne({ email }).exec()
 
-  if (!foundUser) return res.sendStatus(401) //Unauthorized
+  // if (!foundUser) return res.sendStatus(401) //Unauthorized
+  if (!foundUser)
+    return res.status(401).json({ message: 'postLogin !foundUser' })
 
   // evaluate password
   const match = await bcrypt.compare(password, foundUser.password)
@@ -86,7 +88,7 @@ exports.postLogin = async (req, res) => {
     res.json({ accessToken })
   } else {
     console.log('else res.sendStatus(401)')
-    res.sendStatus(401)
+    res.status(401).json({ message: 'else res.sendStatus(401)' })
   }
 }
 
@@ -97,7 +99,7 @@ exports.handleRefreshToken = async (req, res) => {
   const cookies = req.cookies
   if (!cookies?.jwt) {
     console.log('No cookies')
-    return res.sendStatus(401)
+    return res.status(401).json({ message: 'No cookies' })
   }
   console.log('cookies.jwt', cookies.jwt)
   const refreshToken = cookies.jwt
