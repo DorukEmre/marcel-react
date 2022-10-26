@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react'
 import axios from 'axios'
 import useAuth from '../hooks/useAuth'
 
-const LOGIN_URL = '/login'
+const LOGIN_URL = '/api/login'
 
 const LogIn = () => {
   const { setAuth, persist, setPersist } = useAuth()

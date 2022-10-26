@@ -7,7 +7,7 @@ const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-const SIGNUP_URL = '/signup'
+const SIGNUP_URL = '/api/signup'
 
 const SignUp = () => {
   // Set focus on username input when component loads
