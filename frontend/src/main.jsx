@@ -10,9 +10,9 @@ import { AuthProvider } from './context/AuthProvider'
 import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:9191'
 
-if (process.env.NODE_ENV === 'production') {
-  disableReactDevTools()
-}
+// if (process.env.NODE_ENV === 'production') {
+//   disableReactDevTools()
+// }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>

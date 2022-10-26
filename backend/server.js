@@ -64,6 +64,19 @@ app.use(
 //   next()
 // })
 
+// Serve frontend
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')))
+
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, '../', 'frontend', 'dist', 'index.html'),
+    ),
+  )
+} else {
+  app.get('/', (req, res) => res.send('Please set to production'))
+}
+
 //Setup Routes For Which The Server Is Listening
 app.use('/', authRoutes)
 app.use('/', mainRoutes)
