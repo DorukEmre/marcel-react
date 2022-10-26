@@ -12,7 +12,10 @@ module.exports = {
         .lean() // .lean() tells Mongoose to skip instantiating a full Mongoose document and just give a JS object
 
       // res.render('feed.ejs', { posts, user: req.user, active })
-      // console.log('posts', posts)
+      console.log(
+        'catNames',
+        posts.map((x) => x.catName),
+      )
       res.json(posts)
     } catch (err) {
       console.log(err)

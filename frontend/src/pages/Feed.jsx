@@ -27,10 +27,10 @@ const Feed = () => {
     axios
       .get('/feed')
       .then((res) => {
-        console.log(res.data)
+        console.log('axios res.data back', res.data)
         setPosts(res.data)
       })
-      .catch((err) => console.log(err.response))
+      .catch((err) => console.log('axios err.response', err.response))
   }, [])
 
   return (
