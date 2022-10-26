@@ -25,7 +25,7 @@ const Feed = () => {
 
   useEffect(() => {
     axios
-      .get('/feed')
+      .get('/api/feed')
       .then((res) => {
         console.log('axios res.data back', res.data)
         setPosts(res.data)

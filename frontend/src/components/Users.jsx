@@ -16,7 +16,7 @@ const Users = () => {
 
     const getUsers = async () => {
       try {
-        const response = await axiosPrivate.get('/users', {
+        const response = await axiosPrivate.get('/api/users', {
           // To cancel request if we need to
           signal: controller.signal,
         })

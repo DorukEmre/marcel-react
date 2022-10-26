@@ -80,11 +80,11 @@ if (process.env.NODE_ENV === 'production') {
 
 //Setup Routes For Which The Server Is Listening
 app.use('/', authRoutes)
-app.use('/', mainRoutes)
+app.use('/api/', mainRoutes)
 app.use(verifyJWT) // Every route after will use verifyJWT
-app.use('/users', require('./routes/users.routes'))
-app.use('/posts', postsRoutes)
-app.use('/groups', groupsRoutes)
+app.use('/api/users', require('./routes/users.routes'))
+app.use('/api/posts', postsRoutes)
+app.use('/api/groups', groupsRoutes)
 
 //Server Running
 const port = process.env.PORT || 9191
