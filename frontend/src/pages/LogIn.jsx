@@ -1,7 +1,7 @@
 import { catMediumLogo } from '../assets/images'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../api/axios'
 import useAuth from '../hooks/useAuth'
 
 const LOGIN_URL = '/api/login'

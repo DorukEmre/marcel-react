@@ -1,7 +1,7 @@
 import axios from 'axios'
-const BASE_URL = 'http://localhost:9191'
+// const BASE_URL = 'http://localhost:9191'
+const BASE_URL = 'https://marcel-the-outdoor-cat.up.railway.app'
 
-// Already called in main.jsx
 export default axios.create({
   baseURL: BASE_URL,
 })

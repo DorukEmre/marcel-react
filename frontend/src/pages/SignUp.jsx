@@ -1,7 +1,7 @@
 import { catMediumLogo } from '../assets/images'
 import { Link } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../api/axios'
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
 const EMAIL_REGEX =

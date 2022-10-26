@@ -6,11 +6,6 @@ import App from './App'
 import './reset.css'
 import './index.css'
 import { AuthProvider } from './context/AuthProvider'
-import axios from 'axios'
-
-if (process.env.NODE_ENV !== 'production') {
-  axios.defaults.baseURL = 'http://localhost:9191'
-}
 
 // if (process.env.NODE_ENV === 'production') {
 //   disableReactDevTools()
