@@ -1,6 +1,13 @@
+import { useEffect } from 'react'
 import { catMainLogo } from '../assets/images'
 
 const Home = () => {
+  // useEffect(() => {
+  //   setCategories((prevCategories) =>
+  //     prevCategories.map((categ) => ({ ...categ, active: false })),
+  //   )
+  // }, [])
+
   return (
     <main id="home-page">
       <section className="hero-container">
