@@ -10,8 +10,8 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
 const SIGNUP_URL = '/api/signup'
 
 const SignUp = () => {
-  // Set focus on username input when component loads
-  const usernameRef = useRef()
+  // Set focus on email input when component loads
+  const emailRef = useRef()
   // Set focus on error so it can be announced to screen readers for accesibility
   const errRef = useRef()
 
@@ -39,7 +39,7 @@ const SignUp = () => {
 
   // Set focus on username input when component loads
   useEffect(() => {
-    usernameRef.current.focus()
+    emailRef.current.focus()
   }, [])
 
   // Check validity any time state of user changes by testing against username regex
@@ -132,12 +132,13 @@ const SignUp = () => {
 
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="email">Email address</label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   id="email"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
+                  ref={emailRef}
                   aria-describedby="emailalert"
                   aria-invalid={validEmail ? 'false' : 'true'}
                   onFocus={() => setEmailFocus(true)}
@@ -162,7 +163,6 @@ const SignUp = () => {
                 <input
                   type="text"
                   id="username"
-                  ref={usernameRef}
                   autoComplete="off"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
