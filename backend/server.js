@@ -61,26 +61,27 @@ app.use(
 
 //Static Folder
 app.use(express.static('public'))
-// Serve frontend
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, '../frontend/dist')))
-
-//   app.get('*', (req, res) =>
-//     res.sendFile(
-//       path.resolve(__dirname, '../', 'frontend', 'dist', 'index.html'),
-//     ),
-//   )
-// } else {
-//   app.get('/', (req, res) => res.send('Please set to production'))
-// }
 
 //Setup Routes For Which The Server Is Listening
 app.use('/api/', authRoutes)
 app.use('/api/', mainRoutes)
-app.use(verifyJWT) // Every route after will use verifyJWT
+// app.use(verifyJWT) // Every route after will use verifyJWT
 app.use('/api/users', require('./routes/users.routes'))
 app.use('/api/posts', postsRoutes)
 app.use('/api/groups', groupsRoutes)
+
+// Serve frontend
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')))
+
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, '../', 'frontend', 'dist', 'index.html'),
+    ),
+  )
+} else {
+  app.get('/', (req, res) => res.send('Please set to production'))
+}
 
 //Server Running
 const port = process.env.PORT || 9191
