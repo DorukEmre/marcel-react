@@ -18,9 +18,9 @@ const useAxiosPrivate = () => {
       (config) => {
         // If authorization header doesn't exist, it means it is a first attempt. (The accessToken can be the initial one or the one we got after a refresh)
         if (!config.headers['Authorization']) {
-          console.log('requestIntercept config.headers before', config.headers)
+          // console.log('requestIntercept config.headers before', config.headers)
           config.headers['Authorization'] = `Bearer ${auth?.accessToken}`
-          console.log('requestIntercept config.headers after', config.headers)
+          // console.log('requestIntercept config.headers after', config.headers)
         }
         return config
       },
@@ -31,19 +31,19 @@ const useAxiosPrivate = () => {
       (response) => response,
       async (error) => {
         const prevRequest = error?.config
-        console.log('requestIntercept error', error)
+        // console.log('requestIntercept error', error)
         // Check error status is '403/forbidden' (which means expired access token) && custom property 'sent' does not exist (so we only retry once and avoid an endless loop of 403)
-        console.log('requestIntercept prevRequest', prevRequest)
+        // console.log('requestIntercept prevRequest', prevRequest)
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true
           // Refresh the access token
           const newAccessToken = await refresh()
           // Set the token in the header
           prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`
-          console.log(
-            "prevRequest with new token in headers['Authorization']",
-            prevRequest,
-          )
+          // console.log(
+          //   "prevRequest with new token in headers['Authorization']",
+          //   prevRequest,
+          // )
           // Making a request again with a refresh token
           return axiosPrivate(prevRequest)
         }
