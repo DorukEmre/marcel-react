@@ -5,8 +5,10 @@ const verifyJWT = require('../middleware/verifyJWT')
 
 router.use(verifyJWT)
 
-router.get('/:id', groupsController.getGroup)
-
 router.post('/createGroup', groupsController.createGroup)
+router.post('/joinGroup', groupsController.joinGroup)
+
+// ////////////////
+router.get('/:id', groupsController.getGroup)
 
 module.exports = router

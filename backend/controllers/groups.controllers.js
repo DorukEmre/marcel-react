@@ -28,8 +28,7 @@ module.exports = {
   },
   // Individual group page
   getGroup: (req, res) => {
-    const active = ['mid', 'mid', 'mid', 'active', 'mid']
-    res.render('group.ejs', { active })
+    res.sendStatus(401)
   },
   createGroup: async (req, res) => {
     try {
@@ -47,6 +46,57 @@ module.exports = {
       // const string = encodeURIComponent(group[0].groupName)
 
       // res.redirect('/groups/?newgroup=' + string)
+
+      const ownedGroups = await Group.find({
+        owner: foundUser.id,
+      }).lean()
+
+      const memberGroups = await Group.find({
+        $and: [
+          { owner: { $ne: foundUser.id } },
+          { members: { $eq: foundUser.id } },
+        ],
+      }).lean()
+
+      console.log('ownedGroups, memberGroups', ownedGroups, memberGroups)
+      res.json({ ownedGroups, memberGroups })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  joinGroup: async (req, res) => {
+    try {
+      console.log('welcome to join group')
+      const foundUser = await User.findOne({ email: req.user })
+
+      const groupToJoin = await Group.findOne({
+        groupName: req.body.submitData,
+      }).lean()
+      console.log('groupToJoin', groupToJoin)
+      console.log('groupToJoin._id', groupToJoin._id)
+      console.log('foundUser.id', foundUser.id)
+
+      if (!groupToJoin)
+        return res.status(400).json({ message: 'Please check the group code' })
+
+      if (
+        !groupToJoin.members.find((x) => x == foundUser.id) &&
+        !groupToJoin.membersToApprove.find((x) => x == foundUser.id)
+      ) {
+        let pushGroup = await Group.findOneAndUpdate(
+          { _id: groupToJoin._id },
+          { $push: { membersToApprove: foundUser.id } },
+        )
+        console.log('pushGroup', pushGroup)
+        console.log('Request to join sent to group admin')
+        return res
+          .status(201)
+          .json({ message: 'Request to join sent to group admin' })
+      } else {
+        console.log('Already member or requested')
+        return res.status(400).json({ message: 'Already member or requested' })
+      }
 
       const ownedGroups = await Group.find({
         owner: foundUser.id,
