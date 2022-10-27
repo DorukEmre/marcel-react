@@ -18,11 +18,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/login" element={<LogIn />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/" element={<Layout />}>
           {/* public routes */}
           <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<LogIn />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
 
           {/* protected routes */}
           <Route element={<PersistLogin />}>
