@@ -5,6 +5,7 @@ import likeTrueIcon from './like-true.svg'
 import galleryIcon from './perm_media_FILL1_wght400_GRAD0_opsz48.svg'
 import cameraIcon from './photo_camera_FILL1_wght400_GRAD0_opsz48.svg'
 import sendMessageIcon from './send_FILL0_wght600_GRAD0_opsz48.svg'
+import catBullet from './cat-bullet.svg'
 
 export {
   closeIcon,
@@ -14,4 +15,5 @@ export {
   galleryIcon,
   cameraIcon,
   sendMessageIcon,
+  catBullet,
 }
