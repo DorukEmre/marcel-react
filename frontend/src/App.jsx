@@ -1,14 +1,18 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import RequireAuth from './components/RequireAuth'
+import PersistLogin from './components/PersistLogin'
 
 import Home from './pages/Home'
 import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp'
 import Feed from './pages/Feed'
+import Explore from './pages/Explore'
+import Spot from './pages/Spot'
+import Groups from './pages/Groups'
+import Profile from './pages/Profile'
 import Missing from './pages/Missing'
 import Users from './components/Users'
-import PersistLogin from './components/PersistLogin'
 
 function App() {
   return (
@@ -24,6 +28,22 @@ function App() {
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth />}>
               <Route path="/feed" element={<Feed />}></Route>
+            </Route>
+
+            <Route element={<RequireAuth />}>
+              <Route path="/explore" element={<Explore />}></Route>
+            </Route>
+
+            <Route element={<RequireAuth />}>
+              <Route path="/spot" element={<Spot />}></Route>
+            </Route>
+
+            <Route element={<RequireAuth />}>
+              <Route path="/groups" element={<Groups />}></Route>
+            </Route>
+
+            <Route element={<RequireAuth />}>
+              <Route path="/profile" element={<Profile />}></Route>
             </Route>
 
             <Route element={<RequireAuth />}>
