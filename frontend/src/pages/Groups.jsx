@@ -4,8 +4,41 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { catBullet } from '../assets/icons'
 
 const Groups = () => {
-  // Fetch  ownedGroups & memberGroups
-  let ownedGroups, memberGroups
+  const axiosPrivate = useAxiosPrivate()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const [groups, setGroups] = useState({})
+  const { ownedGroups, memberGroups } = groups
+
+  useEffect(() => {
+    let isMounted = true
+    // To cancel our request, when the Component unmounts (useful if we have pending requests when Component unmounts)
+    const controller = new AbortController()
+
+    const getGroups = async () => {
+      try {
+        const response = await axiosPrivate.get('/api/groups', {
+          // To cancel request if we need to
+          signal: controller.signal,
+        })
+        console.log('response.data', response.data)
+        isMounted && setGroups(response.data)
+      } catch (err) {
+        console.error('Login again err', err)
+        navigate('/login', { state: { from: location }, replace: true })
+      }
+    }
+
+    getGroups()
+
+    // Clean up function, abort pending requests when the Component unmounts
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }, [])
+  console.log('ownedGroups, memberGroups', ownedGroups, memberGroups)
 
   return (
     <main id="groups-page">
@@ -112,7 +145,7 @@ const Groups = () => {
           <ul className="groups-list">
             {ownedGroups &&
               ownedGroups.map((ownedGroup) => (
-                <li className="groups-list-item">
+                <li className="groups-list-item" key={ownedGroup.id}>
                   <Link to={`/groups/${ownedGroup._id}`}>
                     {ownedGroup.groupName}
                   </Link>
@@ -121,7 +154,7 @@ const Groups = () => {
               ))}
             {memberGroups &&
               memberGroups.map((memberGroup) => (
-                <li className="groups-list-item">
+                <li className="groups-list-item" key={memberGroup.id}>
                   <Link to={`/groups/${memberGroup._id}`}>
                     {memberGroup.groupName}
                   </Link>

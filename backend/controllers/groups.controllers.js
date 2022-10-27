@@ -1,24 +1,30 @@
 const Group = require('../models/Group.model')
+const User = require('../models/User.model')
 
 module.exports = {
   // Groups page
   getGroups: async (req, res) => {
-    const active = ['mid', 'mid', 'mid', 'active', 'mid']
+    try {
+      const foundUser = await User.findOne({ email: req.user })
 
-    const ownedGroups = await Group.find({
-      owner: req.user.id,
-    }).lean()
-    const memberGroups = await Group.find({
-      // both expressions need to be satisfied
-      $and: [
-        // owner not equal ($ne) to user.id
-        { owner: { $ne: req.user.id } },
-        // members equal ($eq) to user.id, same as { members: req.user.id },
-        { members: { $eq: req.user.id } },
-      ],
-    }).lean()
+      const ownedGroups = await Group.find({
+        owner: foundUser.id,
+      }).lean()
 
-    res.render('groups.ejs', { active, ownedGroups, memberGroups })
+      const memberGroups = await Group.find({
+        // both expressions need to be satisfied
+        $and: [
+          // owner not equal ($ne) to user.id
+          { owner: { $ne: foundUser.id } },
+          // members equal ($eq) to user.id, same as { members: req.user.id },
+          { members: { $eq: foundUser.id } },
+        ],
+      }).lean()
+
+      res.json({ ownedGroups, memberGroups })
+    } catch (err) {
+      console.log(err)
+    }
   },
   // Individual group page
   getGroup: (req, res) => {

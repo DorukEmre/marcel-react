@@ -83,6 +83,7 @@
     background-color: var(--clr-back-400);
     /* width: 100vw; */
     height: 91px;
+    box-shadow: 0 0 1em var(--clr-back-300);
   }
   .header-list {
     display: flex;
@@ -379,7 +380,7 @@
     gap: 2rem;
     margin: 0 auto;
     width: auto;
-    max-width: 72rem;
+    max-width: 46rem;
   }
   .groups--title {
     display: flex;
@@ -401,15 +402,15 @@
   .groups-card {
     /* border: 2px solid var(--clr-accent-300); */
     background-color: var(--clr-back-400);
-    /* max-width: 450px; */
-    width: 70%;
+    max-width: 35rem;
+    width: 100%;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.5rem 2rem;
-    /* margin: 0 auto; */
+    margin: 0 auto;
   }
   
   .groups-card h2 {

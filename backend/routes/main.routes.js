@@ -11,6 +11,8 @@ router.use(verifyJWT)
 
 // GET posts from all users
 router.get('/feed', postsController.getFeed)
+// GET page to manage groups
+router.get('/groups', groupsController.getGroups)
 
 // //////////////
 
@@ -24,8 +26,6 @@ router.get('/spot', postsController.getSpot)
 // GET page to explore map of cats in the neighborhood
 router.get('/explore', exploreController.getExplore)
 
-// GET page to manage groups
-router.get('/groups', groupsController.getGroups)
 // POST to join new group
 // router.post("/groups", ensureAuth, groupsController.getGroups);
 // DELETE to remove group
