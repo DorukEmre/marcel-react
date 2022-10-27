@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import useLogout from '../hooks/useLogout'
 import useAuth from '../hooks/useAuth'
 import HeaderButton from './HeaderButton'
 import {
@@ -20,13 +19,6 @@ const Header = () => {
   const { auth } = useAuth()
   const isUserLoggedIn = auth?.accessToken
 
-  const navigate = useNavigate()
-  const logout = useLogout()
-
-  const signOut = async () => {
-    await logout()
-    navigate('/')
-  }
   const [categories, setCategories] = useState([
     {
       name: 'Feed',
@@ -90,14 +82,6 @@ const Header = () => {
                 handleClick={becomeActive}
               />
             ))}
-            <li className="header-item">
-              <Link to="/users">Users</Link>
-            </li>
-            <li className="header-item logout">
-              <button className="logout-link" onClick={signOut}>
-                Log Out
-              </button>
-            </li>
           </ul>
         ) : (
           <ul className="header-list new-session">

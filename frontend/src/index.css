@@ -102,7 +102,7 @@
     text-align:center;
     border-bottom: 3px solid transparent;
   }
-  .header-item:not(.active):hover {
+  .header-item:not(.active):not(.login):not(.signup):hover {
     background-color: rgb(245, 147, 0,.4);
   }
   .header-navbar a {
