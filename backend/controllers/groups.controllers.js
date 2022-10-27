@@ -33,18 +33,34 @@ module.exports = {
   },
   createGroup: async (req, res) => {
     try {
+      const foundUser = await User.findOne({ email: req.user })
+      console.log('req.body.submitData', req.body.submitData)
       await Group.create({
-        groupName: req.body['create-group-name'],
-        owner: req.user.id,
-        members: [req.user.id],
+        groupName: req.body.submitData,
+        owner: foundUser.id,
+        members: [foundUser.id],
       })
 
-      const group = await Group.find({
-        groupName: req.body['create-group-name'],
-      }).lean()
-      const string = encodeURIComponent(group[0].groupName)
+      // const group = await Group.find({
+      //   groupName: req.body.submitData,
+      // }).lean()
+      // const string = encodeURIComponent(group[0].groupName)
 
-      res.redirect('/groups/?newgroup=' + string)
+      // res.redirect('/groups/?newgroup=' + string)
+
+      const ownedGroups = await Group.find({
+        owner: foundUser.id,
+      }).lean()
+
+      const memberGroups = await Group.find({
+        $and: [
+          { owner: { $ne: foundUser.id } },
+          { members: { $eq: foundUser.id } },
+        ],
+      }).lean()
+
+      console.log('ownedGroups, memberGroups', ownedGroups, memberGroups)
+      res.json({ ownedGroups, memberGroups })
     } catch (err) {
       console.log(err)
     }

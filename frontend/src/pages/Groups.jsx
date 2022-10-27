@@ -8,8 +8,11 @@ const Groups = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const [groups, setGroups] = useState({})
-  const { ownedGroups, memberGroups } = groups
+  const [ownedGroups, setOwnedGroups] = useState([])
+  const [memberGroups, setMemberGroups] = useState([])
+
+  const [joinGroupCode, setJoinGroupCode] = useState()
+  const [newGroupName, setNewGroupName] = useState()
 
   useEffect(() => {
     let isMounted = true
@@ -23,7 +26,9 @@ const Groups = () => {
           signal: controller.signal,
         })
         console.log('response.data', response.data)
-        isMounted && setGroups(response.data)
+        const { ownedGroups, memberGroups } = response.data
+        isMounted && setOwnedGroups(ownedGroups)
+        isMounted && setMemberGroups(memberGroups)
       } catch (err) {
         console.error('Login again err', err)
         navigate('/login', { state: { from: location }, replace: true })
@@ -39,6 +44,56 @@ const Groups = () => {
     }
   }, [])
   console.log('ownedGroups, memberGroups', ownedGroups, memberGroups)
+
+  // const handleJoinGroupSubmit = async (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    // console.log('e.target', e.target.className)
+    let isMounted = true
+    const controller = new AbortController()
+
+    let submitUrl =
+      e.target.className === 'join-group-form'
+        ? '/api/groups/joinGroup'
+        : '/api/groups/createGroup'
+
+    let submitData =
+      e.target.className === 'join-group-form' ? joinGroupCode : newGroupName
+
+    try {
+      const response = await axiosPrivate.post(
+        submitUrl,
+        JSON.stringify({ submitData }),
+        {
+          // To cancel request if we need to
+          signal: controller.signal,
+        },
+      )
+      console.log('response?.data', response?.data)
+      const { ownedGroups, memberGroups } = response.data
+      isMounted && setOwnedGroups(ownedGroups)
+      isMounted && setMemberGroups(memberGroups)
+
+      e.target.className === 'join-group-form'
+        ? setJoinGroupCode('')
+        : setNewGroupName('')
+    } catch (err) {
+      console.log('err.', err.response)
+      // if (!err?.response) {
+      //   setErrMsg('No Server Response')
+      // } else if (err.response?.status === 409) {
+      //   setErrMsg(err.response.data.message)
+      // } else {
+      //   setErrMsg('Request failed')
+      // }
+      // errRef.current.focus()
+    }
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }
 
   return (
     <main id="groups-page">
@@ -68,75 +123,42 @@ const Groups = () => {
           <p>
             Type in the group code <span>(example: London#1234)</span>
           </p>
-          <form className="join-group-form" action="/joinGroup" method="get">
+          <form className="join-group-form" onSubmit={handleSubmit}>
             <label htmlFor="join-group-code">
               <input
+                type="text"
                 name="join-group-code"
                 id="join-group-code"
-                type="text"
+                onChange={(e) => setJoinGroupCode(e.target.value)}
+                value={joinGroupCode}
                 placeholder="Group code"
                 required
               />
             </label>
-            <button className="groups--button join-group-button" type="submit">
+            <button className="groups--button join-group-button">
               Request to join group
             </button>
           </form>
-
-          <dialog className="join-group-modal" id="join-group-modal">
-            <div>
-              <p>
-                Create group '<span className="new-group-name"></span>'?
-              </p>
-              <div>
-                <button className="cancel-join-group">Cancel</button>
-                <form className="join-group-form" action="" method="post">
-                  <button className="confirm-join-group">
-                    Request to join group
-                  </button>
-                </form>
-              </div>
-            </div>
-          </dialog>
         </section>
 
         <section className="groups-card groups--create">
           <h2>Create a new group</h2>
-          <form
-            className="create-group-form"
-            action="/groups/createGroup"
-            encType="application/x-www-form-urlencoded"
-            method="post"
-          >
-            <label htmlFor="create-group-name">
+          <form className="create-group-form" onSubmit={handleSubmit}>
+            <label htmlFor="create-new-group">
               <input
-                name="create-group-name"
-                id="create-group-name"
                 type="text"
+                id="create-new-group"
                 placeholder="Group name"
+                onChange={(e) => setNewGroupName(e.target.value)}
+                value={newGroupName}
                 required
               />
               <p className="restrictions">(Max 20 characters)</p>
             </label>
-            <button
-              className="groups--button create-group-button"
-              type="submit"
-            >
+            <button className="groups--button create-new-group-button">
               Create group
             </button>
           </form>
-
-          <dialog className="create-group-modal" id="create-group-modal">
-            <div>
-              <p>
-                Create group '<span className="new-group-name"></span>'?
-              </p>
-              <div>
-                <button className="cancel-new-group">Cancel</button>
-                <button className="confirm-new-group">OK</button>
-              </div>
-            </div>
-          </dialog>
         </section>
 
         <section className="groups-card groups--manage">
