@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import axios from '../api/axios'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import {
   closeIcon,
   commentIcon,
@@ -10,6 +10,9 @@ import {
 } from '../assets/icons'
 
 const Feed = () => {
+  const axiosPrivate = useAxiosPrivate()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [posts, setPosts] = useState([
     {
       catName: 'Kandinsky',
@@ -24,13 +27,30 @@ const Feed = () => {
   const user = { id: '633b49bfe168285a6a1ce74d' }
 
   useEffect(() => {
-    axios
-      .get('/api/feed')
-      .then((res) => {
-        console.log('axios res.data back', res.data)
-        setPosts(res.data)
-      })
-      .catch((err) => console.log('axios err.response', err.response))
+    let isMounted = true
+    // To cancel our request, when the Component unmounts (useful if we have pending requests when Component unmounts)
+    const controller = new AbortController()
+
+    const getPosts = async () => {
+      try {
+        const response = await axiosPrivate.get('/api/feed', {
+          // To cancel request if we need to
+          signal: controller.signal,
+        })
+        isMounted && setPosts(response.data)
+      } catch (err) {
+        console.error('Login again err', err)
+        navigate('/login', { state: { from: location }, replace: true })
+      }
+    }
+
+    getPosts()
+
+    // Clean up function, abort pending requests when the Component unmounts
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
   }, [])
 
   return (

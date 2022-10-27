@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 const upload = require('../middleware/multer')
 const postsController = require('../controllers/posts.controllers')
+const verifyJWT = require('../middleware/verifyJWT')
+
+router.use(verifyJWT)
 
 //Post Route
 router.get('/:id', postsController.getPost)

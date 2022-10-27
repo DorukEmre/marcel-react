@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const groupsController = require('../controllers/groups.controllers')
-// const { ensureAuth, ensureGuest } = require('../middleware/auth')
+const verifyJWT = require('../middleware/verifyJWT')
+
+router.use(verifyJWT)
 
 router.get('/:id', groupsController.getGroup)
 

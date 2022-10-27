@@ -5,6 +5,9 @@ const groupsController = require('../controllers/groups.controllers')
 const exploreController = require('../controllers/explore.controllers')
 const postsController = require('../controllers/posts.controllers')
 const profileController = require('../controllers/profile.controllers')
+const verifyJWT = require('../middleware/verifyJWT')
+
+router.use(verifyJWT)
 
 // GET posts from all users
 router.get('/feed', postsController.getFeed)
