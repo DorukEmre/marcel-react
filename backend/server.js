@@ -23,12 +23,6 @@ require('dotenv').config()
 //Connect To Database
 connectDB()
 
-//Using EJS for views
-// app.set('view engine', 'ejs')
-
-//Static Folder
-app.use(express.static('public'))
-
 //Body Parsing
 // extended option: false to parse the URL-encoded data with the query string library; true allows to parse nested JSON like objects and arrays (qs library)
 app.use(express.urlencoded({ extended: true }))
@@ -65,18 +59,20 @@ app.use(
 //   next()
 // })
 
+//Static Folder
+app.use(express.static('public'))
 // Serve frontend
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/dist')))
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, '../frontend/dist')))
 
-  app.get('*', (req, res) =>
-    res.sendFile(
-      path.resolve(__dirname, '../', 'frontend', 'dist', 'index.html'),
-    ),
-  )
-} else {
-  app.get('/', (req, res) => res.send('Please set to production'))
-}
+//   app.get('*', (req, res) =>
+//     res.sendFile(
+//       path.resolve(__dirname, '../', 'frontend', 'dist', 'index.html'),
+//     ),
+//   )
+// } else {
+//   app.get('/', (req, res) => res.send('Please set to production'))
+// }
 
 //Setup Routes For Which The Server Is Listening
 app.use('/api/', authRoutes)
