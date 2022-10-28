@@ -99,31 +99,54 @@
     min-width: 60px;
     max-width: calc(100% - 65px);
     flex-grow: 1;  
-    padding-top: 8px;
-    text-align:center;
-    border-bottom: 3px solid transparent;
+    text-align: center;
   }
-  .header-item:not(.active):not(.login):not(.signup):hover {
+  .header-item:not(.login):not(.signup) a:not(.active):hover,  
+  .header-item:not(.login):not(.signup) a:not(.active):focus {
     background-color: rgb(245, 147, 0,.4);
+    border-radius: 5px;
   }
-  .header-navbar a {
+  .header-item a {
     text-decoration: none;
     color: var(--clr-neutral-400);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+    justify-content: space-between;
   }
-  .header-navbar p {
-    padding: 0 0 8px;
+  .header-item:not(.login):not(.signup) {
+    height: 100%;
+  }
+  .header-item:not(.login):not(.signup) a {
+    height: 100%;
   }
   .nav-icon {
     margin: 0 auto;
+    padding-top: 8px;
   }
+  
+  .header-item span {
+    display: inline-block;
+    min-height: 3px;
+    height: 3px;
+    width: 100%;
+    margin-top: auto;
+  }
+  .header-item span.active {
+    background-color: var(--clr-accent-300);
+  }
+  .header-item a.active {
+    color: var(--clr-accent-300);
+  }
+
   .header-list.new-session {
     justify-content: flex-end;
   }
   .header-item.login,
   .header-item.signup {
     max-width: 80px;
-    padding-top: 0px;
+    padding-top: 0;
   }
   .header-item.login a {
     color: var(--clr-accent-300);
@@ -151,12 +174,6 @@
   .logout-link {
     display: inline-block;
     height: 100%;
-  }
-  .header-item.active {
-    border-bottom: 3px solid var(--clr-accent-300);
-  }
-  .header-navbar a.active {
-    color: var(--clr-accent-300);
   }
   
   /* ///////////// */
