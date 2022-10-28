@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import Collapsible from 'react-collapsible'
 import {
   closeIcon,
   commentIcon,
   likeFalseIcon,
   likeTrueIcon,
-  sendMessageIcon,
+  sendCommentIcon,
 } from '../assets/icons'
+import Comments from '../components/Comments'
 
 const Feed = () => {
   const axiosPrivate = useAxiosPrivate()
@@ -65,12 +67,14 @@ const Feed = () => {
                       {post.catName} by {post.user.username}
                     </h4>
                   </section>
-                  <a
-                    href={`/posts/${post._id}`}
+
+                  <Link
+                    to={`/posts/${post._id}`}
                     className="card--image-container"
                   >
                     <img className="" src={post.imageUrl} />
-                  </a>
+                  </Link>
+
                   <section className="card--like-container">
                     <form
                       className="like-button"
@@ -98,16 +102,38 @@ const Feed = () => {
                     </form>
                     <span className="like-number">{post.greatCat.length}</span>
                   </section>
+
                   <section className="card--comments-container">
-                    <p className="caption">{post.caption}</p>
-                    <button className="open-comments" data-id={post._id}>
-                      <img
-                        src={commentIcon}
-                        alt=""
-                        height="24px"
-                        width="24px"
-                      />
-                    </button>
+                    <Collapsible
+                      trigger={
+                        <>
+                          <p className="caption">{post.caption}</p>
+                          <button className="open-comments" data-id={post._id}>
+                            <img
+                              src={commentIcon}
+                              alt=""
+                              height="24px"
+                              width="24px"
+                            />
+                          </button>
+                        </>
+                      }
+                      triggerWhenOpen={
+                        <>
+                          <p className="caption">{post.caption}</p>
+                          <button className="open-comments" data-id={post._id}>
+                            <img
+                              src={closeIcon}
+                              alt=""
+                              height="24px"
+                              width="24px"
+                            />
+                          </button>
+                        </>
+                      }
+                    >
+                      <Comments />
+                    </Collapsible>
                   </section>
                 </li>
               ))

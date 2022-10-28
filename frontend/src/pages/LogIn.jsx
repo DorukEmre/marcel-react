@@ -51,8 +51,8 @@ const LogIn = () => {
       setPassword('')
 
       // Take user back where they came from
-      // navigate(from, { replace: true })
-      navigate('/feed')
+      navigate(from, { replace: true })
+      // navigate('/feed')
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response')
