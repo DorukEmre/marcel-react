@@ -78,12 +78,13 @@ const Groups = () => {
         errRef.current.focus()
       } else {
         // console.log('response?.data', response?.data)
-        const { ownedGroups, message } = response.data
+        const { ownedGroups, memberGroups, message } = response.data
         const modal = document.querySelector('.errmsg-modal')
         setErrMsg(message)
         modal.showModal()
         errRef.current.focus()
         ownedGroups && isMounted && setOwnedGroups(ownedGroups)
+        memberGroups && isMounted && setOwnedGroups(memberGroups)
       }
 
       joinGroupRequest ? setJoinGroupCode('') : setNewGroupName('')

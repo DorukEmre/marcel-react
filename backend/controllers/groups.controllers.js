@@ -53,9 +53,10 @@ module.exports = {
           owner: foundUser.id,
           members: [foundUser.id],
         })
-        let { ownedGroups } = await findUserGroups(foundUser)
+        let { ownedGroups, memberGroups } = await findUserGroups(foundUser)
         return res.status(201).json({
           ownedGroups,
+          memberGroups,
           message: 'Group created successfully',
         })
       }
