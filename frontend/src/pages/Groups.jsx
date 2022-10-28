@@ -167,7 +167,7 @@ const Groups = () => {
           <ul className="groups-list">
             {ownedGroups &&
               ownedGroups.map((ownedGroup) => (
-                <li className="groups-list-item" key={ownedGroup.id}>
+                <li className="groups-list-item" key={ownedGroup._id}>
                   <Link to={`/groups/${ownedGroup._id}`}>
                     {ownedGroup.groupName}
                   </Link>
@@ -176,7 +176,7 @@ const Groups = () => {
               ))}
             {memberGroups &&
               memberGroups.map((memberGroup) => (
-                <li className="groups-list-item" key={memberGroup.id}>
+                <li className="groups-list-item" key={memberGroup._id}>
                   <Link to={`/groups/${memberGroup._id}`}>
                     {memberGroup.groupName}
                   </Link>
