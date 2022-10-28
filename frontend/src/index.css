@@ -297,9 +297,6 @@
     display: flex;
     justify-content: space-between;
   }
-  .Collapsible__contentOuter {
-    padding: 0 5px 0;
-  }
 
   .comments-container {
     display: flex;
@@ -317,7 +314,7 @@
     width: 100%;
     justify-content: space-between;
     border-top: 1px solid var(--clr-neutral-600);
-    padding-top: 6px;
+    padding-top: 12px;
   }
   .create-comment--label {
     width: 100%;
@@ -330,6 +327,7 @@
     text-indent: 6px;
     outline: 0;
     width: 100%;
+    border-radius: 0 0 0 10px;
   }
   .create-comment--textarea:focus {  
     border: 2px solid var(--clr-neutral-300);  

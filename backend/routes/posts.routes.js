@@ -6,14 +6,13 @@ const verifyJWT = require('../middleware/verifyJWT')
 
 router.use(verifyJWT)
 
-router.get('/:id', postsController.getPost)
-router.get('/getComments/:id', postsController.getComments)
+// router.get('/:postid', postsController.getPost)
+router.get('/getComments/:postid', postsController.getComments)
+router.post('/createComment/:postid', postsController.createComment)
 
 // POST new cat pictures, upload and checks through Multer 'upload.single("file")'
 router.post('/createPost', upload.single('file'), postsController.createPost)
 
-router.put('/likePost/:id', postsController.likePost)
-
-router.post('/createComment/:id', postsController.createComment)
+router.put('/likePost/:postid', postsController.likePost)
 
 module.exports = router

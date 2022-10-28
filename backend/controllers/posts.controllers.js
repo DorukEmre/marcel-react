@@ -1,6 +1,7 @@
 const cloudinary = require('../middleware/cloudinary')
 const Post = require('../models/Post.model')
 const Comment = require('../models/Comment.model')
+const User = require('../models/User.model')
 
 module.exports = {
   getFeed: async (req, res) => {
@@ -12,11 +13,11 @@ module.exports = {
         .lean() // .lean() tells Mongoose to skip instantiating a full Mongoose document and just give a JS object
 
       // res.render('feed.ejs', { posts, user: req.user, active })
-      console.log(
-        'catNames',
-        posts.map((x) => x.catName),
-      )
-      res.json(posts)
+      // console.log(
+      //   'catNames',
+      //   posts.map((x) => x.catName),
+      // )
+      res.status(200).json(posts)
     } catch (err) {
       console.log(err)
     }
@@ -24,18 +25,18 @@ module.exports = {
   getPost: async (req, res) => {
     const active = ['active', 'mid', 'mid', 'mid', 'mid']
 
-    if (!req?.params?.id)
+    if (!req?.params?.postid)
       return res.status(400).json({ message: 'Post ID required.' })
 
-    const post = await Post.findById(req.params.id).populate('user').lean()
+    const post = await Post.findById(req.params.postid).populate('user').lean()
 
     if (!post) {
       return res
         .status(204)
-        .json({ message: `No post matches ID ${req.params.id}.` })
+        .json({ message: `No post matches ID ${req.params.postid}.` })
     }
 
-    // const comments = await Comment.find({ postId: req.params.id })
+    // const comments = await Comment.find({ postId: req.params.postid })
     //   .sort({ createdAt: 'asc' })
     //   .populate('user')
     //   .lean()
@@ -70,21 +71,21 @@ module.exports = {
   },
   likePost: async (req, res) => {
     try {
-      const likedPost = await Post.findById(req.params.id).lean()
+      const likedPost = await Post.findById(req.params.postid).lean()
       if (likedPost.greatCat.find((x) => x == req.user.id) == undefined) {
         await Post.findOneAndUpdate(
-          { _id: req.params.id },
+          { _id: req.params.postid },
           { $push: { greatCat: req.user.id } },
         )
         console.log('Likes +1')
       } else {
         await Post.findOneAndUpdate(
-          { _id: req.params.id },
+          { _id: req.params.postid },
           { $pull: { greatCat: req.user.id } },
         )
         console.log('Likes -1')
       }
-      // res.redirect(`/post/${req.params.id}`)
+      // res.redirect(`/post/${req.params.postid}`)
       res.redirect(`/feed`)
     } catch (err) {
       console.log(err)
@@ -92,10 +93,10 @@ module.exports = {
   },
   getComments: async (req, res) => {
     try {
-      console.log('req.params.id', req.params.id)
-      // const post = await Post.findById(req.params.id).populate('user').lean()
+      // console.log('req.params', req.params.postid)
+      // const post = await Post.findById(req.params.postid).populate('user').lean()
 
-      const comments = await Comment.find({ postId: req.params.id })
+      const comments = await Comment.find({ postId: req.params.postid })
         .sort({ createdAt: 'asc' })
         .populate('user')
         .lean()
@@ -103,23 +104,29 @@ module.exports = {
       // const data = { post, comments }
       // console.log('data_getComments', comments)
 
-      res.json(comments)
+      res.status(200).json(comments)
     } catch (err) {
       console.log(err)
     }
   },
   createComment: async (req, res) => {
     try {
-      console.log('createComment')
-      console.log(req.body)
-      console.log(req.body.comment)
+      // console.log(req.body)
+      // console.log(req.user)
+
+      const foundUser = await User.findOne({ email: req.user })
+      // console.log('foundUser', foundUser)
       await Comment.create({
-        comment: req.body.comment,
-        user: req.user.id,
-        postId: req.params.id,
+        comment: req.body.newComment,
+        user: foundUser.id,
+        postId: req.params.postid,
       })
-      console.log('Comment has been added!')
-      res.redirect(`/posts/${req.params.id}`)
+      const comments = await Comment.find({ postId: req.params.postid })
+        .sort({ createdAt: 'asc' })
+        .populate('user')
+        .lean()
+
+      res.status(201).json(comments)
     } catch (err) {
       console.log(err)
     }
