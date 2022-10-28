@@ -20,9 +20,6 @@ router.get('/groups', groupsController.getGroups)
 
 router.get('/demo', homeController.getDemo)
 
-// GET page to post new cat pictures
-router.get('/spot', postsController.getSpot)
-
 // GET page to explore map of cats in the neighborhood
 router.get('/explore', exploreController.getExplore)
 

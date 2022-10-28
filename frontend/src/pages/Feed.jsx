@@ -121,7 +121,7 @@ const Feed = () => {
                       triggerWhenOpen={
                         <>
                           <p className="caption">{post.caption}</p>
-                          <button className="open-comments" data-id={post._id}>
+                          <button className="close-button" data-id={post._id}>
                             <img
                               src={closeIcon}
                               alt=""
@@ -132,7 +132,7 @@ const Feed = () => {
                         </>
                       }
                     >
-                      <Comments />
+                      <Comments data-id={post._id} />
                     </Collapsible>
                   </section>
                 </li>

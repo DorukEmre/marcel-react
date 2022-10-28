@@ -1,28 +1,41 @@
 import { useState } from 'react'
-import { axiosPrivate } from '../api/axios'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { sendCommentIcon } from '../assets/icons'
 
-const Comments = () => {
-  const [comments, setComments] = useState([
-    {
-      _id: 1,
-      user: { username: 'Greg' },
-      comment: 'Good cat',
-    },
-    {
-      _id: 2,
-      user: { username: 'Greg' },
-      comment: 'Good cat',
-    },
-  ])
-  let post
-  // axios get comments
-  //
-  // modal.querySelector('.create-comment--textarea').value = ''
-  // const postId = this.dataset.id
-  // const response = await fetch(`posts/getComments/${postId}`)
-  // const data = await response.json()
-  // const { post, comments } = data
+const Comments = (props) => {
+  const axiosPrivate = useAxiosPrivate()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    let isMounted = true
+    const controller = new AbortController()
+
+    const getComments = async () => {
+      try {
+        const response = await axiosPrivate.get(
+          `api/posts/getComments/${props['data-id']}`,
+          {
+            signal: controller.signal,
+          },
+        )
+        // console.log(response.data)
+        isMounted && setComments(response.data)
+      } catch (err) {
+        console.error('getComments err', err)
+        // navigate('/login', { state: { from: location }, replace: true })
+      }
+    }
+    getComments()
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }, [])
 
   // axios post comments
   // `posts/createComment/${postId}`
@@ -54,7 +67,6 @@ const Comments = () => {
             id="comment"
             name="comment"
             placeholder="Add a comment"
-            autoFocus
             required
           ></textarea>
         </label>

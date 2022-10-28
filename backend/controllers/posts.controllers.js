@@ -21,10 +21,6 @@ module.exports = {
       console.log(err)
     }
   },
-  getSpot: (req, res) => {
-    const active = ['mid', 'mid', 'active', 'mid', 'mid']
-    res.render('spot.ejs', { active })
-  },
   getPost: async (req, res) => {
     const active = ['active', 'mid', 'mid', 'mid', 'mid']
 
@@ -96,20 +92,18 @@ module.exports = {
   },
   getComments: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id).populate('user').lean()
+      console.log('req.params.id', req.params.id)
+      // const post = await Post.findById(req.params.id).populate('user').lean()
 
       const comments = await Comment.find({ postId: req.params.id })
         .sort({ createdAt: 'asc' })
         .populate('user')
         .lean()
-      console.log('comments', comments)
 
-      // const { cloudinaryId, GPS, reports, ...others } = post
+      // const data = { post, comments }
+      // console.log('data_getComments', comments)
 
-      const data = { post, comments }
-      console.log('data_getComments', data)
-
-      res.json(data)
+      res.json(comments)
     } catch (err) {
       console.log(err)
     }
