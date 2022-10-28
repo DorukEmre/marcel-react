@@ -107,8 +107,11 @@ exports.handleRefreshToken = async (req, res) => {
   if (!foundUser) return res.sendStatus(403) //Forbidden
   // evaluate jwt
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err || foundUser.username !== decoded.username)
+    if (err || foundUser.username !== decoded.username) {
+      console.log('foundUser.username', foundUser.username)
+      console.log('decoded.username', decoded.username)
       return res.sendStatus(403)
+    }
 
     console.log('decoded in handleRefreshToken', decoded)
     const accessToken = jwt.sign(

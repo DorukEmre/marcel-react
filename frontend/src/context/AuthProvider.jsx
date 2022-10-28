@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem('persist')) || false,
   )
 
-  console.log('auth in AuthProvider', auth)
+  // console.log('auth in AuthProvider', auth)
 
   return (
     <AuthContext.Provider value={{ auth, setAuth, persist, setPersist }}>

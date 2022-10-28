@@ -69,7 +69,7 @@ const Groups = () => {
           signal: controller.signal,
         },
       )
-      console.log('response?.data', response?.data)
+      // console.log('response?.data', response?.data)
 
       if (joinGroupRequest) {
         const modal = document.querySelector('.errmsg-modal')
@@ -84,7 +84,7 @@ const Groups = () => {
         modal.showModal()
         errRef.current.focus()
         ownedGroups && isMounted && setOwnedGroups(ownedGroups)
-        memberGroups && isMounted && setOwnedGroups(memberGroups)
+        memberGroups && isMounted && setMemberGroups(memberGroups)
       }
 
       joinGroupRequest ? setJoinGroupCode('') : setNewGroupName('')

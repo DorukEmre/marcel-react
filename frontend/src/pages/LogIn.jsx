@@ -33,7 +33,7 @@ const LogIn = () => {
     e.preventDefault()
 
     try {
-      console.log(email, password)
+      // console.log(email, password)
       const response = await axios.post(
         LOGIN_URL,
         JSON.stringify({ email, password }),
@@ -42,7 +42,7 @@ const LogIn = () => {
           withCredentials: true,
         },
       )
-      console.log('response.data', response.data)
+      // console.log('response.data', response.data)
       const accessToken = response?.data?.accessToken
 
       setAuth({ email, accessToken })
