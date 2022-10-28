@@ -16,7 +16,7 @@ const PersistLogin = () => {
         // Reach out to endpoint and take cookie with it
         await refresh()
       } catch (err) {
-        console.error(err)
+        // console.error(err)
       } finally {
         isMounted && setIsLoading(false)
       }
@@ -31,8 +31,8 @@ const PersistLogin = () => {
   }, [])
 
   useEffect(() => {
-    console.log(`isLoading: ${isLoading}`)
-    console.log(`accessToken: ${JSON.stringify(auth?.accessToken)}`)
+    // console.log(`isLoading: ${isLoading}`)
+    // console.log(`accessToken: ${JSON.stringify(auth?.accessToken)}`)
   }, [isLoading])
   return (
     <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>

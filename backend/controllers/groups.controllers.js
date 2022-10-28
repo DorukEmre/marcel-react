@@ -1,25 +1,31 @@
 const Group = require('../models/Group.model')
 const User = require('../models/User.model')
 
+async function findUserGroups(foundUser) {
+  const ownedGroups = await Group.find({
+    owner: foundUser.id,
+  }).lean()
+
+  const memberGroups = await Group.find({
+    // both expressions need to be satisfied
+    $and: [
+      // owner not equal ($ne) to user.id
+      { owner: { $ne: foundUser.id } },
+      // members equal ($eq) to user.id, same as { members: req.user.id },
+      { members: { $eq: foundUser.id } },
+    ],
+  }).lean()
+
+  return { ownedGroups, memberGroups }
+}
+
 module.exports = {
   // Groups page
   getGroups: async (req, res) => {
     try {
       const foundUser = await User.findOne({ email: req.user })
 
-      const ownedGroups = await Group.find({
-        owner: foundUser.id,
-      }).lean()
-
-      const memberGroups = await Group.find({
-        // both expressions need to be satisfied
-        $and: [
-          // owner not equal ($ne) to user.id
-          { owner: { $ne: foundUser.id } },
-          // members equal ($eq) to user.id, same as { members: req.user.id },
-          { members: { $eq: foundUser.id } },
-        ],
-      }).lean()
+      let { ownedGroups, memberGroups } = await findUserGroups(foundUser)
 
       res.json({ ownedGroups, memberGroups })
     } catch (err) {
@@ -34,11 +40,25 @@ module.exports = {
     try {
       const foundUser = await User.findOne({ email: req.user })
       console.log('req.body.submitData', req.body.submitData)
-      await Group.create({
+
+      const checkGroupExists = await Group.findOne({
         groupName: req.body.submitData,
-        owner: foundUser.id,
-        members: [foundUser.id],
-      })
+      }).lean()
+
+      if (checkGroupExists) {
+        return res.status(400).json({ message: 'Group already exists' })
+      } else {
+        await Group.create({
+          groupName: req.body.submitData,
+          owner: foundUser.id,
+          members: [foundUser.id],
+        })
+        let { ownedGroups } = await findUserGroups(foundUser)
+        return res.status(201).json({
+          ownedGroups,
+          message: 'Group created successfully',
+        })
+      }
 
       // const group = await Group.find({
       //   groupName: req.body.submitData,
@@ -46,20 +66,6 @@ module.exports = {
       // const string = encodeURIComponent(group[0].groupName)
 
       // res.redirect('/groups/?newgroup=' + string)
-
-      const ownedGroups = await Group.find({
-        owner: foundUser.id,
-      }).lean()
-
-      const memberGroups = await Group.find({
-        $and: [
-          { owner: { $ne: foundUser.id } },
-          { members: { $eq: foundUser.id } },
-        ],
-      }).lean()
-
-      console.log('ownedGroups, memberGroups', ownedGroups, memberGroups)
-      res.json({ ownedGroups, memberGroups })
     } catch (err) {
       console.log(err)
     }
@@ -73,12 +79,11 @@ module.exports = {
       const groupToJoin = await Group.findOne({
         groupName: req.body.submitData,
       }).lean()
-      console.log('groupToJoin', groupToJoin)
-      console.log('groupToJoin._id', groupToJoin._id)
-      console.log('foundUser.id', foundUser.id)
 
       if (!groupToJoin)
-        return res.status(400).json({ message: 'Please check the group code' })
+        return res
+          .status(400)
+          .json({ message: 'Please check the group code is valid' })
 
       if (
         !groupToJoin.members.find((x) => x == foundUser.id) &&
@@ -88,29 +93,21 @@ module.exports = {
           { _id: groupToJoin._id },
           { $push: { membersToApprove: foundUser.id } },
         )
-        console.log('pushGroup', pushGroup)
-        console.log('Request to join sent to group admin')
+        // console.log('Request to join sent to group admin')
         return res
           .status(201)
           .json({ message: 'Request to join sent to group admin' })
-      } else {
-        console.log('Already member or requested')
-        return res.status(400).json({ message: 'Already member or requested' })
+      } else if (groupToJoin.members.find((x) => x == foundUser.id)) {
+        // console.log('Already a member')
+        return res
+          .status(400)
+          .json({ message: 'You are already a member of that group' })
+      } else if (groupToJoin.membersToApprove.find((x) => x == foundUser.id)) {
+        // console.log('Already requested')
+        return res
+          .status(400)
+          .json({ message: 'Request to join that group is pending' })
       }
-
-      const ownedGroups = await Group.find({
-        owner: foundUser.id,
-      }).lean()
-
-      const memberGroups = await Group.find({
-        $and: [
-          { owner: { $ne: foundUser.id } },
-          { members: { $eq: foundUser.id } },
-        ],
-      }).lean()
-
-      console.log('ownedGroups, memberGroups', ownedGroups, memberGroups)
-      res.json({ ownedGroups, memberGroups })
     } catch (err) {
       console.log(err)
     }

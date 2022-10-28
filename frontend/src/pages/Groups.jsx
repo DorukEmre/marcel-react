@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { catBullet } from '../assets/icons'
@@ -7,6 +7,9 @@ const Groups = () => {
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
+
+  const errRef = useRef()
+  const [errMsg, setErrMsg] = useState('')
 
   const [ownedGroups, setOwnedGroups] = useState([])
   const [memberGroups, setMemberGroups] = useState([])
@@ -25,7 +28,7 @@ const Groups = () => {
           // To cancel request if we need to
           signal: controller.signal,
         })
-        console.log('response.data', response.data)
+        // console.log('response.data', response.data)
         const { ownedGroups, memberGroups } = response.data
         isMounted && setOwnedGroups(ownedGroups)
         isMounted && setMemberGroups(memberGroups)
@@ -43,22 +46,19 @@ const Groups = () => {
       controller.abort()
     }
   }, [])
-  console.log('ownedGroups, memberGroups', ownedGroups, memberGroups)
 
-  // const handleJoinGroupSubmit = async (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // console.log('e.target', e.target.className)
     let isMounted = true
     const controller = new AbortController()
 
-    let submitUrl =
-      e.target.className === 'join-group-form'
-        ? '/api/groups/joinGroup'
-        : '/api/groups/createGroup'
+    let joinGroupRequest = e.target.className === 'join-group-form'
 
-    let submitData =
-      e.target.className === 'join-group-form' ? joinGroupCode : newGroupName
+    let submitUrl = joinGroupRequest
+      ? '/api/groups/joinGroup'
+      : '/api/groups/createGroup'
+
+    let submitData = joinGroupRequest ? joinGroupCode : newGroupName
 
     try {
       const response = await axiosPrivate.post(
@@ -70,23 +70,35 @@ const Groups = () => {
         },
       )
       console.log('response?.data', response?.data)
-      const { ownedGroups, memberGroups } = response.data
-      isMounted && setOwnedGroups(ownedGroups)
-      isMounted && setMemberGroups(memberGroups)
 
-      e.target.className === 'join-group-form'
-        ? setJoinGroupCode('')
-        : setNewGroupName('')
+      if (joinGroupRequest) {
+        const modal = document.querySelector('.errmsg-modal')
+        setErrMsg(response.data.message)
+        modal.showModal()
+        errRef.current.focus()
+      } else {
+        // console.log('response?.data', response?.data)
+        const { ownedGroups, message } = response.data
+        const modal = document.querySelector('.errmsg-modal')
+        setErrMsg(message)
+        modal.showModal()
+        errRef.current.focus()
+        ownedGroups && isMounted && setOwnedGroups(ownedGroups)
+      }
+
+      joinGroupRequest ? setJoinGroupCode('') : setNewGroupName('')
     } catch (err) {
-      console.log('err.', err.response)
-      // if (!err?.response) {
-      //   setErrMsg('No Server Response')
-      // } else if (err.response?.status === 409) {
-      //   setErrMsg(err.response.data.message)
-      // } else {
-      //   setErrMsg('Request failed')
-      // }
-      // errRef.current.focus()
+      const modal = document.querySelector('.errmsg-modal')
+      setErrMsg(err.response.data.message)
+      modal.showModal()
+      if (!err?.response) {
+        setErrMsg('No Server Response')
+      } else if (err.response?.status === 400) {
+        setErrMsg(err.response.data.message)
+      } else {
+        setErrMsg('Request failed')
+      }
+      errRef.current.focus()
     }
 
     return () => {
@@ -97,6 +109,16 @@ const Groups = () => {
 
   return (
     <main id="groups-page">
+      <dialog
+        ref={errRef}
+        className="errmsg errmsg-modal"
+        aria-live="assertive"
+      >
+        <p>{errMsg}</p>
+        <button onClick={() => document.querySelector('.errmsg-modal').close()}>
+          OK
+        </button>
+      </dialog>
       <div className="groups-container">
         <section className="groups--title">
           <h1>Join or create a group</h1>
