@@ -49,7 +49,7 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="header-navbar">
+      <nav className={`header-navbar ${!isUserLoggedIn ? 'slim' : ''}`}>
         {isUserLoggedIn ? (
           <ul className="header-list">
             {categories.map((categ) => (

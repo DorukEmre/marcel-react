@@ -84,7 +84,9 @@ const LogIn = () => {
           </Link>
         </section>
         <section className="form-panel">
-          <h1>Log in to Marcel</h1>
+          <h1>
+            Log in to <span className="Marcel">Marcel</span>
+          </h1>
           <p
             ref={errRef}
             className={errMsg ? 'errmsg' : 'offscreen'}
@@ -102,7 +104,6 @@ const LogIn = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 value={email}
-                autoFocus
               />
             </div>
             <div className="form-group">

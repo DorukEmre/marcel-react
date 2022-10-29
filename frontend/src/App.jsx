@@ -16,7 +16,7 @@ import Users from './components/Users'
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Routes>
         <Route path="login" element={<LogIn />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
@@ -59,7 +59,7 @@ function App() {
           <Route path="*" element={<Missing />} />
         </Route>
       </Routes>
-    </div>
+    </>
   )
 }
 

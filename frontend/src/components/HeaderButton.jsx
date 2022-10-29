@@ -4,7 +4,7 @@ const HeaderButton = (props) => {
   let activeClassName = 'active'
 
   return (
-    <li className="header-item">
+    <li className="header-item after">
       <NavLink
         to={props.url}
         className={({ isActive }) => (isActive ? activeClassName : undefined)}

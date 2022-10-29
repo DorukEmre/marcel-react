@@ -121,7 +121,9 @@ const SignUp = () => {
           </section>
         ) : (
           <section className="form-panel">
-            <h1>Sign Up to Marcel</h1>
+            <h1>
+              Sign up to <span className="Marcel">Marcel</span>
+            </h1>
             <p
               ref={errRef}
               className={errMsg ? 'errmsg' : 'offscreen'}
@@ -144,7 +146,6 @@ const SignUp = () => {
                   onFocus={() => setEmailFocus(true)}
                   onBlur={() => setEmailFocus(false)}
                   required
-                  autoFocus
                 />
                 <p
                   id="emailalert"
