@@ -46,8 +46,13 @@ module.exports = {
   },
   createPost: async (req, res) => {
     try {
+      // console.log('req.user', req.user)
+      // console.log('req.file', req.file)
+      // console.log('req.body', req.body)
       // Upload image to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path)
+
+      const foundUser = await User.findOne({ email: req.user })
 
       await Post.create({
         catName: req.body.catName,
@@ -61,10 +66,10 @@ module.exports = {
         imageUrl: result.secure_url,
         cloudinaryId: result.public_id,
         caption: req.body.comment,
-        user: req.user.id,
+        user: foundUser.id,
       })
-      console.log('Post has been added!')
-      res.redirect('/feed')
+
+      res.sendStatus(201)
     } catch (err) {
       console.log(err)
     }

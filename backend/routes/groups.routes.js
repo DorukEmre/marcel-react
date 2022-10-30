@@ -9,6 +9,6 @@ router.post('/createGroup', groupsController.createGroup)
 router.post('/joinGroup', groupsController.joinGroup)
 
 // ////////////////
-router.get('/:id', groupsController.getGroup)
+router.get('/:groupid', groupsController.getGroup)
 
 module.exports = router

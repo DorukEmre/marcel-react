@@ -15,11 +15,10 @@ export default function BasicModal(props) {
       <Modal
         open={props.openModal}
         onClose={props.handleCloseModal}
-        aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className={props.className}>
-          <p id="modal-modal-title" variant="h6" component="h2">
+          <p id="modal-modal-description" variant="h6" component="h2">
             {props.modalMsg}
           </p>
           {props.displayButton && (
