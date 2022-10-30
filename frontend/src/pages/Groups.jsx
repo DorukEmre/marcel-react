@@ -2,20 +2,25 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { catBullet } from '../assets/icons'
+import BasicModal from '../components/BasicModal'
 
 const Groups = () => {
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const errRef = useRef()
-  const [errMsg, setErrMsg] = useState('')
+  const modalRef = useRef()
+  const [modalMsg, setModalMsg] = useState('')
 
   const [ownedGroups, setOwnedGroups] = useState([])
   const [memberGroups, setMemberGroups] = useState([])
 
-  const [joinGroupCode, setJoinGroupCode] = useState()
-  const [newGroupName, setNewGroupName] = useState()
+  const [joinGroupCode, setJoinGroupCode] = useState('')
+  const [newGroupName, setNewGroupName] = useState('')
+
+  const [openModal, setOpenModal] = useState(false)
+  const handleOpenModal = () => setOpenModal(true)
+  const handleCloseModal = () => setOpenModal(false)
 
   useEffect(() => {
     let isMounted = true
@@ -71,35 +76,28 @@ const Groups = () => {
       )
       // console.log('response?.data', response?.data)
 
-      if (joinGroupRequest) {
-        const modal = document.querySelector('.errmsg-modal')
-        setErrMsg(response.data.message)
-        modal.showModal()
-        errRef.current.focus()
-      } else {
-        // console.log('response?.data', response?.data)
-        const { ownedGroups, memberGroups, message } = response.data
-        const modal = document.querySelector('.errmsg-modal')
-        setErrMsg(message)
-        modal.showModal()
-        errRef.current.focus()
+      setModalMsg(response.data.message)
+      handleOpenModal()
+      // modalRef.current.focus()
+
+      if (!joinGroupRequest) {
+        const { ownedGroups, memberGroups } = response.data
         ownedGroups && isMounted && setOwnedGroups(ownedGroups)
         memberGroups && isMounted && setMemberGroups(memberGroups)
       }
 
       joinGroupRequest ? setJoinGroupCode('') : setNewGroupName('')
     } catch (err) {
-      const modal = document.querySelector('.errmsg-modal')
-      setErrMsg(err.response.data.message)
-      modal.showModal()
+      setModalMsg(err.response.data.message)
+      handleOpenModal()
       if (!err?.response) {
-        setErrMsg('No Server Response')
+        setModalMsg('No Server Response')
       } else if (err.response?.status === 400) {
-        setErrMsg(err.response.data.message)
+        setModalMsg(err.response.data.message)
       } else {
-        setErrMsg('Request failed')
+        setModalMsg('Request failed')
       }
-      errRef.current.focus()
+      // modalRef.current.focus()
     }
 
     return () => {
@@ -110,16 +108,15 @@ const Groups = () => {
 
   return (
     <main id="groups-page">
-      <dialog
-        ref={errRef}
-        className="errmsg errmsg-modal"
-        aria-live="assertive"
-      >
-        <p>{errMsg}</p>
-        <button onClick={() => document.querySelector('.errmsg-modal').close()}>
-          OK
-        </button>
-      </dialog>
+      <BasicModal
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        className="confirmation-modal"
+        modalMsg={modalMsg}
+        displayButton={true}
+        buttonClass="close-modal"
+        buttonText="OK"
+      ></BasicModal>
       <div className="groups-container">
         <section className="groups--title">
           <h1>Join or create a group</h1>

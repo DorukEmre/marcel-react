@@ -421,8 +421,10 @@ form.create-comment {
   flex-direction: column;
   gap: 2rem;
   margin: 0 auto;
-  width: auto;
-  max-width: 46rem;
+  max-width: 43rem;
+  margin: 0 auto;
+  text-align: left;
+  align-items: center;
 }
 .groups--title {
   display: flex;
@@ -446,6 +448,7 @@ form.create-comment {
   background-color: var(--clr-back-400);
   max-width: 35rem;
   width: 100%;
+  max-width: 430px;
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
@@ -520,6 +523,33 @@ form.create-comment {
   text-decoration: underline;
 }
 
+body .confirmation-modal {
+  background-color: var(--clr-back-400);
+  color: var(--clr-neutral-300);
+  border: none;
+  width: 80%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.confirmation-modal::backdrop,
+body .MuiBackdrop-root {
+  background: rgb(0 0 0 / 0.65);
+}
+.close-modal {
+  border-radius: 5px;
+  margin-left: auto;
+  border: none;
+  color: var(--clr-accent-300);
+  background-color: transparent;
+  font-weight: 700;
+}
+
 /* ///////////// */
 /*   Spot page   */
 /* ///////////// */
@@ -533,7 +563,7 @@ form.create-comment {
 }
 #custom-file-upload {  
   color: var(--clr-back-400);
-  background-color: var(--clr-back-400);
+  background-color: transparent;
   border: 1px solid transparent;
   padding: 0.1rem;
   cursor: pointer;
@@ -749,12 +779,16 @@ footer p {
 @media screen and (max-width: 480px) {
   
   header {
-    position: fixed;
+    /* position: fixed;
     bottom: 0;
     top: auto;
-    width: 100%;
+    width: 100%; */
   }
   .header-navbar {
+    height: 70px;
+    padding: 0 0.5rem;
+  }
+  .header-navbar.slim {
     height: 70px;
   }
   .header-list {
@@ -812,4 +846,30 @@ footer p {
     background-color: transparent;
   }
 
+  .card {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid var(--clr-neutral-600);
+    box-shadow: none;
+    padding: 1rem 0;
+  }
+
+  .spot-logo-container {
+    padding: 1rem 0;
+  }
+
+  .groups--title {
+    padding: 0 1rem;
+  }
+  .groups-card {
+    border-radius: 0;
+    background-color: transparent;
+    border-top: 1px solid var(--clr-compl-600);
+  }
+  .groups-card h2 {
+    border-bottom: 1px solid var(--clr-neutral-300);
+  }
+  .groups-card input {
+    background-color: transparent;
+  }
 }
