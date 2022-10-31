@@ -11,21 +11,20 @@
   General styling
   /////////////////////// */
 
-
 :root {
-  --clr-back-200: #1C1B1F; 
-  --clr-back-300: #13212F; /* hsl(210, 42%, 13%) */
-  --clr-back-400: #20303F; /* hsl(209, 33%, 19%) */
-  
+  --clr-back-200: #1c1b1f;
+  --clr-back-300: #13212f; /* hsl(210, 42%, 13%) */
+  --clr-back-400: #20303f; /* hsl(209, 33%, 19%) */
+
   --clr-compl-200: #402b20; /* hsl(20, 33%, 19%) */
-  --clr-compl-300: #48351A; /* hsl(210, 42%, 13%) */
+  --clr-compl-300: #48351a; /* hsl(210, 42%, 13%) */
   --clr-compl-400: #624d2d; /* hsl(36, 37%, 28%) */
   --clr-compl-510: #402b20; /* hsl(20, 33%, 19%) */
   --clr-compl-520: #623f2d; /* hsl(20, 37%, 28%) */
   --clr-compl-530: #612000; /* hsl(20, 100%, 19%) */
   --clr-compl-540: #613a00; /* hsl(36, 100%, 19%) */
   --clr-compl-600: #f59300; /* hsl(36, 100%, 48%) */
-  
+
   --clr-accent-300: #8ab7ff; /* hsl(217, 100%, 77%) */
   --clr-accent-400: #82a1d4; /* hsl(217, 49%, 67%) */
 
@@ -33,8 +32,8 @@
   --clr-neutral-300: #d6e6ff; /* hsl(217, 100%, 92%) */
   --clr-neutral-400: #a2b7cd; /* hsl(211, 30%, 72%) */
   --clr-neutral-600: #546a83; /* hsl(212, 22%, 42%) */
-  
-  --ff-body: "Inter",sans-serif;
+
+  --ff-body: 'Inter', sans-serif;
 }
 
 /* Sticky header and footer pushed down */
@@ -47,7 +46,8 @@ body {
   display: flex;
   flex-direction: column;
 }
-header, footer {
+header,
+footer {
   flex-grow: 0;
   flex-shrink: 0;
 }
@@ -120,7 +120,7 @@ main {
   transition: background-color 50ms ease-in;
   transition: color 100ms ease-in;
 }
-.header-item.after a:not(.active):hover,  
+.header-item.after a:not(.active):hover,
 .header-item.after a:not(.active):focus {
   background-color: var(--clr-compl-200);
   border-radius: 15px 15px 0 0;
@@ -175,8 +175,8 @@ main {
   transition-duration: 0.2s;
 }
 .header-item.signup:hover a {
-  background-color: var(--clr-accent-400); 
-  transition-duration: 0.2s; 
+  background-color: var(--clr-accent-400);
+  transition-duration: 0.2s;
 }
 .header-item.logout {
   width: 20px;
@@ -327,18 +327,18 @@ form.create-comment {
 .create-comment--label {
   width: 100%;
 }
-.create-comment--textarea {  
+.create-comment--textarea {
   resize: none;
   background-color: var(--clr-back-400);
   color: var(--clr-neutral-300);
-  border: 2px solid transparent;  
+  border: 2px solid transparent;
   text-indent: 6px;
   outline: 0;
   width: 100%;
   border-radius: 0 0 0 10px;
 }
-.create-comment--textarea:focus {  
-  border: 2px solid var(--clr-neutral-300);  
+.create-comment--textarea:focus {
+  border: 2px solid var(--clr-neutral-300);
 }
 
 .send-button {
@@ -349,16 +349,15 @@ form.create-comment {
   align-self: flex-end;
 }
 
-
 /* Feed page old modal */
 .modal {
   padding: 1em;
   max-width: 80vw;
-  max-height: 90vh;  
+  max-height: 90vh;
   min-width: 300px;
   border: 1px solid var(--clr-neutral-600);
   border-radius: 10px;
-  box-shadow: 0 0 1em rgb(0 0 0 / .3);
+  box-shadow: 0 0 1em rgb(0 0 0 / 0.3);
   background-color: var(--clr-back-300);
   color: var(--clr-neutral-300);
 }
@@ -485,10 +484,11 @@ form.create-comment {
   background-color: var(--clr-back-400);
   color: var(--clr-neutral-300);
 }
-.groups-card input:focus {  
+.groups-card input:focus {
   border: 2px solid var(--clr-accent-300);
   outline: 0;
-  box-shadow: inset 0 1px 2px rgba(203,203,210,0.2),0 0 4px rgba(121,88,159,0.3);
+  box-shadow: inset 0 1px 2px rgba(203, 203, 210, 0.2),
+    0 0 4px rgba(121, 88, 159, 0.3);
 }
 
 .groups--create .restrictions {
@@ -553,15 +553,25 @@ body .MuiBackdrop-root {
 /* ///////////// */
 /*   Spot page   */
 /* ///////////// */
-.file-upload-wrapper {  
+
+.spot-logo-container {
+  height: 200px;
+  padding-bottom: 2rem;
+}
+.spot-logo-container img {
+  max-height: 100%;
+  margin: 0 auto;
+}
+
+.file-upload-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 1rem;
 }
-#custom-file-upload {  
+#custom-file-upload {
   color: var(--clr-back-400);
   background-color: transparent;
   border: 1px solid transparent;
@@ -575,12 +585,12 @@ body .MuiBackdrop-root {
   border-radius: 5px;
   overflow: hidden;
   flex-shrink: 0;
-  
-  display:flex;
-  justify-content:center;
-  align-items: center; 
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-#custom-file-upload input[type="file"] {
+#custom-file-upload input[type='file'] {
   height: 75px;
   width: 75px;
   position: absolute;
@@ -592,18 +602,24 @@ body .MuiBackdrop-root {
 #custom-file-upload:hover {
   background-color: var(--clr-neutral-600);
 }
-output#file-list {
-  text-align: left;
+output#cropped-image-list {
+  /* text-align: left;
   font-size: 0.8rem;
-  white-space: pre-line;
+  white-space: pre-line; */
+  display: flex;
+  align-items: flex-end;
+  gap: 0.25rem;
 }
-.spot-logo-container {
-  height: 200px;
-  padding-bottom: 2rem;
+div.delete-crop {
+  background-color: transparent;
+  border: none;
+  transition: background-color 100ms ease-in;
+  border-radius: 5px;
+  padding: 4px;
+  height: fit-content;
 }
-.spot-logo-container img {
-  max-height: 100%;
-  margin: 0 auto;
+div.delete-crop:hover {
+  background-color: var(--clr-compl-530);
 }
 
 /* ////////////////////// */
@@ -651,13 +667,13 @@ output#file-list {
 .form-group {
   margin-bottom: 20px;
 }
-.form-group label {  
+.form-group label {
   display: inline-block;
   width: 100%;
   text-align: left;
   font-size: 0.8rem;
   font-weight: bold;
-  margin-bottom: 5px;  
+  margin-bottom: 5px;
 }
 .form-group input,
 .form-group textarea {
@@ -673,12 +689,13 @@ output#file-list {
 .form-group input {
   height: 44px;
 }
-.form-group input:focus {  
+.form-group input:focus {
   border: 2px solid var(--clr-accent-300);
   outline: 0;
-  box-shadow: inset 0 1px 2px rgba(203,203,210,0.2),0 0 4px rgba(121,88,159,0.3);
+  box-shadow: inset 0 1px 2px rgba(203, 203, 210, 0.2),
+    0 0 4px rgba(121, 88, 159, 0.3);
 }
-.form-panel button {  
+.form-panel button {
   color: var(--clr-back-400);
   background-color: var(--clr-accent-300);
   font-size: 1.1rem;
@@ -759,7 +776,6 @@ output#file-list {
   margin-right: 8px;
 }
 
-
 /* ////////// */
 /*   Footer   */
 /* ////////// */
@@ -775,9 +791,7 @@ footer p {
 /*   media queries   */
 /* ///////////////// */
 
-
 @media screen and (max-width: 480px) {
-  
   header {
     /* position: fixed;
     bottom: 0;
@@ -808,19 +822,18 @@ footer p {
   .header-item.after p {
     font-size: 0.8rem;
   }
-  .header-item.after a:not(.active):hover,  
+  .header-item.after a:not(.active):hover,
   .header-item.after a:not(.active):focus {
     border-radius: 0;
-  }  
-  
+  }
 
   main {
     padding: 2rem 0;
   }
   main#login-page,
   main#signup-page {
-      padding-bottom: 0;
-      padding-top: 2.5rem;
+    padding-bottom: 0;
+    padding-top: 2.5rem;
   }
   .hero-container {
     padding: 1rem;
@@ -831,18 +844,19 @@ footer p {
     padding: 0 0.5rem;
   }
 
-  .login-container, .signup-container {
+  .login-container,
+  .signup-container {
     padding-top: 0rem;
   }
-  .login-logo-container, 
+  .login-logo-container,
   .signup-logo-container {
     margin: 0 0 1rem;
   }
   .form-panel {
     background-color: transparent;
   }
-  .form-group input, 
-  .form-group textarea{
+  .form-group input,
+  .form-group textarea {
     background-color: transparent;
   }
 

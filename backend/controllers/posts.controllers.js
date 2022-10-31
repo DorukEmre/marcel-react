@@ -68,7 +68,7 @@ module.exports = {
         caption: req.body.comment,
         user: foundUser.id,
       })
-
+      console.log('New post added')
       res.sendStatus(201)
     } catch (err) {
       console.log(err)
