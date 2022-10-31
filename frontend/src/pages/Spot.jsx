@@ -162,6 +162,7 @@ const Spot = () => {
                       alt="Cropped image"
                       height="100"
                       width="100"
+                      className="crop-thumbnail"
                     />
                     <div
                       className="delete-crop"

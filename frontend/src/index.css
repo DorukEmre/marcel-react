@@ -610,6 +610,10 @@ output#cropped-image-list {
   align-items: flex-end;
   gap: 0.25rem;
 }
+.crop-thumbnail {
+  border-radius: 10px;
+  box-shadow: 0 0 0.5em var(--clr-back-300);
+}
 div.delete-crop {
   background-color: transparent;
   border: none;
