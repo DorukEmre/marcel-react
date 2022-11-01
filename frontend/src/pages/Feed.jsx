@@ -42,7 +42,13 @@ const Feed = () => {
         isMounted && setPosts(response.data)
       } catch (err) {
         console.error('Login again err', err)
-        navigate('/login', { state: { from: location }, replace: true })
+        if (!err?.response) {
+          console.log('No Server Response')
+        } else if (err.response?.status === 403) {
+          navigate('/login', { state: { from: location }, replace: true })
+        } else {
+          console.log('Request failed')
+        }
       }
     }
 
