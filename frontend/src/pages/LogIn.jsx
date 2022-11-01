@@ -33,7 +33,6 @@ const LogIn = () => {
     e.preventDefault()
 
     try {
-      // console.log(email, password)
       const response = await axios.post(
         LOGIN_URL,
         JSON.stringify({ email, password }),
@@ -43,9 +42,9 @@ const LogIn = () => {
         },
       )
       // console.log('response.data', response.data)
-      const accessToken = response?.data?.accessToken
+      const { accessToken, userId } = response?.data
 
-      setAuth({ email, accessToken })
+      setAuth({ email, accessToken, userId })
 
       setEmail('')
       setPassword('')

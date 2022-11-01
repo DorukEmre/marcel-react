@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User.model')
 
 exports.postSignup = async (req, res) => {
-  const { username, email, password } = req.body
+  const { username, password } = req.body
+  const email = req.body.email.toLowerCase()
+
   if (!username || !email || !password)
     return res
       .status(400)
@@ -42,7 +44,8 @@ exports.postSignup = async (req, res) => {
 // ////////////////
 
 exports.postLogin = async (req, res) => {
-  const { email, password } = req.body
+  const { password } = req.body
+  const email = req.body.email.toLowerCase()
 
   if (!email || !password)
     return res.status(400).json({ message: 'Email and password are required.' })
@@ -83,7 +86,7 @@ exports.postLogin = async (req, res) => {
     })
 
     // Send access token to user
-    res.json({ accessToken })
+    res.json({ accessToken, userId: foundUser.id })
   } else {
     console.log('else res.sendStatus(401)')
     res.sendStatus(401)
