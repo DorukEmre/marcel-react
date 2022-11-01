@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
+import { undoIcon } from '../assets/icons'
 import getCroppedImg from './cropImage'
 import './EasyCropper.css'
 
@@ -28,24 +29,24 @@ const EasyCropper = (props) => {
   }, [croppedAreaPixels, rotation])
 
   return (
-    <>
-      <div className="cropper-container">
+    <div className="modal-container">
+      <section className="cropper-container">
         {props.image && (
           <>
-            <div className="cropper-container--cropper">
+            <section className="cropper-container--cropper">
               <Cropper
                 image={props.image}
                 crop={crop}
                 zoom={zoom}
-                rotation={rotation}
+                // rotation={rotation}
                 aspect={1}
                 onCropChange={setCrop}
                 onZoomChange={setZoom}
-                onRotationChange={setRotation}
+                // onRotationChange={setRotation}
                 onCropComplete={onCropComplete}
               />
-            </div>
-            <div className="cropper-container--controls">
+            </section>
+            <section className="cropper-container--controls">
               <div className="cropper-container--controls--slider">
                 <p>Zoom</p>
                 <input
@@ -61,7 +62,7 @@ const EasyCropper = (props) => {
                   className="cropper-range"
                 />
               </div>
-              <div className="cropper-container--controls--slider">
+              {/* <div className="cropper-container--controls--slider">
                 <p>Rotation</p>
                 <input
                   type="range"
@@ -73,19 +74,19 @@ const EasyCropper = (props) => {
                   onChange={(e) => setRotation(e.target.value)}
                   className="cropper-range"
                 />
-              </div>
-            </div>
+              </div> */}
+            </section>
           </>
         )}
-      </div>
-      <div className="cropper-buttons-container">
+      </section>
+      <section className="cropper-buttons-container">
         <button
           className="cropper-cancel-button"
           onClick={(e) => {
             props.handleCropCancel()
           }}
         >
-          Cancel
+          <img src={undoIcon} alt="Go back" height="24px" width="24px" />
         </button>
         <button
           className="cropper-save-button"
@@ -95,10 +96,10 @@ const EasyCropper = (props) => {
             props.handleCropSave()
           }}
         >
-          Save
+          Crop
         </button>
-      </div>
-    </>
+      </section>
+    </div>
   )
 }
 

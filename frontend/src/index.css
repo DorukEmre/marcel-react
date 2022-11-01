@@ -283,6 +283,7 @@ button.close-button {
   transition: background-color 150ms ease-in;
   border-radius: 5px;
   padding: 4px;
+  cursor: pointer;
 }
 button.like-button:hover,
 button.open-comments:hover,
@@ -610,20 +611,27 @@ output#cropped-image-list {
   align-items: flex-end;
   gap: 0.25rem;
 }
-.crop-thumbnail {
+.crop-thumbnail-container {
+  position: relative;
+}
+.crop-thumbnail--image {
   border-radius: 10px;
   box-shadow: 0 0 0.5em var(--clr-back-300);
 }
-div.delete-crop {
-  background-color: transparent;
+.crop-thumbnail--delete {
+  background-color: var(--clr-neutral-400);
   border: none;
   transition: background-color 100ms ease-in;
-  border-radius: 5px;
+  border-radius: 50%;
   padding: 4px;
   height: fit-content;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  cursor: pointer;
 }
-div.delete-crop:hover {
-  background-color: var(--clr-compl-530);
+.crop-thumbnail--delete:hover {
+  background-color: var(--clr-neutral-300);
 }
 
 /* ////////////////////// */
@@ -778,6 +786,25 @@ div.delete-crop:hover {
 }
 .form-panel .persistCheck input {
   margin-right: 8px;
+}
+
+/* ////////////////// */
+/* 404 - Missing page */
+/* ////////////////// */
+
+.go-back-button {
+  color: var(--clr-back-300);
+  background-color: var(--clr-accent-300);
+  padding: 10px;
+  border-radius: 5px;
+  min-width: fit-content;
+  border: none;
+  cursor: pointer;
+  transition: background-color 50ms ease-in;
+}
+
+.go-back-button:hover {
+  background-color: var(--clr-neutral-400);
 }
 
 /* ////////// */

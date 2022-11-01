@@ -7,6 +7,7 @@ import cameraIcon from './photo_camera_FILL1_wght400_GRAD0_opsz48.svg'
 import sendCommentIcon from './send_FILL0_wght600_GRAD0_opsz48.svg'
 import catBullet from './cat-bullet.svg'
 import deleteIcon from './delete_FILL0_wght600_GRAD0_opsz48.svg'
+import undoIcon from './undo_FILL0_wght600_GRAD0_opsz48.svg'
 
 export {
   closeIcon,
@@ -18,4 +19,5 @@ export {
   sendCommentIcon,
   catBullet,
   deleteIcon,
+  undoIcon,
 }

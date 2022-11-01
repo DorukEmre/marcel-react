@@ -76,11 +76,14 @@ const Spot = () => {
 
       isMounted && setCatName('')
       isMounted && setComment('')
-      isMounted && croppedImage(null)
+      isMounted && setCroppedImage(null)
+      navigate('/feed')
     } catch (err) {
-      console.log(err)
+      console.error('Login again err', err)
       if (!err?.response) {
         console.log('No Server Response')
+      } else if (err.response?.status === 403) {
+        navigate('/login', { state: { from: location }, replace: true })
       } else {
         console.log('Request failed')
       }
@@ -89,6 +92,7 @@ const Spot = () => {
     return () => {
       isMounted = false
       controller.abort()
+      navigate('/feed')
     }
   }
 
@@ -156,21 +160,21 @@ const Spot = () => {
               </div>
               <output id="cropped-image-list" htmlFor="imageUpload">
                 {croppedImage && (
-                  <>
+                  <div className="crop-thumbnail-container">
                     <img
                       src={croppedImage}
                       alt="Cropped image"
                       height="100"
                       width="100"
-                      className="crop-thumbnail"
+                      className="crop-thumbnail--image"
                     />
                     <div
-                      className="delete-crop"
+                      className="crop-thumbnail--delete"
                       onClick={() => setCroppedImage(null)}
                     >
-                      <img src={deleteIcon} alt="" height="24px" width="24px" />
+                      <img src={deleteIcon} alt="" height="20px" width="20px" />
                     </div>
-                  </>
+                  </div>
                 )}
               </output>
             </div>

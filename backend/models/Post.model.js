@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 // })
 
 const PostSchema = new mongoose.Schema({
-  catName: { type: String, required: true },
+  catName: { type: String },
   imageUrl: { type: String, require: true },
   cloudinaryId: { type: String, require: true },
   GPS: { type: String, default: 'no GPS data' },
