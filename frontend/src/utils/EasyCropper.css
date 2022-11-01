@@ -67,6 +67,7 @@
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  transition: background-color 100ms ease-in;
 }
 .cropper-save-button {
   color: var(--clr-back-300);
@@ -76,11 +77,13 @@
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  transition: background-color 100ms ease-in;
 }
 
 .cropper-save-button:hover,
 .cropper-cancel-button:hover {
-  opacity: 0.5;
+  color: var(--clr-back-300);
+  background-color: var(--clr-compl-550);
 }
 
 /********** Range Input Styles **********/

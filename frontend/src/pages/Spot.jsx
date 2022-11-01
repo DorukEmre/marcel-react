@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
-import { MarcelFileUpload, SnapACatLogo } from '../assets/images'
 import EasyCropperModal from '../components/EasyCropperModal'
-import { deleteIcon } from '../assets/icons'
+import { SnapACatLogo } from '../assets/images'
+import { deleteIcon, galleryIcon } from '../assets/icons'
 
 const Spot = () => {
   const axiosPrivate = useAxiosPrivate()
@@ -99,85 +99,86 @@ const Spot = () => {
   return (
     <main id="spot-page">
       <section className="spot-container">
-        <div className="spot-logo-container">
-          <img src={SnapACatLogo} alt="cat logo" />
-        </div>
         <section className="form-panel">
           <h2>Snap a cat</h2>
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="catName">
-                Name of the cat (or your best nickname)
-              </label>
-              <input
-                type="text"
-                id="catName"
-                placeholder="Name"
-                onChange={(e) => setCatName(e.target.value)}
-                value={catName}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="comment">Add a comment</label>
-              <textarea
-                id="comment"
-                placeholder="Add a comment"
-                onChange={(e) => setComment(e.target.value)}
-                value={comment}
-              ></textarea>
-            </div>
-
-            <div className="form-group file-upload-wrapper">
-              <div>
-                {!croppedImage && (
-                  <>
-                    <label htmlFor="imageUpload">Add a file</label>
-                    <button
-                      htmlFor="imageUpload"
-                      id="custom-file-upload"
-                      type="button"
-                    >
-                      <img
-                        src={MarcelFileUpload}
-                        alt=""
-                        height="75"
-                        width="75"
-                      />
-                      <input
-                        type="file"
-                        id="imageUpload"
-                        accept="image/*"
-                        tabIndex="-1"
-                        required
-                        onChange={(event) => {
-                          onSelectFile(event)
-                          handleOpenModal()
-                        }}
-                      />
-                    </button>
-                  </>
-                )}
-              </div>
-              <output id="cropped-image-list" htmlFor="imageUpload">
-                {croppedImage && (
-                  <div className="crop-thumbnail-container">
+            {!croppedImage ? (
+              <>
+                <div className="file-upload-container">
+                  <div className="file-upload-container--button-wrapper">
+                    <label htmlFor="imageUpload">
+                      <button
+                        htmlFor="imageUpload"
+                        id="custom-file-upload-button"
+                        type="button"
+                      >
+                        <img
+                          src={galleryIcon}
+                          className="custom-file-upload-button--image"
+                        />
+                        <input
+                          type="file"
+                          id="imageUpload"
+                          className="custom-file-upload-button--input"
+                          accept="image/*"
+                          tabIndex="-1"
+                          required
+                          onChange={(event) => {
+                            onSelectFile(event)
+                            handleOpenModal()
+                          }}
+                        />
+                      </button>
+                      Add a file
+                    </label>
+                  </div>
+                  <div className="file-upload-container--spot-logo-container">
+                    <img src={SnapACatLogo} alt="cat logo" />
+                  </div>
+                  <div className="file-upload-container--right"></div>
+                </div>
+              </>
+            ) : (
+              <>
+                <output id="crop-thumbnail-container" htmlFor="imageUpload">
+                  <div className="crop-thumbnail--wrapper">
                     <img
                       src={croppedImage}
                       alt="Cropped image"
-                      height="100"
-                      width="100"
                       className="crop-thumbnail--image"
                     />
                     <div
                       className="crop-thumbnail--delete"
                       onClick={() => setCroppedImage(null)}
+                      tabindex="0"
                     >
-                      <img src={deleteIcon} alt="" height="20px" width="20px" />
+                      <img src={deleteIcon} alt="Delete cropped image" />
                     </div>
                   </div>
-                )}
-              </output>
-            </div>
+                </output>
+                <div className="form-group">
+                  <label htmlFor="catName">Add a cat name (or nickname)</label>
+                  <input
+                    type="text"
+                    id="catName"
+                    // placeholder="Add a cat name (or nickname)"
+                    onChange={(e) => setCatName(e.target.value)}
+                    value={catName}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="comment">Add a comment</label>
+                  <input
+                    id="comment"
+                    // placeholder="Add a comment"
+                    onChange={(e) => setComment(e.target.value)}
+                    value={comment}
+                  />
+                </div>
+                <div className="form-group file-upload-wrapper"></div>
+                <button>Submit</button>
+              </>
+            )}
             <EasyCropperModal
               image={selectedFile}
               openModal={openModal}
@@ -191,8 +192,6 @@ const Spot = () => {
               buttonText="OK"
               setCroppedImage={setCroppedImage}
             />
-
-            <button>Submit</button>
           </form>
         </section>
       </section>

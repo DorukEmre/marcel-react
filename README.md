@@ -6,6 +6,7 @@ Auth:
 
 Feed page:
 
+- Connect like buttons
 - Display cats belonging to user's different groups
 - Add infinite scroll
 - Add option to report Comment
