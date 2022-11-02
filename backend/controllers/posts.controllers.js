@@ -6,7 +6,6 @@ const User = require('../models/User.model')
 module.exports = {
   getFeed: async (req, res) => {
     try {
-      const active = ['active', 'mid', 'mid', 'mid', 'mid']
       const posts = await Post.find()
         .sort({ createdAt: 'desc' })
         .populate('user')
@@ -23,8 +22,6 @@ module.exports = {
     }
   },
   getPost: async (req, res) => {
-    const active = ['active', 'mid', 'mid', 'mid', 'mid']
-
     if (!req?.params?.postid)
       return res.status(400).json({ message: 'Post ID required.' })
 
@@ -76,22 +73,28 @@ module.exports = {
   },
   likePost: async (req, res) => {
     try {
-      const likedPost = await Post.findById(req.params.postid).lean()
-      if (likedPost.greatCat.find((x) => x == req.user.id) == undefined) {
+      // console.log(req.user)
+      const postid = req.params.postid
+      const userId = req.body.currentUserId
+      const likedPost = await Post.findById(postid).lean()
+      // console.log(likedPost)
+
+      if (likedPost.greatCat.find((x) => x == userId) == undefined) {
         await Post.findOneAndUpdate(
-          { _id: req.params.postid },
-          { $push: { greatCat: req.user.id } },
+          { _id: postid },
+          { $push: { greatCat: userId } },
         )
         console.log('Likes +1')
       } else {
         await Post.findOneAndUpdate(
-          { _id: req.params.postid },
-          { $pull: { greatCat: req.user.id } },
+          { _id: postid },
+          { $pull: { greatCat: userId } },
         )
         console.log('Likes -1')
       }
-      // res.redirect(`/post/${req.params.postid}`)
-      res.redirect(`/feed`)
+      const updatedPost = await Post.findById(postid).lean()
+
+      res.status(200).json({ updatedPost })
     } catch (err) {
       console.log(err)
     }

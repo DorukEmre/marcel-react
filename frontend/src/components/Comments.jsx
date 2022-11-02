@@ -1,42 +1,10 @@
 import { useState } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import { sendCommentIcon } from '../assets/icons'
 
 const Comments = (props) => {
   const axiosPrivate = useAxiosPrivate()
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState('')
-
-  useEffect(() => {
-    let isMounted = true
-    const controller = new AbortController()
-
-    const getComments = async () => {
-      try {
-        const response = await axiosPrivate.get(
-          `api/posts/getComments/${props['data-id']}`,
-          {
-            signal: controller.signal,
-          },
-        )
-        // console.log('comments', response.data)
-        isMounted && setComments(response.data)
-      } catch (err) {
-        console.error('getComments err', err)
-        // navigate('/login', { state: { from: location }, replace: true })
-      }
-    }
-    getComments()
-
-    return () => {
-      isMounted = false
-      controller.abort()
-    }
-  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -47,7 +15,7 @@ const Comments = (props) => {
 
     try {
       const response = await axiosPrivate.post(
-        `api/posts/createComment/${props['data-id']}`,
+        `api/posts/createComment/${props.postId}`,
         JSON.stringify({ newComment }),
         {
           signal: controller.signal,
@@ -55,8 +23,16 @@ const Comments = (props) => {
       )
       // console.log('response?.data', response?.data)
 
-      isMounted && setComments(response.data)
-      setNewComment('')
+      isMounted &&
+        props.setAllComments((oldComments) =>
+          oldComments.map((obj) =>
+            obj.postId === props.postId
+              ? { ...obj, comments: response.data }
+              : obj,
+          ),
+        )
+
+      isMounted && setNewComment('')
     } catch (err) {
       console.log(err)
     }
@@ -70,8 +46,8 @@ const Comments = (props) => {
   return (
     <section className="comments-container">
       <ul className="comments-list">
-        {comments &&
-          comments.map((comment) => (
+        {props.comments &&
+          props.comments.map((comment) => (
             <>
               <li className="comments-line" key={comment._id}>
                 <div>

@@ -1,17 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
-import Collapsible from 'react-collapsible'
-import {
-  closeIcon,
-  commentIcon,
-  likeFalseIcon,
-  likeTrueIcon,
-  sendCommentIcon,
-} from '../assets/icons'
-import Comments from '../components/Comments'
+import Posts from '../components/Posts'
+import useAuth from '../hooks/useAuth'
 
 const Feed = () => {
+  const { auth } = useAuth()
+  const currentUserId = auth.userId
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
@@ -26,7 +21,6 @@ const Feed = () => {
       caption: 'What a cutie',
     },
   ])
-  const user = { id: '633b49bfe168285a6a1ce74d' }
 
   useEffect(() => {
     let isMounted = true
@@ -61,89 +55,60 @@ const Feed = () => {
     }
   }, [])
 
+  const handleToggleLike = async (e, postId) => {
+    e.preventDefault()
+    let isMounted = true
+    const controller = new AbortController()
+
+    try {
+      const response = await axiosPrivate.put(
+        `api/posts/likePost/${postId}`,
+        JSON.stringify({ currentUserId }),
+        {
+          signal: controller.signal,
+        },
+      )
+      // console.log('response?.data', response?.data)
+      const { updatedPost } = response.data
+
+      isMounted &&
+        setPosts((oldPosts) =>
+          oldPosts.map((post) =>
+            post._id === updatedPost._id
+              ? { ...post, greatCat: updatedPost.greatCat }
+              : post,
+          ),
+        )
+    } catch (err) {
+      console.error('Login again err', err)
+      if (!err?.response) {
+        console.log('No Server Response')
+      } else if (err.response?.status === 403) {
+        navigate('/login', { state: { from: location }, replace: true })
+      } else {
+        console.log('Request failed')
+      }
+    }
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }
+
   return (
     <main id="feed-page">
       <div className="">
         <ul className="cards-container">
-          {posts
-            ? posts.map((post) => (
-                <li className="card" key={post._id}>
-                  <section className="card--title-container">
-                    <h4>
-                      {post.catName} by {post.user.username}
-                    </h4>
-                  </section>
-
-                  <Link
-                    to={`/posts/${post._id}`}
-                    className="card--image-container"
-                  >
-                    <img className="" src={post.imageUrl} />
-                  </Link>
-
-                  <section className="card--like-container">
-                    <form
-                      className="like-button"
-                      action={`/posts/likePost/${post._id}?_method=PUT`}
-                      method="POST"
-                    >
-                      <button className="like-button" type="submit">
-                        {post.greatCat.find((x) => x == user.id) !=
-                        undefined ? (
-                          <img
-                            className=""
-                            src={likeTrueIcon}
-                            height="24px"
-                            width="24px"
-                          />
-                        ) : (
-                          <img
-                            className=""
-                            src={likeFalseIcon}
-                            height="24px"
-                            width="24px"
-                          />
-                        )}
-                      </button>
-                    </form>
-                    <span className="like-number">{post.greatCat.length}</span>
-                  </section>
-
-                  <section className="card--comments-container">
-                    <Collapsible
-                      trigger={
-                        <>
-                          <p className="caption">{post.caption}</p>
-                          <button className="open-comments" data-id={post._id}>
-                            <img
-                              src={commentIcon}
-                              alt=""
-                              height="24px"
-                              width="24px"
-                            />
-                          </button>
-                        </>
-                      }
-                      triggerWhenOpen={
-                        <>
-                          <p className="caption">{post.caption}</p>
-                          <button className="close-button" data-id={post._id}>
-                            <img
-                              src={closeIcon}
-                              alt=""
-                              height="24px"
-                              width="24px"
-                            />
-                          </button>
-                        </>
-                      }
-                    >
-                      <Comments data-id={post._id} />
-                    </Collapsible>
-                  </section>
-                </li>
-              ))
-            : ''}
+          {posts ? (
+            <Posts
+              posts={posts}
+              currentUserId={currentUserId}
+              handleToggleLike={handleToggleLike}
+            />
+          ) : (
+            <p>Can't connect to server</p>
+          )}
         </ul>
       </div>
     </main>
