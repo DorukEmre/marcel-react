@@ -39,7 +39,7 @@ module.exports = {
   createGroup: async (req, res) => {
     try {
       const foundUser = await User.findOne({ email: req.user })
-      console.log('req.body.submitData', req.body.submitData)
+      // console.log('req.body.submitData', req.body.submitData)
 
       const checkGroupExists = await Group.findOne({
         groupName: req.body.submitData,

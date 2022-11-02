@@ -94,15 +94,17 @@ const Groups = () => {
 
       joinGroupRequest ? setJoinGroupCode('') : setNewGroupName('')
     } catch (err) {
-      setModalMsg(err.response.data.message)
-      handleOpenModal()
+      // console.log(err.response)
       if (!err?.response) {
         setModalMsg('No Server Response')
       } else if (err.response?.status === 403) {
         navigate('/login', { state: { from: location }, replace: true })
+      } else if (err.response?.status === 400) {
+        setModalMsg(err.response.data.message)
       } else {
         setModalMsg('Request failed')
       }
+      handleOpenModal()
       // modalRef.current.focus()
     }
 
