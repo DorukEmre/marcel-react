@@ -636,6 +636,7 @@ output#crop-thumbnail-container {
   align-items: flex-end;
   gap: 0.25rem;
   margin-bottom: 20px;
+  justify-content: center;
 }
 .crop-thumbnail--wrapper {
   position: relative;

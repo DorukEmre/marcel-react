@@ -96,29 +96,32 @@ exports.postLogin = async (req, res) => {
 // //////////////////////
 
 exports.handleRefreshToken = async (req, res) => {
-  console.log('req.cookies', req.cookies)
+  // console.log('req.cookies', req.cookies)
   const cookies = req.cookies
   if (!cookies?.jwt) {
     console.log('No cookies')
     return res.sendStatus(401)
   }
-  console.log('cookies.jwt', cookies.jwt)
   const refreshToken = cookies.jwt
 
   const foundUser = await User.findOne({ refreshToken }).exec()
-  console.log('foundUser', foundUser)
+  // console.log(
+  //   'found User with the JWT as their refreshToken in the DB',
+  //   foundUser,
+  // )
   if (!foundUser) return res.sendStatus(403) //Forbidden
+
   // evaluate jwt
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err || foundUser.username !== decoded.username) {
-      console.log('foundUser.username', foundUser.username)
-      console.log('decoded.username', decoded.username)
+    // console.log('decoded', decoded)
+    if (err || foundUser.email !== decoded.email) {
+      // console.log('foundUser.email', foundUser.email, 'decoded.email', decoded.email)
       return res.sendStatus(403)
     }
 
     console.log('decoded in handleRefreshToken', decoded)
     const accessToken = jwt.sign(
-      { username: decoded.username },
+      { email: decoded.email },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '15m' },
     )
