@@ -513,7 +513,7 @@ form.create-comment {
   transition-duration: 0.2s;
 }
 .groups--button:hover {
-  color: var(--clr-back-300);
+  color: var(--clr-neutral-200);
   background-color: var(--clr-compl-550);
 }
 
@@ -746,7 +746,7 @@ output#crop-thumbnail-container {
   transition-duration: 0.2s;
 }
 .form-panel button:hover:not(.disabled) {
-  color: var(--clr-back-300);
+  color: var(--clr-neutral-200);
   background-color: var(--clr-compl-550);
 }
 .form-panel button.disabled:hover {
