@@ -98,8 +98,8 @@ const Groups = () => {
       handleOpenModal()
       if (!err?.response) {
         setModalMsg('No Server Response')
-      } else if (err.response?.status === 400) {
-        setModalMsg(err.response.data.message)
+      } else if (err.response?.status === 403) {
+        navigate('/login', { state: { from: location }, replace: true })
       } else {
         setModalMsg('Request failed')
       }

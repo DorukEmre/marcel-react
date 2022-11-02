@@ -562,7 +562,7 @@ body .MuiBackdrop-root {
 /* ///////////// */
 .spot-container h2 {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 .file-upload-container {
   width: 100%;
@@ -923,7 +923,8 @@ footer p {
     gap: 0;
   }
 
-  main#feed-page {
+  main#feed-page,
+  main#spot-page {
     padding: 0;
   }
   .card {

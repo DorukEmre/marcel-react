@@ -150,7 +150,7 @@ const Spot = () => {
                     <div
                       className="crop-thumbnail--delete"
                       onClick={() => setCroppedImage(null)}
-                      tabindex="0"
+                      tabIndex="0"
                     >
                       <img src={deleteIcon} alt="Delete cropped image" />
                     </div>
