@@ -5,21 +5,18 @@ const HeaderButton = (props) => {
 
   return (
     <li className="header-item after">
-      <NavLink
-        to={props.url}
-        className={({ isActive }) => (isActive ? activeClassName : undefined)}
-      >
+      <NavLink to={props.url} className="header-item--link">
         {({ isActive }) => {
           const imgsrc = isActive
             ? props.activeImageSrc
             : props.inactiveImageSrc
 
-          const underline = isActive ? activeClassName : undefined
+          const getClassName = isActive ? activeClassName : undefined
           return (
             <>
               <img src={imgsrc} alt={props.imgalt} className="nav-icon" />
-              <p>{props.name}</p>
-              <span className={underline}></span>
+              <p className={getClassName}>{props.name}</p>
+              <span className={getClassName}></span>
             </>
           )
         }}

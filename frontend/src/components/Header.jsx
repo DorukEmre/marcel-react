@@ -1,7 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useMatch } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
 import HeaderButton from './HeaderButton'
+import HeaderButtonExpandable from './HeaderButtonExpandable'
 import {
   feedActive,
   feedInactive,
@@ -19,31 +20,43 @@ const Header = () => {
   const { auth } = useAuth()
   const isUserLoggedIn = auth?.accessToken
 
+  const [isProfileActive, setIsProfileActive] = useState(false)
+  const isProfileRoute = useMatch('/profile/*')
+
+  useEffect(() => {
+    isProfileRoute ? setIsProfileActive(true) : setIsProfileActive(false)
+  }, [isProfileRoute])
+
   const categories = [
     {
       name: 'Feed',
       activeImage: feedActive,
       inactiveImage: feedInactive,
+      isExpandable: false,
     },
     {
       name: 'Explore',
       activeImage: exploreActive,
       inactiveImage: exploreInactive,
+      isExpandable: false,
     },
     {
       name: 'Spot',
       activeImage: spotActive,
       inactiveImage: spotInactive,
+      isExpandable: false,
     },
     {
       name: 'Groups',
       activeImage: groupsActive,
       inactiveImage: groupsInactive,
+      isExpandable: false,
     },
     {
       name: 'Profile',
       activeImage: profileActive,
       inactiveImage: profileInactive,
+      isExpandable: true,
     },
   ]
 
@@ -52,24 +65,40 @@ const Header = () => {
       <nav className={`header-navbar ${!isUserLoggedIn ? 'slim' : ''}`}>
         {isUserLoggedIn ? (
           <ul className="header-list">
-            {categories.map((categ) => (
-              <HeaderButton
-                key={categ.name}
-                url={categ.name.toLowerCase()}
-                activeImageSrc={categ.activeImage}
-                inactiveImageSrc={categ.inactiveImage}
-                imgalt={`${categ.name} icon`}
-                name={categ.name}
-              />
-            ))}
+            {categories.map((categ) =>
+              !categ.isExpandable ? (
+                <HeaderButton
+                  key={categ.name}
+                  url={categ.name.toLowerCase()}
+                  activeImageSrc={categ.activeImage}
+                  inactiveImageSrc={categ.inactiveImage}
+                  imgalt={`${categ.name} icon`}
+                  name={categ.name}
+                />
+              ) : (
+                <HeaderButtonExpandable
+                  key={categ.name}
+                  url={categ.name.toLowerCase()}
+                  activeImageSrc={categ.activeImage}
+                  inactiveImageSrc={categ.inactiveImage}
+                  imgalt={`${categ.name} icon`}
+                  name={categ.name}
+                  isProfileActive={isProfileActive}
+                />
+              ),
+            )}
           </ul>
         ) : (
           <ul className="header-list new-session">
             <li className="header-item login">
-              <Link to="/login">Log in</Link>
+              <Link to="/login" className="header-item--link">
+                Log in
+              </Link>
             </li>
             <li className="header-item signup">
-              <Link to="/signup">Sign up</Link>
+              <Link to="/signup" className="header-item--link">
+                Sign up
+              </Link>
             </li>
           </ul>
         )}

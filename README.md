@@ -1,12 +1,7 @@
 To do:
 
-Auth:
-
-- Fix auth refresh
-
 Feed page:
 
-- Connect like buttons
 - Display cats belonging to user's different groups
 - Add infinite scroll
 - Add option to report Comment
@@ -31,6 +26,7 @@ Groups page:
 
 Profile page:
 
-- Own profile: Add option to change username
+- Own profile: Add/update profile picture
+- Own profile: Add option to change username/email/password
 - Others profile: Show user's pics
 - Add option to report User
