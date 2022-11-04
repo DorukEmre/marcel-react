@@ -37,6 +37,7 @@ const HeaderButtonExpandable = (props) => {
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
           className="header-item--div"
+          tabIndex="0"
         >
           <>
             <img src={imgsrc} alt={props.imgalt} className="nav-icon" />
