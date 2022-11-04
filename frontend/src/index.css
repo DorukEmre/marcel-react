@@ -852,6 +852,33 @@ output#crop-thumbnail-container {
 .form-panel .persistCheck input {
   margin-right: 8px;
 }
+/* //////////////// */
+/*   Profile page   */
+/* //////////////// */
+
+.profile-pic-image-container {
+  position: relative;
+  width: max-content;
+}
+
+.profile-pic-image-container .file-upload-container--button-wrapper {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.profile-pic-image-container #custom-file-upload-button,
+.profile-pic-image-container .custom-file-upload-button--input {
+  height: 40px;
+  width: 40px;
+}
+.profile-pic-image-container .custom-file-upload-button--image {
+  padding: 0.4rem;
+}
+.profile-pic-image-container #custom-file-upload-button {
+  border: none;
+  background-color: var(--clr-back-400);
+}
 
 /* ////////////////// */
 /* 404 - Missing page */
