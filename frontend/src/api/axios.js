@@ -10,8 +10,6 @@ const BASE_URL =
     ? 'https://marcel.onrender.com'
     : 'http://localhost:9191'
 
-console.log(process.env.NODE_ENV)
-
 export default axios.create({
   baseURL: BASE_URL,
 })
