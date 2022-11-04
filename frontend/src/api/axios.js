@@ -5,8 +5,12 @@ import axios from 'axios'
 // const BASE_URL = 'https://marcel-the-outdoor-cat.up.railway.app/'
 // const BASE_URL = 'https://marcel-the-outdoor-cat-react.herokuapp.com/'
 
+console.log('import.meta.env.BASE_URL', import.meta.env.BASE_URL)
+console.log('NODE_ENV', process.env.NODE_ENV)
+
 const domain = window.location.hostname
-console.log(domain)
+console.log('domain', domain)
+
 let serverLoc
 if (domain === 'marcel-the-outdoor-cat-react.herokuapp.com') {
   console.log('You are using Heroku')
