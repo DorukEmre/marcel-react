@@ -16,7 +16,7 @@ const Feed = () => {
       user: { username: 'Bob' },
       _id: '63454b056ca805a1ed32063e',
       imageUrl:
-        'https://res.cloudinary.com/dgphdac21/image/upload/v1665485572/n1ktk1gkeixs8xbn0k0r.png',
+        'https://res.cloudinary.com/dgphdac21/image/upload/v1667597856/yzah7nzvpbwazuh7wc1p.jpg',
       greatCat: ['a', 'b', 'c'],
       caption: 'What a cutie',
     },

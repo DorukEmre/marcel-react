@@ -5,24 +5,22 @@ import axios from 'axios'
 // const BASE_URL = 'https://marcel-the-outdoor-cat.up.railway.app/'
 // const BASE_URL = 'https://marcel-the-outdoor-cat-react.herokuapp.com/'
 
-console.log('import.meta.env.BASE_URL', import.meta.env.BASE_URL)
-console.log('NODE_ENV', process.env.NODE_ENV)
+console.log('import BASE_URL', import.meta.env.BASE_URL)
+console.log('import VITE_TEST_VAR', import.meta.env.VITE_TEST_VAR)
+console.log('import VITE_LAST_ONE', import.meta.env.VITE_LAST_ONE)
 
 const domain = window.location.hostname
-console.log('domain', domain)
 
 let serverLoc
 if (domain === 'marcel-the-outdoor-cat-react.herokuapp.com') {
-  console.log('You are using Heroku')
   serverLoc = 'https://marcel-the-outdoor-cat-react.herokuapp.com/'
 } else if (domain === 'marcel-the-outdoor-cat.onrender.com') {
-  console.log('You are using Render')
+  serverLoc = 'https://marcel.onrender.com'
+} else if (domain === 'marcel.onrender.com') {
   serverLoc = 'https://marcel.onrender.com'
 } else if (domain === 'marcel-the-outdoor-cat.cyclic.app') {
-  console.log('You are using Cyclic')
   serverLoc = 'https://marcel-the-outdoor-cat.cyclic.app/'
 } else if (domain === 'marcel-the-outdoor-cat.up.railway.app') {
-  console.log('You are using Railway')
   serverLoc = 'https://marcel-the-outdoor-cat.up.railway.app/'
 }
 
