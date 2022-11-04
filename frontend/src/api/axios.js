@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://marcel-the-outdoor-cat.onrender.com'
+    ? 'https://marcel.onrender.com'
     : 'http://localhost:9191'
 
 export default axios.create({
