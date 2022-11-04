@@ -58,7 +58,14 @@ const Posts = (props) => {
       </section>
 
       <Link to={`/posts/${post._id}`} className="card--image-container">
-        <img className="" src={post.imageUrl} />
+        <img
+          className=""
+          src={
+            post.imageUrl.slice(0, 49) +
+            '/w_800,h_800,c_scale' +
+            post.imageUrl.slice(49)
+          }
+        />
       </Link>
 
       <section className="card--like-container">

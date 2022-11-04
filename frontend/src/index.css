@@ -271,6 +271,8 @@ h1 span.Marcel {
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 1rem;
+  max-width: 58rem;
+  margin: 0 auto;
 }
 
 .card {
