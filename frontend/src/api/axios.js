@@ -10,6 +10,9 @@ const BASE_URL =
     ? 'https://marcel-the-outdoor-cat-react.herokuapp.com/'
     : 'http://localhost:9191'
 
+console.log('VITE_BASE_URL', import.meta.env.VITE_BASE_URL)
+console.log(window.location.hostname)
+
 export default axios.create({
   baseURL: BASE_URL,
 })
