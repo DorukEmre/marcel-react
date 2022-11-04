@@ -129,7 +129,7 @@ const Spot = () => {
                           }}
                         />
                       </button>
-                      Add a file
+                      Add a photo
                     </label>
                   </div>
                   <div className="file-upload-container--spot-logo-container">
@@ -189,7 +189,7 @@ const Spot = () => {
               modalMsg="some text"
               displayButton={true}
               buttonClass="close-modal"
-              buttonText="OK"
+              buttonText="Crop"
               setCroppedImage={setCroppedImage}
             />
           </form>

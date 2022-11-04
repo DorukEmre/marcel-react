@@ -93,10 +93,10 @@ const EasyCropper = (props) => {
           onClick={(e) => {
             // console.log('props.image', props.image)
             handleCropImage()
-            props.handleCropSave()
+            props.handleCropSave(e)
           }}
         >
-          Crop
+          {props.buttonText}
         </button>
       </section>
     </div>

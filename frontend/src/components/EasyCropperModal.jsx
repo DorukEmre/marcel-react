@@ -20,6 +20,7 @@ export default function EasyCropperModal(props) {
             handleCropSave={props.handleCropSave}
             setCroppedImage={props.setCroppedImage}
             handleCropCancel={props.handleCropCancel}
+            buttonText={props.buttonText}
           />
         </Box>
       </Modal>
