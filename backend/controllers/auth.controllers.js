@@ -74,7 +74,7 @@ exports.postLogin = async (req, res) => {
     foundUser.refreshToken = refreshToken
     // const currentUser = { ...foundUser, refreshToken}
     const result = await foundUser.save()
-    console.log(result.username)
+    // console.log(result.username)
 
     // Creates Secure Cookie with refresh token (httpOnly -> not available to JS)
     res.cookie('jwt', refreshToken, {
@@ -86,6 +86,7 @@ exports.postLogin = async (req, res) => {
     })
 
     // Send access token to user
+    console.log('postLogin', { accessToken, userId: foundUser.id })
     res.json({ accessToken, userId: foundUser.id })
   } else {
     console.log('else res.sendStatus(401)')
@@ -99,7 +100,7 @@ exports.handleRefreshToken = async (req, res) => {
   // console.log('req.cookies', req.cookies)
   const cookies = req.cookies
   if (!cookies?.jwt) {
-    console.log('No cookies')
+    // console.log('No cookies')
     return res.sendStatus(401)
   }
   const refreshToken = cookies.jwt
@@ -125,7 +126,8 @@ exports.handleRefreshToken = async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '15m' },
     )
-    res.json({ accessToken })
+    console.log('handleRefreshToken', { accessToken, userId: foundUser.id })
+    res.json({ accessToken, userId: foundUser.id })
   })
 }
 
@@ -134,10 +136,10 @@ exports.handleRefreshToken = async (req, res) => {
 exports.logout = async (req, res) => {
   // On client, also delete the accessToken
 
-  console.log('req.cookies', req.cookies)
+  // console.log('req.cookies', req.cookies)
   const cookies = req.cookies
   if (!cookies?.jwt) {
-    console.log('No cookie found')
+    // console.log('No cookie found')
     return res.sendStatus(204)
   } //No content
   const refreshToken = cookies.jwt
@@ -145,7 +147,7 @@ exports.logout = async (req, res) => {
   // Is refreshToken in db?
   const foundUser = await User.findOne({ refreshToken }).exec()
   if (!foundUser) {
-    console.log('Cookie found, but on user')
+    // console.log('Cookie found, but on user')
     res.clearCookie('jwt', {
       httpOnly: true,
       sameSite: 'None',
@@ -158,7 +160,7 @@ exports.logout = async (req, res) => {
   // Delete refreshToken in db
   foundUser.refreshToken = ''
   const result = await foundUser.save()
-  console.log('User refresh token deleted:', result)
+  // console.log('User refresh token deleted:', result)
 
   res.clearCookie('jwt', {
     httpOnly: true,
@@ -166,6 +168,6 @@ exports.logout = async (req, res) => {
     secure: true,
     // secure: false, // for development localhost
   })
-  console.log('Cookie cleared')
+  // console.log('Cookie cleared')
   res.sendStatus(204)
 }

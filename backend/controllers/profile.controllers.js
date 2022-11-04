@@ -1,17 +1,51 @@
-// const cloudinary = require("../middleware/cloudinary");
+const cloudinary = require('../middleware/cloudinary')
 // const Post = require("../models/Post.model");
+const User = require('../models/User.model')
 
 module.exports = {
-  getProfile: (req, res) => {
-    const active = ['mid', 'mid', 'mid', 'mid', 'active']
-    res.render('profile.ejs', { active })
+  getMyProfile: async (req, res) => {
+    console.log('req.body', req.body)
+    console.log('req.user', req.user)
+    try {
+      const foundUser = await User.findOne({ email: req.user })
+
+      res
+        .status(200)
+        .json({
+          profilePicUrl: foundUser.profilePicUrl,
+          username: foundUser.username,
+        })
+    } catch (err) {
+      console.log(err)
+    }
   },
-  // getProfile: async (req, res) => {
-  //   try {
-  //     const posts = await Post.find({ user: req.user.id });
-  //     res.render("profile.ejs", { posts: posts, user: req.user });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // },
+  updatePicture: async (req, res) => {
+    // console.log('req.file', req.file)
+    console.log('req.body', req.body)
+    console.log('req.user', req.user)
+    try {
+      const result = await cloudinary.uploader.upload(req.file.path)
+
+      const userId = req.body.currentUserId
+
+      // .findOneAndUpdate({filter parameter}, {update}, {new:true returns the updated document} )
+      let foundUser = await User.findOneAndUpdate(
+        {
+          // _id: userId,
+          email: req.user,
+        },
+        {
+          profilePicUrl: result.secure_url,
+          cloudinaryId: result.public_id,
+        },
+        {
+          new: true,
+        },
+      )
+      console.log('Profile pic updated')
+      res.status(200).json({ profilePicUrl: foundUser.profilePicUrl })
+    } catch (err) {
+      console.log(err)
+    }
+  },
 }

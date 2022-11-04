@@ -860,11 +860,14 @@ output#crop-thumbnail-container {
   position: relative;
   width: max-content;
 }
-
+.profile-pic-image-container--image {
+  border-radius: 50%;
+  overflow: hidden;
+}
 .profile-pic-image-container .file-upload-container--button-wrapper {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 0;
+  right: 0;
 }
 
 .profile-pic-image-container #custom-file-upload-button,

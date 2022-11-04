@@ -23,6 +23,7 @@ const EasyCropper = (props) => {
       )
       // console.log('donee', { croppedImage })
       props.setCroppedImage(croppedImage)
+      return croppedImage
     } catch (e) {
       console.error(e)
     }
@@ -90,10 +91,9 @@ const EasyCropper = (props) => {
         </button>
         <button
           className="cropper-save-button"
-          onClick={(e) => {
+          onClick={async (e) => {
             // console.log('props.image', props.image)
-            handleCropImage()
-            props.handleCropSave(e)
+            props.handleCropSave(e, await handleCropImage())
           }}
         >
           {props.buttonText}

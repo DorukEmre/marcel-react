@@ -8,6 +8,8 @@ const UserSchema = new mongoose.Schema({
   signUpDate: { type: Date, default: Date.now },
   lastLoginDate: { type: Date, default: Date.now },
   refreshToken: String,
+  profilePicUrl: { type: String },
+  cloudinaryId: { type: String },
 })
 
 // Password hash middleware.

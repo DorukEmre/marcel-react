@@ -7,14 +7,13 @@ const path = require('path')
 const cors = require('cors')
 const connectDB = require('./config/database')
 const corsOptions = require('./config/corsOptions')
-const credentials = require('./middleware/credentials')
 
 const authRoutes = require('./routes/auth.routes')
 const mainRoutes = require('./routes/main.routes')
 const postsRoutes = require('./routes/posts.routes')
 const groupsRoutes = require('./routes/groups.routes')
+const profileRoutes = require('./routes/profile.routes')
 
-const verifyJWT = require('./middleware/verifyJWT')
 const cookieParser = require('cookie-parser')
 
 //Use .env file
@@ -26,10 +25,6 @@ connectDB()
 //Body Parsing
 // extended option: false to parse the URL-encoded data with the query string library; true allows to parse nested JSON like objects and arrays (qs library)
 app.use(express.urlencoded({ extended: true }))
-
-// Handle options credentials check - before CORS!
-// and fetch cookies credentials requirement
-// app.use(credentials)
 
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions))
@@ -65,10 +60,11 @@ app.use(express.static('public'))
 //Setup Routes For Which The Server Is Listening
 app.use('/api/', authRoutes)
 app.use('/api/', mainRoutes)
-// app.use(verifyJWT) // Every route after will use verifyJWT
-app.use('/api/users', require('./routes/users.routes'))
+// Every route after will use verifyJWT, added directly to route file instead
+// app.use(verifyJWT)
 app.use('/api/posts', postsRoutes)
 app.use('/api/groups', groupsRoutes)
+app.use('/api/profile', profileRoutes)
 
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {

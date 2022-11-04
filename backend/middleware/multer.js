@@ -5,6 +5,8 @@ module.exports = multer({
   storage: multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
     let ext = path.extname(file.originalname)
+    // console.log(ext)
+    // console.log('multer file', file)
     if (
       // ext !== '.jpg' &&
       // ext !== '.jpeg' &&
