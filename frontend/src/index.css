@@ -578,6 +578,7 @@ body .confirmation-modal {
   justify-content: space-between;
   gap: 1.5rem;
   padding: 1rem 1.25rem;
+  border-radius: 10px;
 }
 
 .confirmation-modal::backdrop,
@@ -591,6 +592,13 @@ body .MuiBackdrop-root {
   color: var(--clr-accent-300);
   background-color: transparent;
   font-weight: 700;
+  padding: 0.5rem 1rem;
+  transition: background-color 150ms ease-in;
+  cursor: pointer;
+}
+.close-modal:hover {
+  color: var(--clr-back-400);
+  background-color: var(--clr-accent-300);
 }
 
 /* ///////////// */
