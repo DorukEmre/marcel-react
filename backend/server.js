@@ -72,6 +72,7 @@ app.use('/api/groups', groupsRoutes)
 
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
+  console.log('NE is prod')
   app.use(express.static(path.join(__dirname, '../frontend/dist')))
 
   app.get('*', (req, res) =>
@@ -80,6 +81,7 @@ if (process.env.NODE_ENV === 'production') {
     ),
   )
 } else {
+  console.log('NE', process.env.NODE_ENV)
   app.get('/', (req, res) => res.send('Please set to production'))
 }
 
