@@ -42,7 +42,7 @@ const Explore = () => {
   }, [])
 
   return (
-    <main id="feed-page">
+    <main id="explore-page">
       <h1>Explore page</h1>
       {!loading ? (
         <Map catsWithLocation={catsWithLocation} />

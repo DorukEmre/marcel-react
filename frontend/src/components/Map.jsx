@@ -10,7 +10,7 @@ const Map = ({ catsWithLocation, center, zoom }) => {
       ? import.meta.env.VITE_GM_KEY_PROD
       : import.meta.env.VITE_GM_KEY_DEV
 
-  console.log(catsWithLocation)
+  // console.log(catsWithLocation)
   const markers = catsWithLocation.map((cat, index) => {
     return (
       <LocationMarker
@@ -27,7 +27,7 @@ const Map = ({ catsWithLocation, center, zoom }) => {
       />
     )
   })
-  console.log(markers)
+  // console.log(markers)
 
   return (
     <div className="map">

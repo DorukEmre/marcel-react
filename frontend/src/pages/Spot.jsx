@@ -116,7 +116,7 @@ const Spot = () => {
     <main id="spot-page">
       <section className="spot-container">
         <section className="form-panel">
-          <h2>Snap a cat</h2>
+          <h1>Snap a cat</h1>
           <form onSubmit={handleSubmit}>
             {!croppedImage ? (
               <>
