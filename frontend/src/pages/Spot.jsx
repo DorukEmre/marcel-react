@@ -5,11 +5,14 @@ import EasyCropperModal from '../components/EasyCropperModal'
 import { SnapACatLogo } from '../assets/images'
 import { deleteIcon, galleryIcon } from '../assets/icons'
 import exifr from 'exifr'
+import BasicModal from '../components/BasicModal'
 
 const Spot = () => {
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
+
+  const [sendingFile, setSendingFile] = useState(false)
 
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => setOpenModal(true)
@@ -58,6 +61,7 @@ const Spot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setSendingFile(true)
     let isMounted = true
     const controller = new AbortController()
 
@@ -93,6 +97,7 @@ const Spot = () => {
       isMounted && setComment('')
       isMounted && setCroppedImage(null)
       isMounted && setGps({})
+      setSendingFile(false)
       navigate('/feed')
     } catch (err) {
       console.error('Login again err', err)
@@ -122,7 +127,10 @@ const Spot = () => {
               <>
                 <div className="file-upload-container">
                   <div className="file-upload-container--button-wrapper">
-                    <label htmlFor="imageUpload">
+                    <label
+                      htmlFor="imageUpload"
+                      className="file-upload-container--label"
+                    >
                       <button
                         htmlFor="imageUpload"
                         id="custom-file-upload-button"
@@ -212,6 +220,16 @@ const Spot = () => {
           </form>
         </section>
       </section>
+      {sendingFile && (
+        <BasicModal
+          openModal={sendingFile}
+          handleCloseModal={() => sendingFile(false)}
+          className="sending-file-modal confirmation-modal"
+          modalMsg="File uploading"
+          displayButton={false}
+          displayAnimation={true}
+        ></BasicModal>
+      )}
     </main>
   )
 }

@@ -31,6 +31,8 @@ export default function BasicModal(props) {
               </button>
             </>
           )}
+
+          {props.displayAnimation && <div className="dot-elastic"></div>}
         </Box>
       </Modal>
     </div>
