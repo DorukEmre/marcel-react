@@ -601,6 +601,16 @@ body .MuiBackdrop-root {
   background-color: var(--clr-accent-300);
 }
 
+/* //////////////// */
+/*   Explore page   */
+/* //////////////// */
+
+.map {
+  width: 80vw;
+  height: 80vh;
+  position: relative;
+}
+
 /* ///////////// */
 /*   Spot page   */
 /* ///////////// */

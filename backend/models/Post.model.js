@@ -10,7 +10,8 @@ const PostSchema = new mongoose.Schema({
   catName: { type: String },
   imageUrl: { type: String, require: true },
   cloudinaryId: { type: String, require: true },
-  GPS: { type: String, default: 'no GPS data' },
+  longitude: { type: String },
+  latitude: { type: String },
   caption: { type: String },
   user: {
     type: mongoose.Schema.Types.ObjectId,

@@ -4,26 +4,37 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import EasyCropperModal from '../components/EasyCropperModal'
 import { SnapACatLogo } from '../assets/images'
 import { deleteIcon, galleryIcon } from '../assets/icons'
+import exifr from 'exifr'
 
 const Spot = () => {
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const modalRef = useRef()
-
-  const [catName, setCatName] = useState('')
-  const [comment, setComment] = useState('')
-  const [selectedFile, setSelectedFile] = useState(null)
-
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => setOpenModal(true)
   const handleCloseModal = () => setOpenModal(false)
 
+  const [selectedFile, setSelectedFile] = useState(null)
   const [croppedImage, setCroppedImage] = useState(null)
+  const [catName, setCatName] = useState('')
+  const [comment, setComment] = useState('')
+  const [gps, setGps] = useState({})
+
+  const getExif = async ({
+    target: {
+      files: [file],
+    },
+  }) => {
+    if (file && file.name) {
+      let output = await exifr.parse(file)
+      setGps({ longitude: output.longitude, latitude: output.latitude })
+    }
+  }
 
   const onSelectFile = (event) => {
     // console.log('event.target.files', event.target.files)
+    // console.log('event.target.files[0]', event.target.files[0])
     if (event.target.files && event.target.files.length > 0) {
       const reader = new FileReader()
       reader.readAsDataURL(event.target.files[0])
@@ -41,6 +52,7 @@ const Spot = () => {
   const handleCropCancel = async () => {
     setSelectedFile(null)
     setCroppedImage(null)
+    setGps({})
     handleCloseModal()
   }
 
@@ -48,6 +60,7 @@ const Spot = () => {
     e.preventDefault()
     let isMounted = true
     const controller = new AbortController()
+
     const formData = new FormData()
     // formData.append(name, value)
     await fetch(croppedImage)
@@ -59,6 +72,8 @@ const Spot = () => {
     // formData.append('file', croppedImage)
     formData.append('catName', catName)
     formData.append('comment', comment)
+    formData.append('longitude', gps.longitude)
+    formData.append('latitude', gps.latitude)
 
     try {
       // axios.post(url[, data[, config]])
@@ -77,6 +92,7 @@ const Spot = () => {
       isMounted && setCatName('')
       isMounted && setComment('')
       isMounted && setCroppedImage(null)
+      isMounted && setGps({})
       navigate('/feed')
     } catch (err) {
       console.error('Login again err', err)
@@ -124,6 +140,7 @@ const Spot = () => {
                           tabIndex="-1"
                           required
                           onChange={(event) => {
+                            getExif(event)
                             onSelectFile(event)
                             handleOpenModal()
                           }}

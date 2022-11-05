@@ -50,16 +50,10 @@ module.exports = {
       const result = await cloudinary.uploader.upload(req.file.path)
 
       const foundUser = await User.findOne({ email: req.user })
-
       await Post.create({
         catName: req.body.catName,
-        // image: [
-        //   {
-        //     url: result.secure_url,
-        //     cloudinaryId: result.public_id,
-        //     // GPS: ,
-        //   },
-        // ],
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
         imageUrl: result.secure_url,
         cloudinaryId: result.public_id,
         caption: req.body.comment,

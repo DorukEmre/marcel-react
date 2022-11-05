@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import Map from '../components/Map'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 
 const Explore = () => {
   return (
-    <article style={{ padding: '100px' }}>
+    <main id="feed-page">
       <h1>Explore page</h1>
-      <div className="">
-        <Link to="/">Visit Our Homepage</Link>
-        <br />
-      </div>
-    </article>
+      <Map />
+    </main>
   )
 }
 
