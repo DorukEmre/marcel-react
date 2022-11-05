@@ -10,6 +10,10 @@ const Map = ({ catsWithLocation, center, zoom }) => {
       ? import.meta.env.VITE_GM_KEY_PROD
       : import.meta.env.VITE_GM_KEY_DEV
 
+  const handleClose = () => {
+    setCatInfo(null)
+  }
+
   // console.log(catsWithLocation)
   const markers = catsWithLocation.map((cat, index) => {
     return (
@@ -17,6 +21,7 @@ const Map = ({ catsWithLocation, center, zoom }) => {
         key={index}
         lat={cat.latitude}
         lng={cat.longitude}
+        imageUrl={cat.imageUrl}
         onClick={() =>
           setCatInfo({
             catName: cat.catName,
@@ -35,10 +40,11 @@ const Map = ({ catsWithLocation, center, zoom }) => {
         bootstrapURLKeys={{ key: URLKey }}
         defaultCenter={center}
         defaultZoom={zoom}
+        options={{ mapId: 'e3380fc948889a8' }}
       >
         {markers}
       </GoogleMapReact>
-      {catInfo && <CatInfoBox info={catInfo} />}
+      {catInfo && <CatInfoBox info={catInfo} handleClose={handleClose} />}
     </div>
   )
 }

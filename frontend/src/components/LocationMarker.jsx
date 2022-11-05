@@ -1,10 +1,10 @@
-import { Icon } from '@iconify/react'
-import catIcon from '@iconify/icons-mdi/cat'
+import { pinIcon } from '../assets/icons'
 
-const LocationMarker = ({ lat, lng, onClick }) => {
+const LocationMarker = ({ lat, lng, imageUrl, onClick }) => {
   return (
-    <div className="location-marker" onClick={onClick}>
-      <Icon icon={catIcon} className="location-icon" />
+    <div className="marker-container" onClick={onClick}>
+      <img src={pinIcon} className="marker-container--icon" alt="" />
+      <img src={imageUrl} className="marker-container--cat" alt="" />
     </div>
   )
 }

@@ -615,24 +615,48 @@ body .MuiBackdrop-root {
 
 .map {
   width: 90vw;
-  height: 80vh;
+  height: 70vh;
   position: relative;
   margin: 0 auto;
 }
-
-.location-icon {
-  font-size: 2rem;
-  color: var(--clr-back-400);
+.marker-container {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+.marker-container--icon {
+  width: 48px;
+  height: 48px;
+}
+.marker-container--cat {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 
 .cat-info {
   position: absolute;
   top: 50px;
   right: 50px;
-  padding: 1.5rem;
+  padding: 0.75rem 1rem 1rem;
   background-color: var(--clr-back-400);
   border-radius: 10px;
   box-shadow: 0 0 1rem var(--clr-back-300);
+}
+.cat-info--header-container {
+  display: flex;
+  align-items: center;
+  padding-bottom: 0.5rem;
+}
+.cat-info--header-text {
+  flex: 1;
+}
+.cat-info--close-button {
+  flex: 0;
 }
 
 /* ///////////// */

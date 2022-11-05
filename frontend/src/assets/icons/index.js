@@ -9,6 +9,7 @@ import catBullet from './cat-bullet.svg'
 import deleteIcon from './delete_FILL0_wght600_GRAD0_opsz48.svg'
 import undoIcon from './undo_FILL0_wght600_GRAD0_opsz48.svg'
 import addPhoto from './add_a_photo_FILL1_wght400_GRAD0_opsz48.svg'
+import pinIcon from './pin-location-icon.svg'
 
 export {
   closeIcon,
@@ -22,4 +23,5 @@ export {
   deleteIcon,
   undoIcon,
   addPhoto,
+  pinIcon,
 }
