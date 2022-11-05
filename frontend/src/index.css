@@ -289,14 +289,31 @@ h1 span.Marcel {
   overflow: hidden;
   padding: 0 0 0.75rem;
 }
-.card--title-container {
+.card--header-container {
   padding: 0.75rem;
   background-color: var(--clr-back-400);
-  /* border-radius: 10px 10px 0 0; */
+  display: flex;
+  align-items: center;
 }
-.card--title-container h4 {
-  font-weight: 400;
+.card--header-text {
+  flex: 1;
 }
+.card--username-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 0.5rem;
+}
+.card--username--avatar {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+}
+.card--close-button {
+  flex: 0;
+}
+
 .card--image-container {
   width: 100%;
 }
@@ -631,10 +648,10 @@ body .MuiBackdrop-root {
 }
 .marker-container--cat {
   position: absolute;
-  top: 4px;
-  left: 8px;
-  width: 32px;
-  height: 32px;
+  top: 3px;
+  left: 7px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
 }
 
@@ -642,10 +659,14 @@ body .MuiBackdrop-root {
   position: absolute;
   top: 50px;
   right: 50px;
-  padding: 0.75rem 1rem 1rem;
   background-color: var(--clr-back-400);
   border-radius: 10px;
   box-shadow: 0 0 1rem var(--clr-back-300);
+  width: max-content;
+}
+.cat-info .card {
+  max-width: calc(200px + 2rem);
+  min-width: 200px;
 }
 .cat-info--header-container {
   display: flex;

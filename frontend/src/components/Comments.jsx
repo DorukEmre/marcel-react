@@ -48,14 +48,12 @@ const Comments = (props) => {
       <ul className="comments-list">
         {props.comments &&
           props.comments.map((comment) => (
-            <>
-              <li className="comments-line" key={comment._id}>
-                <div>
-                  <em className="userName">{comment.user.username}: </em>
-                  <span className="comment">{comment.comment}</span>
-                </div>
-              </li>
-            </>
+            <li className="comments-line" key={comment._id}>
+              <div>
+                <em className="userName">{comment.user.username}: </em>
+                <span className="comment">{comment.comment}</span>
+              </div>
+            </li>
           ))}
       </ul>
       <form className="create-comment" onSubmit={handleSubmit}>

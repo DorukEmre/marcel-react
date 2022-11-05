@@ -5,6 +5,7 @@ import CatInfoBox from './CatInfoBox'
 
 const Map = ({ catsWithLocation, center, zoom }) => {
   const [catInfo, setCatInfo] = useState(null)
+
   const URLKey =
     process.env.NODE_ENV === 'production'
       ? import.meta.env.VITE_GM_KEY_PROD
@@ -22,17 +23,10 @@ const Map = ({ catsWithLocation, center, zoom }) => {
         lat={cat.latitude}
         lng={cat.longitude}
         imageUrl={cat.imageUrl}
-        onClick={() =>
-          setCatInfo({
-            catName: cat.catName,
-            caption: cat.caption,
-            imageUrl: cat.imageUrl,
-          })
-        }
+        onClick={() => setCatInfo(cat)}
       />
     )
   })
-  // console.log(markers)
 
   return (
     <div className="map">
@@ -44,7 +38,7 @@ const Map = ({ catsWithLocation, center, zoom }) => {
       >
         {markers}
       </GoogleMapReact>
-      {catInfo && <CatInfoBox info={catInfo} handleClose={handleClose} />}
+      {catInfo && <CatInfoBox post={catInfo} handleClose={handleClose} />}
     </div>
   )
 }
@@ -54,7 +48,7 @@ Map.defaultProps = {
     lat: 51.4569,
     lng: -0.0963,
   },
-  zoom: 13,
+  zoom: 12,
 }
 
 export default Map
