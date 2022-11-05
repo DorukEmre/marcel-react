@@ -8,7 +8,9 @@ const CatInfoBox = ({ info }) => {
         <li>
           <em>{info.caption}</em>
         </li>
-        <img src={info.imageUrl} alt="" height="200" width="200" />
+        {/*  */}
+        <img src={info.imageUrl make to image size} alt="" height="200" width="200" />
+        {/*  */}
       </ul>
     </div>
   )
