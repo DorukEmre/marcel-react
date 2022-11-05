@@ -611,6 +611,21 @@ body .MuiBackdrop-root {
   position: relative;
 }
 
+.location-icon {
+  font-size: 2rem;
+  color: var(--clr-back-400);
+}
+
+.cat-info {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  padding: 1.5rem;
+  background-color: var(--clr-back-400);
+  border-radius: 10px;
+  box-shadow: 0 0 1rem var(--clr-back-300);
+}
+
 /* ///////////// */
 /*   Spot page   */
 /* ///////////// */

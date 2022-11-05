@@ -11,9 +11,6 @@ router.use(verifyJWT)
 router.get('/feed', postsController.getFeed)
 // GET page to manage groups
 router.get('/groups', groupsController.getGroups)
-
-// //////////////
-
 // GET page to explore map of cats in the neighborhood
 router.get('/explore', exploreController.getExplore)
 
