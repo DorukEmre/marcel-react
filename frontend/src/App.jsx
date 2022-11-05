@@ -12,7 +12,6 @@ import Spot from './pages/Spot'
 import Groups from './pages/Groups'
 import Profile from './pages/Profile'
 import Missing from './pages/Missing'
-import Users from './components/Users'
 import ProfileMe from './pages/ProfileMe'
 import ProfileSettings from './pages/ProfileSettings'
 
@@ -50,12 +49,7 @@ function App() {
               <Route path="profile" element={<Profile />}>
                 <Route path="me" element={<ProfileMe />} />
                 <Route path="settings" element={<ProfileSettings />} />
-              </Route>
-            </Route>
-
-            <Route element={<RequireAuth />}>
-              <Route path="users" element={<Users />}>
-                <Route path=":userid" element={<Users />} />
+                <Route path=":userid" element={<Profile />} />
               </Route>
             </Route>
           </Route>
