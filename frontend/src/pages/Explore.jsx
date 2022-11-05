@@ -2,8 +2,13 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import Map from '../components/Map'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import useAuth from '../hooks/useAuth'
 
 const Explore = () => {
+  const { auth } = useAuth()
+  // console.log('auth on Explore', auth)
+  const currentUserId = auth.userId
+
   const axiosPrivate = useAxiosPrivate()
   const [catsWithLocation, setCatsWithLocation] = useState([])
   const [loading, setLoading] = useState(false)
@@ -45,7 +50,11 @@ const Explore = () => {
     <main id="explore-page">
       <h1>Explore page</h1>
       {!loading ? (
-        <Map catsWithLocation={catsWithLocation} />
+        <Map
+          catsWithLocation={catsWithLocation}
+          setCatsWithLocation={setCatsWithLocation}
+          currentUserId={currentUserId}
+        />
       ) : (
         'Fetching data...'
       )}

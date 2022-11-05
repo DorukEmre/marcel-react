@@ -6,7 +6,9 @@ import useAuth from '../hooks/useAuth'
 
 const Feed = () => {
   const { auth } = useAuth()
+  // console.log('auth on Feed', auth)
   const currentUserId = auth.userId
+
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
