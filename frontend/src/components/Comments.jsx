@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { sendCommentIcon } from '../assets/icons'
+import { profileInactive } from '../assets/nav_icons'
 
 const Comments = (props) => {
   const axiosPrivate = useAxiosPrivate()
@@ -49,19 +50,41 @@ const Comments = (props) => {
         {props.comments &&
           props.comments.map((comment) => (
             <li className="comments-line" key={comment._id}>
-              <div>
-                <em className="userName">{comment.user.username}: </em>
-                <span className="comment">{comment.comment}</span>
+              <div className="comments--header-text">
+                <div className="comments--username-wrapper">
+                  <img
+                    src={
+                      typeof comment.user.profilePicUrl !== 'undefined'
+                        ? `${comment.user.profilePicUrl.slice(
+                            0,
+                            49,
+                          )}/w_72,h_72,c_scale${comment.user.profilePicUrl.slice(
+                            49,
+                          )}`
+                        : profileInactive
+                    }
+                    alt="user profile picture"
+                    className="comments--username--avatar"
+                  />
+                  <div>
+                    <p className="comments--username--name">
+                      {comment.user.username}
+                      <span className="comments--username--date"></span>
+                    </p>
+                    <p className="comments--comment">{comment.comment}</p>
+                  </div>
+                </div>
               </div>
             </li>
           ))}
       </ul>
       <form className="create-comment" onSubmit={handleSubmit}>
-        <label htmlFor="comment--textarea" className="create-comment--label">
-          <textarea
+        <label htmlFor="comment--input" className="create-comment--label">
+          <input
+            type="text"
             rows="2"
-            className="create-comment--textarea"
-            id="comment--textarea"
+            className="create-comment--input"
+            id="comment--input"
             placeholder="Add a comment"
             onChange={(e) => setNewComment(e.target.value)}
             value={newComment}

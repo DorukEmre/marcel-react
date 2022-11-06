@@ -255,7 +255,7 @@ main {
 .hero-title-container h1 > span.outdoor-cat {
   display: block;
   color: var(--clr-neutral-300);
-  text-align: right;
+  padding-left: 6rem;
 }
 
 h1 span.Marcel {
@@ -372,6 +372,25 @@ button.close-button:hover {
 .comments-line {
   margin-bottom: 0.25rem;
 }
+.comments--header-text {
+  flex: 1;
+}
+.comments--username-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 0.5rem;
+}
+.comments--username--avatar {
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+}
+.comments--comment {
+  padding-left: 1rem;
+}
+
 form.create-comment {
   display: flex;
   flex-wrap: nowrap;
@@ -385,18 +404,18 @@ form.create-comment {
   width: 100%;
   border: none;
 }
-.create-comment--textarea {
-  resize: none;
+.create-comment--input {
   background-color: var(--clr-back-400);
   color: var(--clr-neutral-300);
   border: 2px solid transparent;
   text-indent: 6px;
   outline: 0;
   width: 100%;
-  border-radius: 0 0 0 10px;
+  border-radius: 10px;
   margin: 0;
+  padding: 6px 12px;
 }
-.create-comment--textarea:focus {
+.create-comment--input:focus {
   border: 2px solid var(--clr-neutral-300);
 }
 
@@ -678,6 +697,10 @@ body .MuiBackdrop-root {
 }
 .cat-info--close-button {
   flex: 0;
+}
+.cat-info .create-comment--input {
+  color: var(--clr-neutral-400);
+  background-color: var(--clr-back-300);
 }
 
 /* ///////////// */
@@ -1078,6 +1101,9 @@ footer p {
   .hero-title-container h1 {
     font-size: 2.25rem;
     padding: 0 0.5rem;
+  }
+  .hero-title-container h1 > span.outdoor-cat {
+    padding-left: 5rem;
   }
 
   .login-container,
