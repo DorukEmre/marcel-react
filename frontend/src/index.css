@@ -1130,14 +1130,17 @@ footer p {
   main#spot-page {
     padding: 0;
   }
-  .card {
+  #feed-page .card {
     border-radius: 0;
     border: 0;
-    /* border-bottom: 1px solid var(--clr-neutral-600); */
     box-shadow: none;
     padding: 0 0 2.5rem;
   }
-
+  .cat-info .card {
+    border: 0;
+    box-shadow: none;
+    padding: 0 0 0.75rem;
+  }
   .groups--title {
     padding: 0 1rem;
   }

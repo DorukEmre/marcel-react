@@ -48,7 +48,6 @@ const Explore = () => {
 
   return (
     <main id="explore-page">
-      <h1>Explore page</h1>
       {!loading ? (
         <Map
           catsWithLocation={catsWithLocation}
@@ -56,7 +55,7 @@ const Explore = () => {
           currentUserId={currentUserId}
         />
       ) : (
-        'Fetching data...'
+        'Tracking neighbourhood cats...'
       )}
     </main>
   )

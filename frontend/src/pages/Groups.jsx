@@ -127,7 +127,7 @@ const Groups = () => {
       ></BasicModal>
       <div className="groups-container">
         <section className="groups--title">
-          <p style={{ color: 'red' }}>Groups not yet functional</p>
+          <p style={{ color: 'red' }}>Not yet functional</p>
           <h1>Join or create a group</h1>
           <div className="bullet-point">
             <img src={catBullet} alt="" height="24" width="24" />
