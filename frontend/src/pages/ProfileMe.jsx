@@ -130,7 +130,7 @@ const ProfileMe = () => {
               src={
                 profilePicUrl
                   ? profilePicUrl.slice(0, 49) +
-                    '/w_150,h_150,c_scale' +
+                    '/w_300,h_300,c_scale' +
                     profilePicUrl.slice(49)
                   : profileInactive
               }

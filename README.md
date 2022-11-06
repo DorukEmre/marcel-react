@@ -10,6 +10,8 @@ Feed page:
 - Add infinite scroll
 - Add option to report Comment
 - Add option to report Post
+- Add date to posts
+- Add date to comments
 
 Explore page:
 
