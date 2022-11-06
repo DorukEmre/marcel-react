@@ -15,7 +15,14 @@ const Card = (props) => {
         <div className="card--header-text">
           <div className="card--username-wrapper">
             <img
-              src={profileInactive}
+              src={
+                typeof props.profilePicUrl !== 'undefined'
+                  ? `${props.profilePicUrl.slice(
+                      0,
+                      49,
+                    )}/w_72,h_72,c_scale${props.profilePicUrl.slice(49)}`
+                  : profileInactive
+              }
               alt="user profile picture"
               className="card--username--avatar"
             />

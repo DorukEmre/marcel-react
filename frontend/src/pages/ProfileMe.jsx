@@ -180,8 +180,8 @@ const ProfileMe = () => {
           setCroppedImage={setCroppedImage}
         />
       </section>
-      <section className="my-pictures">My pictures</section>
-      <section className="my-groups">My groups</section>
+      <section className="my-pictures"></section>
+      <section className="my-groups"></section>
     </main>
   )
 }

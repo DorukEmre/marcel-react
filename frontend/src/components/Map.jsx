@@ -59,10 +59,10 @@ const Map = ({
 
 Map.defaultProps = {
   center: {
-    lat: 51.4569,
-    lng: -0.0963,
+    lat: 51.507543,
+    lng: -0.084638,
   },
-  zoom: 12,
+  zoom: 11,
 }
 
 export default Map

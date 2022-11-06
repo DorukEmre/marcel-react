@@ -958,6 +958,7 @@ output#crop-thumbnail-container {
 .profile-pic-image-container {
   position: relative;
   width: max-content;
+  margin: 1rem 2rem;
 }
 .profile-pic-image-container--image {
   border-radius: 50%;
@@ -1059,7 +1060,7 @@ footer p {
   }
   #profile-menu .profile-menu--item--link {
     font-size: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.25rem;
   }
 
   main {
@@ -1124,6 +1125,12 @@ footer p {
   }
   .groups-card input {
     background-color: transparent;
+  }
+  .profile-pic-header-container {
+    padding: 0 2rem;
+  }
+  .profile-pic-image-container {
+    margin: 1rem auto;
   }
 }
 

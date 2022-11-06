@@ -47,6 +47,7 @@ const Posts = (props) => {
       postId={post._id}
       catName={post.catName}
       username={post.user.username}
+      profilePicUrl={post.user.profilePicUrl}
       imageUrl={post.imageUrl}
       imageXY="800"
       greatCat={post.greatCat}

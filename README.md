@@ -1,5 +1,9 @@
 To do:
 
+Home page:
+
+- Persistent login doesn't work on main page even when user is logged in because outside PersistLogin route
+
 Feed page:
 
 - Display cats belonging to user's different groups
@@ -9,7 +13,6 @@ Feed page:
 
 Explore page:
 
-- Display google maps
 - Connect with gps coordinates of pics of user's groups
 
 Spot page:
@@ -26,7 +29,6 @@ Groups page:
 
 Profile page:
 
-- Own profile: Add/update profile picture
 - Own profile: Add option to change username/email/password
 - Others profile: Show user's pics
 - Add option to report User

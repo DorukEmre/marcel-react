@@ -101,6 +101,7 @@ const CatInfoBox = ({
         postId={post._id}
         catName={post.catName}
         username={post.user.username}
+        profilePicUrl={post.user.profilePicUrl}
         imageUrl={post.imageUrl}
         imageXY="400"
         greatCat={post.greatCat}
