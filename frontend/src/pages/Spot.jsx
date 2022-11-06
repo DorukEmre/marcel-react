@@ -181,7 +181,7 @@ const Spot = () => {
                     </div>
                   </div>
                 </output>
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label htmlFor="catName">Add a cat name (or nickname)</label>
                   <input
                     type="text"
@@ -190,7 +190,7 @@ const Spot = () => {
                     onChange={(e) => setCatName(e.target.value)}
                     value={catName}
                   />
-                </div>
+                </div> */}
                 <div className="form-group">
                   <label htmlFor="comment">Add a comment</label>
                   <input
