@@ -977,7 +977,12 @@ output#crop-thumbnail-container {
 /* //////////////// */
 /*   Profile page   */
 /* //////////////// */
-
+.add-profile-pic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+}
 .profile-pic-image-container {
   position: relative;
   width: max-content;

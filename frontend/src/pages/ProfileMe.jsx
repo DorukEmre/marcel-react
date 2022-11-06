@@ -124,46 +124,50 @@ const ProfileMe = () => {
     <main id="my-profile-page">
       <section className="profile-pic-header-container">
         <h1>{username}</h1>
-        <div className="profile-pic-image-container">
-          <div className="profile-pic-image-container--image">
-            <img
-              src={
-                profilePicUrl
-                  ? profilePicUrl.slice(0, 49) +
-                    '/w_300,h_300,c_scale' +
-                    profilePicUrl.slice(49)
-                  : profileInactive
-              }
-              alt="profile-pic"
-              height="150"
-            />
+
+        <div className="add-profile-pic-container">
+          <div className="profile-pic-image-container">
+            <div className="profile-pic-image-container--image">
+              <img
+                src={
+                  profilePicUrl
+                    ? profilePicUrl.slice(0, 49) +
+                      '/w_300,h_300,c_scale' +
+                      profilePicUrl.slice(49)
+                    : profileInactive
+                }
+                alt="profile-pic"
+                height="150"
+              />
+            </div>
+            <div className="file-upload-container--button-wrapper">
+              <label htmlFor="imageUpload">
+                <button
+                  htmlFor="imageUpload"
+                  id="custom-file-upload-button"
+                  type="button"
+                >
+                  <img
+                    src={addPhoto}
+                    className="custom-file-upload-button--image"
+                  />
+                  <input
+                    type="file"
+                    id="imageUpload"
+                    className="custom-file-upload-button--input"
+                    accept="image/*"
+                    tabIndex="-1"
+                    required
+                    onChange={(event) => {
+                      onSelectFile(event)
+                      handleOpenModal()
+                    }}
+                  />
+                </button>
+              </label>
+            </div>
           </div>
-          <div className="file-upload-container--button-wrapper">
-            <label htmlFor="imageUpload">
-              <button
-                htmlFor="imageUpload"
-                id="custom-file-upload-button"
-                type="button"
-              >
-                <img
-                  src={addPhoto}
-                  className="custom-file-upload-button--image"
-                />
-                <input
-                  type="file"
-                  id="imageUpload"
-                  className="custom-file-upload-button--input"
-                  accept="image/*"
-                  tabIndex="-1"
-                  required
-                  onChange={(event) => {
-                    onSelectFile(event)
-                    handleOpenModal()
-                  }}
-                />
-              </button>
-            </label>
-          </div>
+          {!profilePicUrl ? <p>Add a profile picture</p> : null}
         </div>
 
         <EasyCropperModal
