@@ -68,7 +68,7 @@ footer {
 body {
   background-color: var(--clr-back-300);
   color: var(--clr-neutral-300);
-  font-family: var(--ff-body);
+  font-family: var(--ff-body), sans-serif;
 }
 
 /* ul {  
