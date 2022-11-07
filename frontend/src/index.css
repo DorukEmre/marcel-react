@@ -660,6 +660,7 @@ body .MuiBackdrop-root {
   width: 48px;
   height: 48px;
   cursor: pointer;
+  transform: translate(-50%, -50%);
 }
 .marker-container--icon {
   width: 48px;
