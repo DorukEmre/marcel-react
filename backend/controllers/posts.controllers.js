@@ -6,12 +6,23 @@ const User = require('../models/User.model')
 module.exports = {
   getFeed: async (req, res) => {
     try {
+      const count = await Post.estimatedDocumentCount()
+      const page = Number(req.params.pageid)
+      const perPage = 10
+
       const posts = await Post.find()
+        .skip((page - 1) * perPage)
+        .limit(perPage)
         .sort({ createdAt: 'desc' })
         .populate('user')
         .lean()
 
-      res.status(200).json(posts)
+      const info = {
+        count,
+        pages: Math.ceil(count / perPage),
+        next: page < count / perPage ? page + 1 : null,
+      }
+      res.status(200).json({ info, posts })
     } catch (err) {
       console.log(err)
     }

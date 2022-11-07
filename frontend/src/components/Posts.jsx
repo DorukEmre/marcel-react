@@ -41,24 +41,29 @@ const Posts = (props) => {
       controller.abort()
     }
   }
-  const cards = props.posts.map((post, index) => (
-    <Card
-      key={index}
-      postId={post._id}
-      catName={post.catName}
-      username={post.user.username}
-      profilePicUrl={post.user.profilePicUrl}
-      imageUrl={post.imageUrl}
-      imageXY="800"
-      greatCat={post.greatCat}
-      caption={post.caption}
-      handleToggleLike={props.handleToggleLike}
-      currentUserId={props.currentUserId}
-      getComments={getComments}
-      allComments={allComments}
-      setAllComments={setAllComments}
-    />
-  ))
+
+  const cards = props.posts.map((post, index) => {
+    let componentProps = {
+      key: index,
+      postId: post._id,
+      catName: post.catName,
+      username: post.user.username,
+      profilePicUrl: post.user.profilePicUrl,
+      imageUrl: post.imageUrl,
+      imageXY: 800,
+      greatCat: post.greatCat,
+      caption: post.caption,
+      handleToggleLike: props.handleToggleLike,
+      currentUserId: props.currentUserId,
+      getComments: getComments,
+      allComments: allComments,
+      setAllComments: setAllComments,
+    }
+    if (props.posts.length === index + 1) {
+      return <Card ref={props.lastPostRef} {...componentProps} />
+    }
+    return <Card {...componentProps} />
+  })
   // console.log(cards)
 
   return <>{cards}</>

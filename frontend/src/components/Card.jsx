@@ -1,3 +1,4 @@
+import React from 'react'
 import Collapsible from 'react-collapsible'
 import {
   closeIcon,
@@ -8,9 +9,9 @@ import {
 import { profileInactive } from '../assets/nav_icons'
 import Comments from '../components/Comments'
 
-const Card = (props) => {
+const Card = React.forwardRef((props, ref) => {
   return (
-    <li className="card">
+    <li className="card" ref={typeof ref !== 'undefined' ? ref : null}>
       <section className="card--header-container">
         <div className="card--header-text">
           <div className="card--username-wrapper">
@@ -109,6 +110,6 @@ const Card = (props) => {
       </section>
     </li>
   )
-}
+})
 
 export default Card

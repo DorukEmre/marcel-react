@@ -1,61 +1,61 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import { useInfiniteQuery } from 'react-query'
 import Posts from '../components/Posts'
 import useAuth from '../hooks/useAuth'
 
 const Feed = () => {
   const { auth } = useAuth()
-  // console.log('auth on Feed', auth)
   const currentUserId = auth.userId
-
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
-  const [posts, setPosts] = useState([
-    {
-      catName: 'Kandinsky',
-      user: { username: 'Bob' },
-      _id: '63454b056ca805a1ed32063e',
-      imageUrl:
-        'https://res.cloudinary.com/dgphdac21/image/upload/v1667597856/yzah7nzvpbwazuh7wc1p.jpg',
-      greatCat: ['a', 'b', 'c'],
-      caption: 'What a cutie',
+
+  const getPostsPage = async ({ pageParam = 1 }) => {
+    const response = await axiosPrivate.get(`/api/feed/${pageParam}`)
+    // console.log(response.data)
+
+    return response.data
+  }
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: getPostsPage,
+    getNextPageParam: (lastPage, allPages) => {
+      // console.log('lastPage', lastPage)
+      return lastPage.info.next
     },
-  ])
+  })
 
-  useEffect(() => {
-    let isMounted = true
-    // To cancel our request, when the Component unmounts (useful if we have pending requests when Component unmounts)
-    const controller = new AbortController()
+  // console.log('status', status)
 
-    const getPosts = async () => {
-      try {
-        const response = await axiosPrivate.get('/api/feed', {
-          // To cancel request if we need to
-          signal: controller.signal,
-        })
-        isMounted && setPosts(response.data)
-      } catch (err) {
-        console.error('Login again err', err)
-        if (!err?.response) {
-          console.log('No Server Response')
-        } else if (err.response?.status === 403) {
-          navigate('/login', { state: { from: location }, replace: true })
-        } else {
-          console.log('Request failed')
+  const intObserver = useRef()
+  const lastPostRef = useCallback(
+    (post) => {
+      if (isFetchingNextPage) return
+
+      if (intObserver.current) intObserver.current.disconnect()
+
+      intObserver.current = new IntersectionObserver((posts) => {
+        if (posts[0].isIntersecting && hasNextPage) {
+          console.log('We are near the last post!')
+          fetchNextPage()
         }
-      }
-    }
+      })
 
-    getPosts()
-
-    // Clean up function, abort pending requests when the Component unmounts
-    return () => {
-      isMounted = false
-      controller.abort()
-    }
-  }, [])
+      if (post) intObserver.current.observe(post)
+    },
+    [isFetchingNextPage, fetchNextPage, hasNextPage],
+  )
 
   const handleToggleLike = async (e, postId) => {
     e.preventDefault()
@@ -102,14 +102,25 @@ const Feed = () => {
     <main id="feed-page">
       <div className="">
         <ul className="cards-container">
-          {posts ? (
-            <Posts
-              posts={posts}
-              currentUserId={currentUserId}
-              handleToggleLike={handleToggleLike}
-            />
+          {status === 'loading' ? (
+            <p>Loading...</p>
+          ) : status === 'error' ? (
+            <p>Error: {error.message}</p>
           ) : (
-            <p>Can't connect to server</p>
+            <>
+              {data.pages.map((group, i) => {
+                return (
+                  <React.Fragment key={i}>
+                    <Posts
+                      posts={group.posts}
+                      currentUserId={currentUserId}
+                      handleToggleLike={handleToggleLike}
+                      lastPostRef={lastPostRef}
+                    />
+                  </React.Fragment>
+                )
+              })}
+            </>
           )}
         </ul>
       </div>
