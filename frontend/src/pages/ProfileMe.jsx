@@ -65,7 +65,7 @@ const ProfileMe = () => {
           signal: controller.signal,
         },
       )
-      console.log('response?.data', response?.data)
+      // console.log('response?.data', response?.data)
 
       isMounted && setSelectedFile(null)
       isMounted && setCroppedImage(null)
