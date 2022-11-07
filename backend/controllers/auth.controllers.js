@@ -120,13 +120,13 @@ exports.handleRefreshToken = async (req, res) => {
       return res.sendStatus(403)
     }
 
-    console.log('decoded in handleRefreshToken', decoded)
+    // console.log('decoded in handleRefreshToken', decoded)
     const accessToken = jwt.sign(
       { email: decoded.email },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '15m' },
     )
-    console.log('handleRefreshToken', { accessToken, userId: foundUser.id })
+    // console.log('handleRefreshToken', { accessToken, userId: foundUser.id })
     res.json({ accessToken, userId: foundUser.id })
   })
 }

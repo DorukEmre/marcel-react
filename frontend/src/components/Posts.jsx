@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { useState } from 'react'
 import Card from './Card'
@@ -41,7 +40,7 @@ const Posts = (props) => {
       controller.abort()
     }
   }
-
+  // console.log(props.posts)
   const cards = props.posts.map((post, index) => {
     let componentProps = {
       key: index,
@@ -59,7 +58,7 @@ const Posts = (props) => {
       allComments: allComments,
       setAllComments: setAllComments,
     }
-    if (props.posts.length === index + 1) {
+    if (index === props.posts.length - 2) {
       return <Card ref={props.lastPostRef} {...componentProps} />
     }
     return <Card {...componentProps} />
