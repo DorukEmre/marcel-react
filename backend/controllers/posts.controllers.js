@@ -55,7 +55,7 @@ module.exports = {
       // console.log('req.file', req.file)
       // console.log('req.body', req.body)
 
-      const result = await resizeAndCloudinary(req, 800)
+      const result = await resizeAndCloudinary(req, 800, 'posts')
 
       const foundUser = await User.findOne({ email: req.user })
 

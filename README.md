@@ -7,7 +7,6 @@ Home page:
 Feed page:
 
 - Display cats belonging to user's different groups
-- Add infinite scroll
 - Add option to report Comment
 - Add option to report Post
 - Add date to posts

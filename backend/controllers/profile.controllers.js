@@ -23,7 +23,7 @@ module.exports = {
     // console.log('req.body', req.body)
     // console.log('req.user', req.user)
     try {
-      const result = await resizeAndCloudinary(req, 300)
+      const result = await resizeAndCloudinary(req, 300, 'profile')
 
       // console.log('result', result)
 
