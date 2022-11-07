@@ -1,8 +1,6 @@
-const cloudinary = require('../middleware/cloudinary')
-const sharp = require('sharp')
-let streamifier = require('streamifier')
-// const Post = require("../models/Post.model");
+const resizeAndCloudinary = require('../middleware/resize')
 const User = require('../models/User.model')
+// const Post = require("../models/Post.model");
 
 module.exports = {
   getMyProfile: async (req, res) => {
@@ -19,35 +17,13 @@ module.exports = {
       console.log(err)
     }
   },
+
   updatePicture: async (req, res) => {
     // console.log('req.file', req.file)
-    // console.log('req.file.path', req.file.path)
     // console.log('req.body', req.body)
     // console.log('req.user', req.user)
-
     try {
-      // Sharp transforms to buffer
-      const data = await sharp(req.file.path)
-        .resize({ width: 300 })
-        .toFormat('jpeg')
-        .toBuffer()
-
-      // Convert buffer to stream before upload to cloudinary with .pipe() method
-      let uploadFromBuffer = (req) => {
-        return new Promise((resolve, reject) => {
-          let cld_upload_stream = cloudinary.uploader.upload_stream(
-            (error, result) => {
-              if (result) {
-                resolve(result)
-              } else {
-                reject(error)
-              }
-            },
-          )
-          streamifier.createReadStream(data).pipe(cld_upload_stream)
-        })
-      }
-      let result = await uploadFromBuffer(req)
+      const result = await resizeAndCloudinary(req, 300)
 
       // console.log('result', result)
 

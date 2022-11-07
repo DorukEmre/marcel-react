@@ -1,4 +1,4 @@
-const cloudinary = require('../middleware/cloudinary')
+const resizeAndCloudinary = require('../middleware/resize')
 const Post = require('../models/Post.model')
 const Comment = require('../models/Comment.model')
 const User = require('../models/User.model')
@@ -9,18 +9,14 @@ module.exports = {
       const posts = await Post.find()
         .sort({ createdAt: 'desc' })
         .populate('user')
-        .lean() // .lean() tells Mongoose to skip instantiating a full Mongoose document and just give a JS object
+        .lean()
 
-      // res.render('feed.ejs', { posts, user: req.user, active })
-      // console.log(
-      //   'catNames',
-      //   posts.map((x) => x.catName),
-      // )
       res.status(200).json(posts)
     } catch (err) {
       console.log(err)
     }
   },
+
   getPost: async (req, res) => {
     if (!req?.params?.postid)
       return res.status(400).json({ message: 'Post ID required.' })
@@ -41,15 +37,17 @@ module.exports = {
     res.json(post)
     // res.render('post.ejs', { post, comments, user: req.user, active })
   },
+
   createPost: async (req, res) => {
     try {
       // console.log('req.user', req.user)
       // console.log('req.file', req.file)
       // console.log('req.body', req.body)
-      // Upload image to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path)
+
+      const result = await resizeAndCloudinary(req, 800)
 
       const foundUser = await User.findOne({ email: req.user })
+
       await Post.create({
         catName: req.body.catName,
         latitude: req.body.latitude,
@@ -65,6 +63,7 @@ module.exports = {
       console.log(err)
     }
   },
+
   likePost: async (req, res) => {
     try {
       // console.log(req.user)
@@ -93,6 +92,7 @@ module.exports = {
       console.log(err)
     }
   },
+
   getComments: async (req, res) => {
     try {
       // console.log('req.params', req.params.postid)
@@ -111,6 +111,7 @@ module.exports = {
       console.log(err)
     }
   },
+
   createComment: async (req, res) => {
     try {
       // console.log(req.body)
