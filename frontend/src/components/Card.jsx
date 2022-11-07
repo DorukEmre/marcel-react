@@ -48,6 +48,7 @@ const Card = React.forwardRef((props, ref) => {
             props.imageXY
           },c_scale${props.imageUrl.slice(49)}`}
           alt="cat picture"
+          loading="lazy"
         />
       </section>
 
