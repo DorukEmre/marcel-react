@@ -316,6 +316,7 @@ h1 span.Marcel {
 
 .card--image-container {
   width: 100%;
+  min-height: 300px;
 }
 .card--image-container img {
   width: 100%;

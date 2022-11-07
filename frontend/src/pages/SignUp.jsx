@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
 import axios from '../api/axios'
 
-const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
+const USERNAME_REGEX = /^[A-z0-9-_]{3,23}$/
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
+// const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/
 const SIGNUP_URL = '/api/signup'
 
 const SignUp = () => {
@@ -114,9 +115,10 @@ const SignUp = () => {
         </section>
         {success ? (
           <section>
-            <h1>Account created!</h1>
+            <h1>Account created</h1>
+            <br />
             <p>
-              <Link to="/login">Please sign In</Link>
+              <Link to="/login">Please log in</Link>
             </p>
           </section>
         ) : (
@@ -173,11 +175,6 @@ const SignUp = () => {
                   onFocus={() => setUsernameFocus(true)}
                   onBlur={() => setUsernameFocus(false)}
                 />
-                <ul id="userhelp" className="form-help">
-                  <li>4 to 24 characters</li>
-                  <li>Must begin with a letter</li>
-                  <li>Letters, numbers, underscores, or hyphens</li>
-                </ul>
                 <p
                   id="useralert"
                   className={
@@ -188,6 +185,18 @@ const SignUp = () => {
                   }
                 >
                   Please check you have entered a valid user name.
+                </p>
+                <p
+                  id="useralert"
+                  className={
+                    (!usernameFocus && username && !validUsername) ||
+                    (usernameFocus && username.length > 3 && !validUsername)
+                      ? 'instructions'
+                      : 'offscreen'
+                  }
+                >
+                  4 to 24 characters; letters, numbers, underscores, and hyphens
+                  allowed
                 </p>
               </div>
 
@@ -204,20 +213,6 @@ const SignUp = () => {
                   onFocus={() => setPasswordFocus(true)}
                   onBlur={() => setPasswordFocus(false)}
                 />
-                <ul id="passwordHelp" className="form-help">
-                  <li>8 to 24 characters</li>
-                  <li>Uppercase and lowercase letters</li>
-                  <li>Number</li>
-                  <li>
-                    Special character:{' '}
-                    <span aria-label="exclamation mark">!</span>{' '}
-                    <span aria-label="at symbol">@</span>{' '}
-                    <span aria-label="hashtag">#</span>{' '}
-                    <span aria-label="dollar sign">$</span>{' '}
-                    <span aria-label="percent">%</span>
-                  </li>
-                </ul>
-
                 <p
                   id="passwordnote"
                   className={
@@ -228,7 +223,19 @@ const SignUp = () => {
                 >
                   Please check your password is valid
                 </p>
+                <p
+                  id="passwordnote"
+                  className={
+                    !passwordFocus && password && !validPassword
+                      ? 'instructions'
+                      : 'offscreen'
+                  }
+                >
+                  Must contain: 8 to 24 characters; uppercase and lowercase
+                  letters; number
+                </p>
               </div>
+
               <div className="form-group">
                 <label htmlFor="confirmPassword">Confirm password</label>
                 <input

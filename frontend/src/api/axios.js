@@ -10,8 +10,8 @@ if (domain === 'marcel-the-outdoor-cat-react.herokuapp.com') {
   serverLoc = 'https://marcel.onrender.com'
 } else if (domain === 'marcel-the-outdoor-cat.cyclic.app') {
   serverLoc = 'https://marcel-the-outdoor-cat.cyclic.app/'
-} else if (domain === 'marcel-the-outdoor-cat.up.railway.app') {
-  serverLoc = 'https://marcel-the-outdoor-cat.up.railway.app/'
+} else if (domain === 'marcel-the-cat.up.railway.app') {
+  serverLoc = 'https://marcel-the-cat.up.railway.app/'
 }
 
 const BASE_URL =
