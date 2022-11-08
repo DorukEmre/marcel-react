@@ -77,7 +77,7 @@ const Card = React.forwardRef((props, ref) => {
             aria-describedby="menu"
             type="button"
             onClick={handleOpenMenu}
-            className="popup-menu-button"
+            className="popup-menu-button icon-button"
           >
             <img src={menuIcon} alt="" height="24px" width="24px" />
           </button>
@@ -90,7 +90,7 @@ const Card = React.forwardRef((props, ref) => {
 
           {typeof props.handleClose !== 'undefined' ? (
             <button
-              className="card--close-button close-button"
+              className="card--close-button close-button icon-button"
               onClick={props.handleClose}
             >
               <img src={closeIcon} alt="" height="24px" width="24px" />
@@ -112,10 +112,10 @@ const Card = React.forwardRef((props, ref) => {
 
       <section className="card--like-container">
         <form
-          className="like-button"
+          className="like-button icon-button"
           onClick={(e) => props.handleToggleLike(e, props.postId)}
         >
-          <button className="like-button">
+          <button className="like-button icon-button">
             {props.greatCat.find((x) => x == props.currentUserId) !=
             undefined ? (
               <img className="" src={likeTrueIcon} height="24px" width="24px" />
@@ -137,7 +137,10 @@ const Card = React.forwardRef((props, ref) => {
           trigger={
             <>
               <p className="caption">{props.caption}</p>
-              <button className="open-comments" data-id={props.postId}>
+              <button
+                className="open-comments icon-button"
+                data-id={props.postId}
+              >
                 <img src={commentIcon} alt="" height="24px" width="24px" />
               </button>
             </>
@@ -145,7 +148,10 @@ const Card = React.forwardRef((props, ref) => {
           triggerWhenOpen={
             <>
               <p className="caption">{props.caption}</p>
-              <button className="close-button" data-id={props.postId}>
+              <button
+                className="close-button icon-button"
+                data-id={props.postId}
+              >
                 <img src={closeIcon} alt="" height="24px" width="24px" />
               </button>
             </>

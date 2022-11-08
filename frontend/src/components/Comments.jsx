@@ -92,7 +92,7 @@ const Comments = (props) => {
           />
         </label>
 
-        <button className="send-button">
+        <button className="send-button icon-button">
           <img className="" src={sendCommentIcon} height="24px" width="24px" />
         </button>
       </form>

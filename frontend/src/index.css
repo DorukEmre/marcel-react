@@ -127,7 +127,10 @@ main {
   cursor: pointer;
 }
 .header-item--div:hover,
+.header-item--div:active,
+.header-item--div:focus,
 .header-item.after .header-item--link:not(.active):hover,
+.header-item.after .header-item--link:not(.active):active,
 .header-item.after .header-item--link:not(.active):focus {
   background-color: var(--clr-compl-200);
   border-radius: 15px 15px 0 0;
@@ -189,7 +192,9 @@ main {
   width: 100%;
   height: 100%;
 }
-.profile-menu--item:hover {
+.profile-menu--item:hover,
+.profile-menu--item:active,
+.profile-menu--item:focus {
   background-color: var(--clr-compl-550);
 }
 
@@ -318,6 +323,7 @@ h1 span.Marcel {
 }
 
 .card--username-wrapper:hover,
+.card--username-wrapper:active,
 .card--username-wrapper:focus {
   text-decoration: underline var(--clr-neutral-300) 2px;
 }
@@ -345,11 +351,7 @@ h1 span.Marcel {
 span.like-number {
   min-width: 17.5px;
 }
-button.like-button,
-button.open-comments,
-button.send-button,
-button.close-button,
-button.popup-menu-button {
+button.icon-button {
   background-color: transparent;
   border: none;
   transition: background-color 150ms ease-in;
@@ -357,11 +359,8 @@ button.popup-menu-button {
   padding: 4px;
   cursor: pointer;
 }
-button.like-button:hover,
-button.open-comments:hover,
-button.send-button:hover,
-button.close-button:hover,
-button.popup-menu-button:hover {
+button.icon-button:hover,
+button.icon-button:active {
   background-color: var(--clr-neutral-600);
 }
 .card--comments-container {
@@ -601,7 +600,9 @@ form.create-comment {
   cursor: pointer;
   transition-duration: 0.2s;
 }
-.groups--button:hover {
+.groups--button:hover,
+.groups--button:active,
+.groups--button:focus {
   color: var(--clr-neutral-200);
   background-color: var(--clr-compl-550);
 }
@@ -614,7 +615,9 @@ form.create-comment {
   color: inherit;
   text-decoration: none;
 }
-.groups-list-item a:hover {
+.groups-list-item a:hover,
+.groups-list-item a:active,
+.groups-list-item a:focus {
   color: var(--clr-accent-300);
   text-decoration: underline;
 }
@@ -649,7 +652,9 @@ body .MuiBackdrop-root {
   transition: background-color 150ms ease-in;
   cursor: pointer;
 }
-.close-modal:hover {
+.close-modal:hover,
+.close-modal:active,
+.close-modal:focus {
   color: var(--clr-back-400);
   background-color: var(--clr-accent-300);
 }
@@ -833,7 +838,9 @@ output#crop-thumbnail-container {
   height: 40px;
   width: 40px;
 }
-.crop-thumbnail--delete:hover {
+.crop-thumbnail--delete:hover,
+.crop-thumbnail--delete:active,
+.crop-thumbnail--delete:focus {
   background-color: var(--clr-neutral-400);
 }
 
@@ -986,7 +993,11 @@ output#crop-thumbnail-container {
   text-decoration: none;
 }
 .global-button:hover,
-.form-panel button:hover:not(.disabled) {
+.global-button:active,
+.global-button:focus,
+.form-panel button:hover:not(.disabled),
+.form-panel button:active:not(.disabled),
+.form-panel button:focus:not(.disabled) {
   color: var(--clr-neutral-200);
   background-color: var(--clr-compl-550);
 }
@@ -1122,10 +1133,14 @@ output#crop-thumbnail-container {
 .toggle-location-button.location-off {
   background-color: var(--clr-neutral-300);
 }
-.toggle-location-button.location-on:hover {
+.toggle-location-button.location-on:hover,
+.toggle-location-button.location-on:active,
+.toggle-location-button.location-on:focus {
   background-color: var(--clr-compl-550);
 }
-.toggle-location-button.location-off:hover {
+.toggle-location-button.location-off:hover,
+.toggle-location-button.location-off:active,
+.toggle-location-button.location-off:focus {
   background-color: var(--clr-neutral-200);
 }
 
@@ -1163,7 +1178,9 @@ output#crop-thumbnail-container {
   transition: background-color 50ms ease-in;
 }
 
-.go-back-button:hover {
+.go-back-button:hover,
+.go-back-button:focus,
+.go-back-button:active {
   background-color: var(--clr-neutral-400);
 }
 
@@ -1214,6 +1231,7 @@ footer p {
     font-size: 0.8rem;
   }
   .header-item--div:hover,
+  .header-item--div:focus,
   .header-item.after .header-item--link:not(.active):hover,
   .header-item.after .header-item--link:not(.active):focus {
     border-radius: 0;
