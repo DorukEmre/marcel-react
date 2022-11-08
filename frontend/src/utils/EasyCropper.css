@@ -23,6 +23,7 @@
   max-height: 550px;
   max-width: 450px;
   margin: 1.5rem auto 0;
+  /* margin: 0 auto; */
 }
 
 .cropper-container--cropper {
@@ -144,8 +145,12 @@
 }
 
 @media screen and (max-width: 480px) {
+  .cropper-container {
+    margin: 0 auto;
+  }
   .cropper-container--controls {
     padding: 1rem 2rem;
+    margin-top: 0;
   }
   .cropper-buttons-container {
     padding: 0 1rem;

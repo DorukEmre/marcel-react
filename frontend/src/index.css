@@ -822,6 +822,61 @@ output#crop-thumbnail-container {
   margin: 0 auto;
 }
 
+.form-group .location-switch {
+  margin-bottom: 0;
+}
+.location-switch--text {
+  margin-bottom: 5px;
+}
+.location-switch-checkbox-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.form-group .location-switch--checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.location-switch--slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--clr-neutral-400);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+.location-switch--slider:before {
+  position: absolute;
+  content: '';
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--clr-neutral-200);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+.location-switch--checkbox:checked + .location-switch--slider {
+  background-color: var(--clr-accent-300);
+}
+
+.location-switch--checkbox:focus + .location-switch--slider {
+  box-shadow: 0 0 1px var(--clr-accent-300);
+}
+
+.location-switch--checkbox:checked + .location-switch--slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
 /* ////////////////////// */
 /*   Log-in and Sign-up   */
 /* ////////////////////// */
@@ -1134,6 +1189,9 @@ footer p {
     background-color: transparent;
   }
 
+  .spot-container .form-panel h1 {
+    margin-bottom: 0;
+  }
   .cards-container {
     gap: 0;
   }

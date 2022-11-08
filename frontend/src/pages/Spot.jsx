@@ -23,6 +23,7 @@ const Spot = () => {
   const [catName, setCatName] = useState('')
   const [comment, setComment] = useState('')
   const [gps, setGps] = useState({})
+  const [showLocation, setShowLocation] = useState(true)
 
   const getExif = async ({
     target: {
@@ -59,6 +60,12 @@ const Spot = () => {
     handleCloseModal()
   }
 
+  const handleCropDelete = async () => {
+    setCroppedImage(null)
+    setGps({})
+    setShowLocation(true)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSendingFile(true)
@@ -78,6 +85,10 @@ const Spot = () => {
     formData.append('comment', comment)
     formData.append('longitude', gps.longitude)
     formData.append('latitude', gps.latitude)
+    formData.append(
+      'showLocation',
+      typeof gps.longitude === 'undefined' ? false : showLocation,
+    )
 
     try {
       // axios.post(url[, data[, config]])
@@ -174,7 +185,7 @@ const Spot = () => {
                     />
                     <div
                       className="crop-thumbnail--delete"
-                      onClick={() => setCroppedImage(null)}
+                      onClick={handleCropDelete}
                       tabIndex="0"
                     >
                       <img src={deleteIcon} alt="Delete cropped image" />
@@ -194,13 +205,38 @@ const Spot = () => {
                 <div className="form-group">
                   <label htmlFor="comment">Add a comment</label>
                   <input
+                    type="text"
                     id="comment"
                     // placeholder="Add a comment"
                     onChange={(e) => setComment(e.target.value)}
                     value={comment}
                   />
                 </div>
-                <div className="form-group file-upload-wrapper"></div>
+                <div className="form-group">
+                  <label htmlFor="show-location" className="location-switch">
+                    {typeof gps.latitude === 'undefined' ? (
+                      <p>No location data available for this picture</p>
+                    ) : (
+                      <>
+                        <p className="location-switch--text">
+                          Make location visible
+                        </p>
+                        <div className="location-switch-checkbox-wrapper">
+                          <input
+                            id="show-location"
+                            type="checkbox"
+                            className="location-switch--checkbox"
+                            onChange={(e) => {
+                              setShowLocation(e.target.checked)
+                            }}
+                            checked={showLocation}
+                          />
+                          <span className="location-switch--slider"></span>
+                        </div>
+                      </>
+                    )}
+                  </label>
+                </div>
                 <button>Submit</button>
               </>
             )}
