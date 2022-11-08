@@ -10,6 +10,9 @@ import deleteIcon from './delete_FILL0_wght600_GRAD0_opsz48.svg'
 import undoIcon from './undo_FILL0_wght600_GRAD0_opsz48.svg'
 import addPhoto from './add_a_photo_FILL1_wght400_GRAD0_opsz48.svg'
 import pinIcon from './pin-location-icon.svg'
+import menuIcon from './more_vert_FILL0_wght400_GRAD0_opsz24.svg'
+import locationOffIcon from './location_off_FILL0_wght600_GRAD0_opsz48.svg'
+import locationOnIcon from './location_on_FILL0_wght600_GRAD0_opsz48.svg'
 
 export {
   closeIcon,
@@ -24,4 +27,7 @@ export {
   undoIcon,
   addPhoto,
   pinIcon,
+  menuIcon,
+  locationOffIcon,
+  locationOnIcon,
 }

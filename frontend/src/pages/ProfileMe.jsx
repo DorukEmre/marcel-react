@@ -238,6 +238,47 @@ const ProfileMe = () => {
     }
   }
 
+  const handleToggleLocation = async (e, postId) => {
+    e.preventDefault()
+    let isMounted = true
+    const controller = new AbortController()
+
+    try {
+      const response = await axiosPrivate.put(
+        `api/posts/toggleLocation/${postId}`,
+        JSON.stringify({ currentUserId }),
+        {
+          signal: controller.signal,
+        },
+      )
+      // console.log('response?.data', response?.data)
+      const { updatedPost } = response.data
+
+      isMounted &&
+        setPosts((oldPosts) =>
+          oldPosts.map((post) =>
+            post._id === updatedPost._id
+              ? { ...post, showLocation: updatedPost.showLocation }
+              : post,
+          ),
+        )
+    } catch (err) {
+      console.error('Login again err', err)
+      if (!err?.response) {
+        console.log('No Server Response')
+      } else if (err.response?.status === 403) {
+        navigate('/login', { state: { from: location }, replace: true })
+      } else {
+        console.log('Request failed')
+      }
+    }
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }
+
   return (
     <main id="profile-page">
       <div className="profile-page-container">
@@ -325,6 +366,7 @@ const ProfileMe = () => {
                 handleToggleLike={handleToggleLike}
                 lastPostRef={lastPostRef}
                 ownProfile={true}
+                handleToggleLocation={handleToggleLocation}
               />
             ) : (
               <p>Can't connect to server</p>

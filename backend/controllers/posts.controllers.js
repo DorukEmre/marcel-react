@@ -105,6 +105,30 @@ module.exports = {
     }
   },
 
+  toggleLocation: async (req, res) => {
+    try {
+      const postid = req.params.postid
+      const userId = req.body.currentUserId
+      const postToUpdate = await Post.findById(postid).lean()
+
+      // Check if user making request is owner of post (just in case)
+      if (postToUpdate.user == userId) {
+        await Post.findOneAndUpdate(
+          { _id: postid },
+          // set showLocation to true if it is false, and to false if it is any other value.
+          [{ $set: { showLocation: { $eq: [false, '$showLocation'] } } }],
+        )
+        console.log('showLocation toggled')
+      }
+
+      const updatedPost = await Post.findById(postid).lean()
+
+      res.status(200).json({ updatedPost })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
   getComments: async (req, res) => {
     try {
       // console.log('req.params', req.params.postid)

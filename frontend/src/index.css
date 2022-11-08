@@ -303,12 +303,11 @@ h1 span.Marcel {
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
-  margin-bottom: 0.5rem;
   text-decoration: none;
 }
 .card--username--avatar {
-  height: 36px;
-  width: 36px;
+  height: 42px;
+  width: 42px;
   border-radius: 50%;
 }
 .card--username--name {
@@ -321,6 +320,12 @@ h1 span.Marcel {
 .card--username-wrapper:hover,
 .card--username-wrapper:focus {
   text-decoration: underline var(--clr-neutral-300) 2px;
+}
+.card-popup-menu {
+  background-color: var(--clr-back-400);
+  border: 1px solid var(--clr-back-300);
+  border-radius: 5px;
+  padding: 1rem;
 }
 
 .card--image-container {
@@ -343,7 +348,8 @@ span.like-number {
 button.like-button,
 button.open-comments,
 button.send-button,
-button.close-button {
+button.close-button,
+button.popup-menu-button {
   background-color: transparent;
   border: none;
   transition: background-color 150ms ease-in;
@@ -354,7 +360,8 @@ button.close-button {
 button.like-button:hover,
 button.open-comments:hover,
 button.send-button:hover,
-button.close-button:hover {
+button.close-button:hover,
+button.popup-menu-button:hover {
   background-color: var(--clr-neutral-600);
 }
 .card--comments-container {
@@ -1094,6 +1101,33 @@ output#crop-thumbnail-container {
   padding: 2rem 0 1rem;
 }
 
+#profile-page .card {
+  position: relative;
+}
+.toggle-location-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: none;
+  transition: background-color 150ms ease-in;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--clr-back-400);
+}
+
+.toggle-location-button.location-on {
+  background-color: var(--clr-accent-300);
+}
+.toggle-location-button.location-off {
+  background-color: var(--clr-neutral-300);
+}
+.toggle-location-button.location-on:hover {
+  background-color: var(--clr-compl-550);
+}
+.toggle-location-button.location-off:hover {
+  background-color: var(--clr-neutral-200);
+}
 /* ////////////////// */
 /* 404 - Missing page */
 /* ////////////////// */

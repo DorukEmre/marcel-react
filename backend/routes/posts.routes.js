@@ -14,5 +14,6 @@ router.post('/createComment/:postid', postsController.createComment)
 router.post('/createPost', upload.single('file'), postsController.createPost)
 
 router.put('/likePost/:postid', postsController.likePost)
+router.put('/toggleLocation/:postid', postsController.toggleLocation)
 
 module.exports = router
