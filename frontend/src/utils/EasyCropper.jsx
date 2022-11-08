@@ -55,7 +55,7 @@ const EasyCropper = (props) => {
                   value={zoom}
                   min={1}
                   max={3}
-                  step="any"
+                  step={0.01}
                   aria-labelledby="Zoom"
                   onChange={(e) => {
                     setZoom(e.target.value)

@@ -94,6 +94,9 @@
   background: transparent;
   cursor: pointer;
   width: 100%;
+  background-color: var(--clr-accent-300);
+  border-radius: 8px;
+  height: 8px;
 }
 
 /* Removes default focus */
@@ -102,32 +105,39 @@
 }
 
 /* slider track */
-.cropper-range::-webkit-slider-runnable-track,
+.cropper-range::-webkit-slider-runnable-track {
+  background-color: var(--clr-accent-300);
+  border-radius: 8px;
+  height: 8px;
+}
 .cropper-range::-moz-range-track {
   background-color: var(--clr-accent-300);
-  border-radius: 0.5rem;
-  height: 0.5rem;
+  border-radius: 8px;
+  height: 8px;
 }
 
 /* slider thumb */
 .cropper-range::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
+  -webkit-appearance: none;
   appearance: none;
-  margin-top: -12px; /* Centers thumb on the track */
-}
-.cropper-range::-moz-range-thumb {
-  border: none; /*Removes extra border that FF applies*/
-  border-radius: 50%; /*Removes default border-radius that FF applies*/
-}
-.cropper-range::-webkit-slider-thumb,
-.cropper-range::-moz-range-thumb {
-  /*custom styles*/
   background-color: var(--clr-compl-600);
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  margin-top: -4px;
+}
+.cropper-range::-moz-range-thumb {
+  background-color: var(--clr-compl-600);
+  height: 16px;
+  width: 16px;
+  border: none;
+  border-radius: 50%;
 }
 
-.cropper-range:focus::-webkit-slider-thumb,
+.cropper-range:focus::-webkit-slider-thumb {
+  outline: 2px solid var(--clr-neutral-400);
+  outline-offset: 0.125rem;
+}
 .cropper-range:focus::-moz-range-thumb {
   outline: 2px solid var(--clr-neutral-400);
   outline-offset: 0.125rem;
