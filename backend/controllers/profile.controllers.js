@@ -1,6 +1,6 @@
 const resizeAndCloudinary = require('../middleware/resize')
 const User = require('../models/User.model')
-// const Post = require("../models/Post.model");
+const Post = require('../models/Post.model')
 
 module.exports = {
   getMyProfile: async (req, res) => {
@@ -42,6 +42,31 @@ module.exports = {
       )
       // console.log('Profile pic updated')
       res.status(200).json({ profilePicUrl: foundUser.profilePicUrl })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  getPosts: async (req, res) => {
+    // console.log('req.query', req.query)
+    try {
+      const count = await Post.countDocuments({ user: req.query.user })
+      const page = Number(req.query.pagenum)
+      const perPage = 10
+
+      const posts = await Post.find({ user: req.query.user })
+        .skip((page - 1) * perPage)
+        .limit(perPage)
+        .sort({ createdAt: 'desc' })
+        .populate('user')
+        .lean()
+      // console.log('posts', posts)
+      const info = {
+        count,
+        pages: Math.ceil(count / perPage),
+        next: page < count / perPage ? page + 1 : null,
+      }
+      res.status(200).json({ info, posts })
     } catch (err) {
       console.log(err)
     }

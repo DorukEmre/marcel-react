@@ -8,7 +8,7 @@ const verifyJWT = require('../middleware/verifyJWT')
 router.use(verifyJWT)
 
 // GET posts from all users
-router.get('/feed/:pageid', postsController.getFeed)
+router.get('/feed/:pagenum', postsController.getFeed)
 // GET page to manage groups
 router.get('/groups', groupsController.getGroups)
 // GET page to explore map of cats in the neighborhood

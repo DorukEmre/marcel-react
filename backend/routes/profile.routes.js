@@ -12,6 +12,7 @@ router.put(
   upload.single('file'),
   profileController.updatePicture,
 )
+router.get('/getPosts', profileController.getPosts)
 
 // router.get('/getComments/:postid', profileController.getComments)
 // router.post('/createComment/:postid', profileController.createComment)

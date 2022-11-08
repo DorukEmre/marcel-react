@@ -7,7 +7,7 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const count = await Post.estimatedDocumentCount()
-      const page = Number(req.params.pageid)
+      const page = Number(req.params.pagenum)
       const perPage = 10
 
       const posts = await Post.find()

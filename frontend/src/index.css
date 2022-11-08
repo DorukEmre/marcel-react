@@ -1073,6 +1073,10 @@ output#crop-thumbnail-container {
   background-color: var(--clr-back-400);
 }
 
+.user-pictures h2 {
+  padding: 2rem 0 1rem;
+}
+
 /* ////////////////// */
 /* 404 - Missing page */
 /* ////////////////// */
@@ -1200,7 +1204,11 @@ footer p {
   main#spot-page {
     padding: 0;
   }
-  #feed-page .card {
+  main#my-profile-page {
+    padding: 1rem 0 0;
+  }
+  #feed-page .card,
+  #my-profile-page .card {
     border-radius: 0;
     border: 0;
     box-shadow: none;
@@ -1230,6 +1238,10 @@ footer p {
   }
   .profile-pic-image-container {
     margin: 1rem auto;
+  }
+
+  .user-pictures h2 {
+    padding: 2rem 2rem 1rem;
   }
 }
 
