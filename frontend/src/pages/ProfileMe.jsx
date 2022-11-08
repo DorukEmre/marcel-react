@@ -4,6 +4,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { profileInactive } from '../assets/nav_icons'
 import { addPhoto } from '../assets/icons'
 import EasyCropperModal from '../components/EasyCropperModal'
+import BasicModal from '../components/BasicModal'
 import useAuth from '../hooks/useAuth'
 
 const ProfileMe = () => {
@@ -11,6 +12,7 @@ const ProfileMe = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
+  const [sendingFile, setSendingFile] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
 
   const [openModal, setOpenModal] = useState(false)
@@ -42,6 +44,7 @@ const ProfileMe = () => {
     e.preventDefault()
     let isMounted = true
     const controller = new AbortController()
+    setSendingFile(true)
 
     // console.log(croppedImage)
     const formData = new FormData()
@@ -70,6 +73,7 @@ const ProfileMe = () => {
       isMounted && setSelectedFile(null)
       isMounted && setCroppedImage(null)
       isMounted && setProfilePicUrl(response.data.profilePicUrl)
+      setSendingFile(false)
       handleCloseModal()
     } catch (err) {
       console.error('Login again err', err)
@@ -183,6 +187,16 @@ const ProfileMe = () => {
           buttonText="Save"
           setCroppedImage={setCroppedImage}
         />
+        {sendingFile && (
+          <BasicModal
+            openModal={sendingFile}
+            handleCloseModal={() => sendingFile(false)}
+            className="sending-file-modal confirmation-modal"
+            modalMsg="File uploading"
+            displayButton={false}
+            displayAnimation={true}
+          ></BasicModal>
+        )}
       </section>
       <section className="my-pictures"></section>
       <section className="my-groups"></section>
