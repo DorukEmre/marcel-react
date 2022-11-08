@@ -1,29 +1,24 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import useAuth from '../hooks/useAuth'
 import { profileInactive } from '../assets/nav_icons'
-import { addPhoto } from '../assets/icons'
-import EasyCropperModal from '../components/EasyCropperModal'
-import BasicModal from '../components/BasicModal'
 import Posts from '../components/Posts'
 
-const ProfileMe = () => {
+const ProfileUser = () => {
   const { auth } = useAuth()
   const currentUserId = auth.userId
+  const params = useParams()
+  const userid = params.userid
 
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const [sendingFile, setSendingFile] = useState(false)
-  const [selectedFile, setSelectedFile] = useState(null)
+  if (userid === currentUserId) {
+    navigate('/profile/me', { state: { from: location }, replace: true })
+  }
 
-  const [openModal, setOpenModal] = useState(false)
-  const handleOpenModal = () => setOpenModal(true)
-  const handleCloseModal = () => setOpenModal(false)
-
-  const [croppedImage, setCroppedImage] = useState(null)
   const [profilePicUrl, setProfilePicUrl] = useState(null)
   const [username, setUsername] = useState(null)
   const [posts, setPosts] = useState([])
@@ -34,84 +29,18 @@ const ProfileMe = () => {
   const [hasNextPage, setHasNextPage] = useState(false)
   const [pageNum, setPageNum] = useState(1)
 
-  const onSelectFile = (event) => {
-    // console.log('event.target.files', event.target.files)
-    if (event.target.files && event.target.files.length > 0) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target.files[0])
-      reader.addEventListener('load', () => {
-        setSelectedFile(reader.result)
-      })
-    }
-  }
-
-  const handleCropCancel = async () => {
-    setSelectedFile(null)
-    setCroppedImage(null)
-    handleCloseModal()
-  }
-
-  const handleCropSave = async (e, croppedImage) => {
-    e.preventDefault()
-    let isMounted = true
-    const controller = new AbortController()
-    setSendingFile(true)
-
-    // console.log(croppedImage)
-    const formData = new FormData()
-    await fetch(croppedImage)
-      .then((res) => res.blob())
-      .then((blob) => {
-        // console.log(blob)
-        formData.append('file', blob)
-      })
-    // formData.append(name, value)
-
-    try {
-      // axios.post(url[, data[, config]])
-      const response = await axiosPrivate.put(
-        'api/profile/updatePicture',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          signal: controller.signal,
-        },
-      )
-      // console.log('response?.data', response?.data)
-
-      isMounted && setSelectedFile(null)
-      isMounted && setCroppedImage(null)
-      isMounted && setProfilePicUrl(response.data.profilePicUrl)
-      setSendingFile(false)
-      handleCloseModal()
-    } catch (err) {
-      console.error('Login again err', err)
-      if (!err?.response) {
-        console.log('No Server Response')
-      } else if (err.response?.status === 403) {
-        navigate('/login', { state: { from: location }, replace: true })
-      } else {
-        console.log('Request failed')
-      }
-    }
-
-    return () => {
-      isMounted = false
-      controller.abort()
-    }
-  }
-
   useEffect(() => {
     let isMounted = true
     const controller = new AbortController()
 
     const getUserProfile = async () => {
       try {
-        const response = await axiosPrivate.get('/api/profile/getMyProfile', {
-          signal: controller.signal,
-        })
+        const response = await axiosPrivate.get(
+          `/api/profile/getUserProfile/${userid}`,
+          {
+            signal: controller.signal,
+          },
+        )
         const { username, profilePicUrl } = response.data
         // console.log('response.data', response.data)
         isMounted && setProfilePicUrl(profilePicUrl)
@@ -146,7 +75,7 @@ const ProfileMe = () => {
       try {
         const response = await axiosPrivate.get(`/api/profile/getPosts/`, {
           params: {
-            user: currentUserId,
+            user: userid,
             pagenum: pageNum,
           },
           signal: controller.signal,
@@ -258,64 +187,9 @@ const ProfileMe = () => {
                 height="150"
               />
             </div>
-            <div className="file-upload-container--button-wrapper">
-              <label htmlFor="imageUpload">
-                <button
-                  htmlFor="imageUpload"
-                  id="custom-file-upload-button"
-                  type="button"
-                >
-                  <img
-                    src={addPhoto}
-                    className="custom-file-upload-button--image"
-                  />
-                  <input
-                    type="file"
-                    id="imageUpload"
-                    className="custom-file-upload-button--input"
-                    accept="image/*"
-                    tabIndex="-1"
-                    required
-                    onChange={(event) => {
-                      onSelectFile(event)
-                      handleOpenModal()
-                    }}
-                  />
-                </button>
-              </label>
-            </div>
           </div>
-          {!profilePicUrl ? <p>Add a profile picture</p> : null}
         </div>
-
-        <EasyCropperModal
-          image={selectedFile}
-          openModal={openModal}
-          handleCloseModal={handleCloseModal}
-          handleCropSave={handleCropSave}
-          handleCropCancel={handleCropCancel}
-          className="crop-modal"
-          modalMsg="some text"
-          displayButton={true}
-          buttonClass="close-modal"
-          buttonText="Save"
-          setCroppedImage={setCroppedImage}
-        />
-        {sendingFile && (
-          <BasicModal
-            openModal={sendingFile}
-            handleCloseModal={() => sendingFile(false)}
-            className="sending-file-modal confirmation-modal"
-            modalMsg="File uploading"
-            displayButton={false}
-            displayAnimation={true}
-          ></BasicModal>
-        )}
       </section>
-      {/* Set Pictures and Grups as tabs */}
-      {/* Check <Link to="?tab=one" preventScrollReset={true} />
-       */}
-      {/* https://reactrouter.com/en/main/components/link */}
       <section className="user-pictures">
         <h2>Pictures</h2>
 
@@ -326,7 +200,6 @@ const ProfileMe = () => {
               currentUserId={currentUserId}
               handleToggleLike={handleToggleLike}
               lastPostRef={lastPostRef}
-              ownProfile={true}
             />
           ) : (
             <p>Can't connect to server</p>
@@ -338,4 +211,4 @@ const ProfileMe = () => {
   )
 }
 
-export default ProfileMe
+export default ProfileUser

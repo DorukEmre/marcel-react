@@ -71,4 +71,19 @@ module.exports = {
       console.log(err)
     }
   },
+
+  getUserProfile: async (req, res) => {
+    // console.log('req.body', req.body)
+    // console.log('req.user', req.user)
+    // console.log('req.params', req.params)
+    try {
+      const foundUser = await User.findById(req.params.userid)
+      res.status(200).json({
+        profilePicUrl: foundUser.profilePicUrl,
+        username: foundUser.username,
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
 }

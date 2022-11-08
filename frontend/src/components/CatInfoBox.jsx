@@ -94,14 +94,14 @@ const CatInfoBox = ({
     }
   }
 
+  // console.log(post)
   return (
     <div className="cat-info">
       <Card
         key={post._id}
         postId={post._id}
         catName={post.catName}
-        username={post.user.username}
-        profilePicUrl={post.user.profilePicUrl}
+        user={post.user}
         imageUrl={post.imageUrl}
         imageXY="400"
         greatCat={post.greatCat}

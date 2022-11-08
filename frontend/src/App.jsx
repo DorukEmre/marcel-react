@@ -13,6 +13,7 @@ import Groups from './pages/Groups'
 import Profile from './pages/Profile'
 import Missing from './pages/Missing'
 import ProfileMe from './pages/ProfileMe'
+import ProfileUser from './pages/ProfileUser'
 import ProfileSettings from './pages/ProfileSettings'
 
 function App() {
@@ -49,8 +50,8 @@ function App() {
               <Route path="profile" element={<Profile />}>
                 <Route path="me" element={<ProfileMe />} />
                 <Route path="settings" element={<ProfileSettings />} />
-                <Route path=":userid" element={<Profile />} />
               </Route>
+              <Route path="profile/:userid" element={<ProfileUser />} />
             </Route>
           </Route>
 

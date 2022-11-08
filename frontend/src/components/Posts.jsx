@@ -46,8 +46,7 @@ const Posts = (props) => {
       key: index,
       postId: post._id,
       catName: post.catName,
-      username: post.user.username,
-      profilePicUrl: post.user.profilePicUrl,
+      user: post.user,
       imageUrl: post.imageUrl,
       imageXY: 800,
       greatCat: post.greatCat,
@@ -57,6 +56,7 @@ const Posts = (props) => {
       getComments: getComments,
       allComments: allComments,
       setAllComments: setAllComments,
+      ownProfile: props.ownProfile ? props.ownProfile : false,
     }
     if (index === props.posts.length - 2) {
       return <Card ref={props.lastPostRef} {...componentProps} />

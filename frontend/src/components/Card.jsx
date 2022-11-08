@@ -1,5 +1,6 @@
 import React from 'react'
 import Collapsible from 'react-collapsible'
+import { Link } from 'react-router-dom'
 import {
   closeIcon,
   commentIcon,
@@ -12,34 +13,41 @@ import Comments from '../components/Comments'
 const Card = React.forwardRef((props, ref) => {
   return (
     <li className="card" ref={typeof ref !== 'undefined' ? ref : null}>
-      <section className="card--header-container">
-        <div className="card--header-text">
-          <div className="card--username-wrapper">
-            <img
-              src={
-                typeof props.profilePicUrl !== 'undefined'
-                  ? `${props.profilePicUrl.slice(
-                      0,
-                      49,
-                    )}/w_72,h_72,c_scale${props.profilePicUrl.slice(49)}`
-                  : profileInactive
-              }
-              alt="user profile picture"
-              className="card--username--avatar"
-            />
-            <span className="card--username--name">{props.username}</span>
+      {!props.ownProfile ? (
+        <section className="card--header-container">
+          <div className="card--header-text">
+            <Link
+              to={`../../profile/${props.user._id}`}
+              className="card--username-wrapper"
+            >
+              <img
+                src={
+                  typeof props.user.profilePicUrl !== 'undefined'
+                    ? `${props.user.profilePicUrl.slice(
+                        0,
+                        49,
+                      )}/w_72,h_72,c_scale${props.user.profilePicUrl.slice(49)}`
+                    : profileInactive
+                }
+                alt="user profile picture"
+                className="card--username--avatar"
+              />
+              <span className="card--username--name">
+                {props.user.username}
+              </span>
+            </Link>
+            <p className="card--catName">{props.catName}</p>
           </div>
-          <p className="card--catName">{props.catName}</p>
-        </div>
-        {typeof props.handleClose !== 'undefined' ? (
-          <button
-            className="card--close-button close-button"
-            onClick={props.handleClose}
-          >
-            <img src={closeIcon} alt="" height="24px" width="24px" />
-          </button>
-        ) : null}
-      </section>
+          {typeof props.handleClose !== 'undefined' ? (
+            <button
+              className="card--close-button close-button"
+              onClick={props.handleClose}
+            >
+              <img src={closeIcon} alt="" height="24px" width="24px" />
+            </button>
+          ) : null}
+        </section>
+      ) : null}
 
       <section className="card--image-container">
         <img

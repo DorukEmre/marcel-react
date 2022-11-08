@@ -304,14 +304,23 @@ h1 span.Marcel {
   justify-content: flex-start;
   gap: 6px;
   margin-bottom: 0.5rem;
+  text-decoration: none;
 }
 .card--username--avatar {
   height: 36px;
   width: 36px;
   border-radius: 50%;
 }
+.card--username--name {
+  color: var(--clr-neutral-300);
+}
 .card--close-button {
   flex: 0;
+}
+
+.card--username-wrapper:hover,
+.card--username-wrapper:focus {
+  text-decoration: underline var(--clr-neutral-300) 2px;
 }
 
 .card--image-container {

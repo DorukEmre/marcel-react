@@ -7,16 +7,14 @@ const verifyJWT = require('../middleware/verifyJWT')
 router.use(verifyJWT)
 
 router.get('/getMyProfile', profileController.getMyProfile)
+router.get('/getUserProfile/:userid', profileController.getUserProfile)
+
 router.put(
   '/updatePicture',
   upload.single('file'),
   profileController.updatePicture,
 )
+// Get a user's posts oon their profile page
 router.get('/getPosts', profileController.getPosts)
-
-// router.get('/getComments/:postid', profileController.getComments)
-// router.post('/createComment/:postid', profileController.createComment)
-
-// router.put('/likePost/:postid', profileController.likePost)
 
 module.exports = router
