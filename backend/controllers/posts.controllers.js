@@ -63,6 +63,7 @@ module.exports = {
         catName: req.body.catName,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
+        showLocation: req.body.showLocation,
         imageUrl: result.secure_url,
         cloudinaryId: result.public_id,
         caption: req.body.comment,

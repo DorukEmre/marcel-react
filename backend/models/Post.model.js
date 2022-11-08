@@ -12,6 +12,7 @@ const PostSchema = new mongoose.Schema({
   cloudinaryId: { type: String, require: true },
   longitude: { type: String },
   latitude: { type: String },
+  showLocation: { type: Boolean },
   caption: { type: String },
   user: {
     type: mongoose.Schema.Types.ObjectId,
