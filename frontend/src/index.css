@@ -1052,6 +1052,10 @@ output#crop-thumbnail-container {
 /* //////////////// */
 /*   Profile page   */
 /* //////////////// */
+.profile-page-container {
+  max-width: 58rem;
+  margin: 0 auto;
+}
 .add-profile-pic-container {
   display: flex;
   flex-direction: column;
@@ -1218,11 +1222,11 @@ footer p {
   main#explore-page {
     padding: 0;
   }
-  main#my-profile-page {
+  main#profile-page {
     padding: 1rem 0 0;
   }
   #feed-page .card,
-  #my-profile-page .card {
+  #profile-page .card {
     border-radius: 0;
     border: 0;
     box-shadow: none;

@@ -168,45 +168,47 @@ const ProfileUser = () => {
   }
 
   return (
-    <main id="my-profile-page">
-      <section className="profile-pic-header-container">
-        <h1>{username}</h1>
+    <main id="profile-page">
+      <div className="profile-page-container">
+        <section className="profile-pic-header-container">
+          <h1>{username}</h1>
 
-        <div className="add-profile-pic-container">
-          <div className="profile-pic-image-container">
-            <div className="profile-pic-image-container--image">
-              <img
-                src={
-                  profilePicUrl
-                    ? profilePicUrl.slice(0, 49) +
-                      '/w_300,h_300,c_scale' +
-                      profilePicUrl.slice(49)
-                    : profileInactive
-                }
-                alt="profile-pic"
-                height="150"
-              />
+          <div className="add-profile-pic-container">
+            <div className="profile-pic-image-container">
+              <div className="profile-pic-image-container--image">
+                <img
+                  src={
+                    profilePicUrl
+                      ? profilePicUrl.slice(0, 49) +
+                        '/w_300,h_300,c_scale' +
+                        profilePicUrl.slice(49)
+                      : profileInactive
+                  }
+                  alt="profile-pic"
+                  height="150"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      <section className="user-pictures">
-        <h2>Pictures</h2>
+        </section>
+        <section className="user-pictures">
+          <h2>Pictures</h2>
 
-        <ul className="cards-container">
-          {posts ? (
-            <Posts
-              posts={posts}
-              currentUserId={currentUserId}
-              handleToggleLike={handleToggleLike}
-              lastPostRef={lastPostRef}
-            />
-          ) : (
-            <p>Can't connect to server</p>
-          )}
-        </ul>
-      </section>
-      <section className="user-groups"></section>
+          <ul className="cards-container">
+            {posts ? (
+              <Posts
+                posts={posts}
+                currentUserId={currentUserId}
+                handleToggleLike={handleToggleLike}
+                lastPostRef={lastPostRef}
+              />
+            ) : (
+              <p>Can't connect to server</p>
+            )}
+          </ul>
+        </section>
+        <section className="user-groups"></section>
+      </div>
     </main>
   )
 }

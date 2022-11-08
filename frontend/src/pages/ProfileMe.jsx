@@ -239,101 +239,100 @@ const ProfileMe = () => {
   }
 
   return (
-    <main id="my-profile-page">
-      <section className="profile-pic-header-container">
-        <h1>{username}</h1>
-
-        <div className="add-profile-pic-container">
-          <div className="profile-pic-image-container">
-            <div className="profile-pic-image-container--image">
-              <img
-                src={
-                  profilePicUrl
-                    ? profilePicUrl.slice(0, 49) +
-                      '/w_300,h_300,c_scale' +
-                      profilePicUrl.slice(49)
-                    : profileInactive
-                }
-                alt="profile-pic"
-                height="150"
-              />
+    <main id="profile-page">
+      <div className="profile-page-container">
+        <section className="profile-pic-header-container">
+          <h1>{username}</h1>
+          <div className="add-profile-pic-container">
+            <div className="profile-pic-image-container">
+              <div className="profile-pic-image-container--image">
+                <img
+                  src={
+                    profilePicUrl
+                      ? profilePicUrl.slice(0, 49) +
+                        '/w_300,h_300,c_scale' +
+                        profilePicUrl.slice(49)
+                      : profileInactive
+                  }
+                  alt="profile-pic"
+                  height="150"
+                />
+              </div>
+              <div className="file-upload-container--button-wrapper">
+                <label htmlFor="imageUpload">
+                  <button
+                    htmlFor="imageUpload"
+                    id="custom-file-upload-button"
+                    type="button"
+                  >
+                    <img
+                      src={addPhoto}
+                      className="custom-file-upload-button--image"
+                    />
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      className="custom-file-upload-button--input"
+                      accept="image/*"
+                      tabIndex="-1"
+                      required
+                      onChange={(event) => {
+                        onSelectFile(event)
+                        handleOpenModal()
+                      }}
+                    />
+                  </button>
+                </label>
+              </div>
             </div>
-            <div className="file-upload-container--button-wrapper">
-              <label htmlFor="imageUpload">
-                <button
-                  htmlFor="imageUpload"
-                  id="custom-file-upload-button"
-                  type="button"
-                >
-                  <img
-                    src={addPhoto}
-                    className="custom-file-upload-button--image"
-                  />
-                  <input
-                    type="file"
-                    id="imageUpload"
-                    className="custom-file-upload-button--input"
-                    accept="image/*"
-                    tabIndex="-1"
-                    required
-                    onChange={(event) => {
-                      onSelectFile(event)
-                      handleOpenModal()
-                    }}
-                  />
-                </button>
-              </label>
-            </div>
+            {!profilePicUrl ? <p>Add a profile picture</p> : null}
           </div>
-          {!profilePicUrl ? <p>Add a profile picture</p> : null}
-        </div>
-
-        <EasyCropperModal
-          image={selectedFile}
-          openModal={openModal}
-          handleCloseModal={handleCloseModal}
-          handleCropSave={handleCropSave}
-          handleCropCancel={handleCropCancel}
-          className="crop-modal"
-          modalMsg="some text"
-          displayButton={true}
-          buttonClass="close-modal"
-          buttonText="Save"
-          setCroppedImage={setCroppedImage}
-        />
-        {sendingFile && (
-          <BasicModal
-            openModal={sendingFile}
-            handleCloseModal={() => sendingFile(false)}
-            className="sending-file-modal confirmation-modal"
-            modalMsg="File uploading"
-            displayButton={false}
-            displayAnimation={true}
-          ></BasicModal>
-        )}
-      </section>
-      {/* Set Pictures and Grups as tabs */}
-      {/* Check <Link to="?tab=one" preventScrollReset={true} />
-       */}
-      {/* https://reactrouter.com/en/main/components/link */}
-      <section className="user-pictures">
-        <h2>Pictures</h2>
-
-        <ul className="cards-container">
-          {posts ? (
-            <Posts
-              posts={posts}
-              currentUserId={currentUserId}
-              handleToggleLike={handleToggleLike}
-              lastPostRef={lastPostRef}
-              ownProfile={true}
-            />
-          ) : (
-            <p>Can't connect to server</p>
+          <EasyCropperModal
+            image={selectedFile}
+            openModal={openModal}
+            handleCloseModal={handleCloseModal}
+            handleCropSave={handleCropSave}
+            handleCropCancel={handleCropCancel}
+            className="crop-modal"
+            modalMsg="some text"
+            displayButton={true}
+            buttonClass="close-modal"
+            buttonText="Save"
+            setCroppedImage={setCroppedImage}
+          />
+          {sendingFile && (
+            <BasicModal
+              openModal={sendingFile}
+              handleCloseModal={() => sendingFile(false)}
+              className="sending-file-modal confirmation-modal"
+              modalMsg="File uploading"
+              displayButton={false}
+              displayAnimation={true}
+            ></BasicModal>
           )}
-        </ul>
-      </section>
-      <section className="user-groups"></section>
+        </section>
+        {/* Set Pictures and Grups as tabs */}
+        {/* Check <Link to="?tab=one" preventScrollReset={true} />
+         */}
+        {/* https://reactrouter.com/en/main/components/link */}
+        <section className="user-pictures">
+          <h2>Pictures</h2>
+          <ul className="cards-container">
+            {posts ? (
+              <Posts
+                posts={posts}
+                currentUserId={currentUserId}
+                handleToggleLike={handleToggleLike}
+                lastPostRef={lastPostRef}
+                ownProfile={true}
+              />
+            ) : (
+              <p>Can't connect to server</p>
+            )}
+          </ul>
+        </section>
+        <section className="user-groups"></section>
+      </div>
     </main>
   )
 }
