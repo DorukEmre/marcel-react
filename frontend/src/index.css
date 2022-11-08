@@ -695,8 +695,12 @@ body .MuiBackdrop-root {
   width: max-content;
 }
 .cat-info .card {
-  max-width: calc(200px + 2rem);
+  /* because of inherited widths */
+  max-width: 200px;
   min-width: 200px;
+}
+.cat-info .card--image-container {
+  min-height: 200px;
 }
 .cat-info--header-container {
   display: flex;
@@ -1210,7 +1214,8 @@ footer p {
   }
 
   main#feed-page,
-  main#spot-page {
+  main#spot-page,
+  main#explore-page {
     padding: 0;
   }
   main#my-profile-page {
@@ -1251,6 +1256,11 @@ footer p {
 
   .user-pictures h2 {
     padding: 2rem 2rem 1rem;
+  }
+
+  .map {
+    width: 100vw;
+    margin: 0;
   }
 }
 
