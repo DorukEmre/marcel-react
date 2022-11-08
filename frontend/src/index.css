@@ -895,6 +895,7 @@ output#crop-thumbnail-container {
   box-shadow: inset 0 1px 2px rgba(203, 203, 210, 0.2),
     0 0 4px rgba(121, 88, 159, 0.3);
 }
+.global-button,
 .form-panel button {
   color: var(--clr-back-400);
   background-color: var(--clr-accent-300);
@@ -906,6 +907,10 @@ output#crop-thumbnail-container {
   cursor: pointer;
   transition-duration: 0.2s;
 }
+.global-button {
+  text-decoration: none;
+}
+.global-button:hover,
 .form-panel button:hover:not(.disabled) {
   color: var(--clr-neutral-200);
   background-color: var(--clr-compl-550);

@@ -118,7 +118,9 @@ const SignUp = () => {
             <h1>Account created</h1>
             <br />
             <p>
-              <Link to="/login">Please log in</Link>
+              <Link to="/login" className="global-button">
+                Please log in
+              </Link>
             </p>
           </section>
         ) : (
