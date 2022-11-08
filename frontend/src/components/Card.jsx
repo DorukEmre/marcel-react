@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Collapsible from 'react-collapsible'
 import { Link } from 'react-router-dom'
 import {
@@ -6,14 +6,49 @@ import {
   commentIcon,
   likeFalseIcon,
   likeTrueIcon,
+  menuIcon,
+  locationOffIcon,
+  locationOnIcon,
 } from '../assets/icons'
 import { profileInactive } from '../assets/nav_icons'
 import Comments from '../components/Comments'
+import MenuPopper from './MenuPopper'
 
 const Card = React.forwardRef((props, ref) => {
+  // const [anchorPopper, setAnchorPopper] = useState(null)
+  // const [openMenuPopper, setOpenMenuPopper] = useState(false)
+
+  // const handleOpenMenu = (event) => {
+  //   setAnchorPopper(event.currentTarget)
+  //   setOpenMenuPopper((prev) => !prev)
+  // }
+
   return (
     <li className="card" ref={typeof ref !== 'undefined' ? ref : null}>
-      {!props.ownProfile ? (
+      {props.ownProfile ? (
+        <>
+          <button
+            aria-describedby="menu"
+            type="button"
+            onClick={(e) => props.handleToggleLocation(e, props.postId)}
+            className={`toggle-location-button ${
+              props.showLocation ? 'location-on' : 'location-off'
+            }`}
+          >
+            <img
+              src={props.showLocation ? locationOnIcon : locationOffIcon}
+              alt=""
+              height="24px"
+              width="24px"
+            />
+          </button>
+          <p className="toggle-location-tooltip">
+            {props.showLocation
+              ? 'Click to hide location on map'
+              : 'Click to show location on map'}
+          </p>
+        </>
+      ) : (
         <section className="card--header-container">
           <div className="card--header-text">
             <Link
@@ -36,8 +71,23 @@ const Card = React.forwardRef((props, ref) => {
                 {props.user.username}
               </span>
             </Link>
-            <p className="card--catName">{props.catName}</p>
           </div>
+
+          {/* <button
+            aria-describedby="menu"
+            type="button"
+            onClick={handleOpenMenu}
+            className="popup-menu-button"
+          >
+            <img src={menuIcon} alt="" height="24px" width="24px" />
+          </button>
+          <MenuPopper
+            anchorPopper={anchorPopper}
+            openMenuPopper={openMenuPopper}
+            id="menu"
+            className="card-popup-menu"
+          /> */}
+
           {typeof props.handleClose !== 'undefined' ? (
             <button
               className="card--close-button close-button"
@@ -47,7 +97,7 @@ const Card = React.forwardRef((props, ref) => {
             </button>
           ) : null}
         </section>
-      ) : null}
+      )}
 
       <section className="card--image-container">
         <img
