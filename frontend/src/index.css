@@ -708,7 +708,7 @@ body .MuiBackdrop-root {
 }
 .cat-info .card {
   /* because of inherited widths */
-  max-width: 200px;
+  max-width: min(90vw, 300px);
   min-width: 200px;
 }
 .cat-info .card--image-container {
@@ -1143,7 +1143,9 @@ output#crop-thumbnail-container {
 .toggle-location-button.location-off:focus {
   background-color: var(--clr-neutral-200);
 }
-
+.toggle-location-button.no-gps {
+  filter: grayscale(1);
+}
 .toggle-location-button:hover + .toggle-location-tooltip,
 .toggle-location-button:focus + .toggle-location-tooltip,
 .toggle-location-button:active + .toggle-location-tooltip {
@@ -1303,6 +1305,9 @@ footer p {
     border: 0;
     box-shadow: none;
     padding: 0 0 2.5rem;
+  }
+  .cat-info {
+    right: 1rem;
   }
   .cat-info .card {
     border: 0;

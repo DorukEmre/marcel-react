@@ -99,13 +99,8 @@ const CatInfoBox = ({
     <div className="cat-info">
       <Card
         key={post._id}
-        postId={post._id}
-        catName={post.catName}
-        user={post.user}
-        imageUrl={post.imageUrl}
+        post={post}
         imageXY="400"
-        greatCat={post.greatCat}
-        caption={post.caption}
         handleToggleLike={handleToggleLike}
         currentUserId={currentUserId}
         getComments={getComments}

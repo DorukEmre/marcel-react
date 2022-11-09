@@ -32,7 +32,15 @@ const Spot = () => {
   }) => {
     if (file && file.name) {
       let output = await exifr.parse(file)
-      setGps({ longitude: output.longitude, latitude: output.latitude })
+
+      if (
+        Number.isFinite(Number(output.longitude)) &&
+        Number.isFinite(Number(output.latitude))
+      ) {
+        setGps({ longitude: output.longitude, latitude: output.latitude })
+      } else {
+        setGps({ longitude: 'undefined', latitude: 'undefined' })
+      }
     }
   }
 
@@ -85,10 +93,13 @@ const Spot = () => {
     formData.append('comment', comment)
     formData.append('longitude', gps.longitude)
     formData.append('latitude', gps.latitude)
-    formData.append(
-      'showLocation',
-      typeof gps.longitude === 'undefined' ? false : showLocation,
-    )
+    let checkShowLocation =
+      typeof gps.longitude === 'number' &&
+      typeof gps.latitude === 'number' &&
+      showLocation === true
+        ? true
+        : false
+    formData.append('showLocation', checkShowLocation)
 
     try {
       // axios.post(url[, data[, config]])
@@ -214,7 +225,8 @@ const Spot = () => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="show-location" className="location-switch">
-                    {typeof gps.latitude === 'undefined' ? (
+                    {typeof gps.latitude !== 'number' ||
+                    typeof gps.longitude !== 'number' ? (
                       <p>No location data available for this picture</p>
                     ) : (
                       <>

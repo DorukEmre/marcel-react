@@ -44,14 +44,8 @@ const Posts = (props) => {
   const cards = props.posts.map((post, index) => {
     let componentProps = {
       key: index,
-      postId: post._id,
-      catName: post.catName,
-      user: post.user,
-      imageUrl: post.imageUrl,
+      post: post,
       imageXY: 800,
-      greatCat: post.greatCat,
-      caption: post.caption,
-      showLocation: post.showLocation,
       handleToggleLike: props.handleToggleLike,
       handleToggleLocation: props.handleToggleLocation,
       currentUserId: props.currentUserId,
