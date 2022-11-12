@@ -23,6 +23,7 @@ const Spot = () => {
   const [catName, setCatName] = useState('')
   const [comment, setComment] = useState('')
   const [gps, setGps] = useState({})
+  const [exifData, setExifData] = useState({})
   const [showLocation, setShowLocation] = useState(true)
 
   const getExif = async ({
@@ -32,6 +33,7 @@ const Spot = () => {
   }) => {
     if (file && file.name) {
       let output = await exifr.parse(file)
+      setExifData(output)
 
       if (
         Number.isFinite(Number(output.longitude)) &&
@@ -65,12 +67,14 @@ const Spot = () => {
     setSelectedFile(null)
     setCroppedImage(null)
     setGps({})
+    setExifData({})
     handleCloseModal()
   }
 
   const handleCropDelete = async () => {
     setCroppedImage(null)
     setGps({})
+    setExifData({})
     setShowLocation(true)
   }
 
@@ -100,6 +104,7 @@ const Spot = () => {
         ? true
         : false
     formData.append('showLocation', checkShowLocation)
+    formData.append('exifData', JSON.stringify(exifData))
 
     try {
       // axios.post(url[, data[, config]])
@@ -115,10 +120,12 @@ const Spot = () => {
       )
       // console.log('response?.data', response?.data)
 
-      isMounted && setCatName('')
-      isMounted && setComment('')
-      isMounted && setCroppedImage(null)
-      isMounted && setGps({})
+      isMounted &&
+        setCatName('') &&
+        setComment('') &&
+        setCroppedImage(null) &&
+        setGps({}) &&
+        setExifData({})
       setSendingFile(false)
       navigate('/feed')
     } catch (err) {

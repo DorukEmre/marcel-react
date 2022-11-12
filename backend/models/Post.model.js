@@ -13,6 +13,7 @@ const PostSchema = new mongoose.Schema({
   longitude: { type: String },
   latitude: { type: String },
   showLocation: { type: Boolean },
+  exifJSON: { type: String },
   caption: { type: String },
   user: {
     type: mongoose.Schema.Types.ObjectId,

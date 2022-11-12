@@ -54,6 +54,7 @@ module.exports = {
       // console.log('req.user', req.user)
       // console.log('req.file', req.file)
       // console.log('req.body', req.body)
+      // console.log('req.body.exifJSON', JSON.parse(req.body.exif))
 
       const result = await resizeAndCloudinary(req, 800, 'posts')
 
@@ -64,6 +65,7 @@ module.exports = {
         latitude: req.body.latitude,
         longitude: req.body.longitude,
         showLocation: req.body.showLocation,
+        exifJSON: req.body.exifData,
         imageUrl: result.secure_url,
         cloudinaryId: result.public_id,
         caption: req.body.comment,
