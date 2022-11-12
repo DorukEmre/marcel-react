@@ -126,7 +126,7 @@
   height: 16px;
   width: 16px;
   border-radius: 50%;
-  margin-top: -2px;
+  margin-top: -6px;
 }
 .cropper-range::-moz-range-thumb {
   background-color: var(--clr-neutral-300);
