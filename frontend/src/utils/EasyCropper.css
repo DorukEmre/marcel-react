@@ -23,7 +23,6 @@
   max-height: 550px;
   max-width: 450px;
   margin: 1.5rem auto 0;
-  /* margin: 0 auto; */
 }
 
 .cropper-container--cropper {
@@ -35,11 +34,9 @@
 }
 
 .cropper-container--controls {
-  /* height: 10%; */
   display: flex;
   align-items: center;
   justify-content: center;
-  /* margin: auto; */
   width: 100%;
   padding: 1rem;
   gap: 2rem;
@@ -53,7 +50,6 @@
 }
 
 .cropper-buttons-container {
-  /* height: 10%; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -61,7 +57,6 @@
   margin-top: 1.5rem;
 }
 .cropper-cancel-button {
-  color: var(--clr-neutral-300);
   background-color: var(--clr-neutral-600);
   min-width: fit-content;
   padding: 10px;
@@ -81,10 +76,16 @@
   transition: background-color 100ms ease-in;
 }
 
+.cropper-cancel-button:hover,
+.cropper-cancel-button:active,
+.cropper-cancel-button:focus {
+  background-color: var(--clr-neutral-500);
+}
 .cropper-save-button:hover,
-.cropper-cancel-button:hover {
+.cropper-save-button:active,
+.cropper-save-button:focus {
   color: var(--clr-back-300);
-  background-color: var(--clr-compl-550);
+  background-color: var(--clr-compl-700);
 }
 
 /********** Range Input Styles **********/
@@ -96,8 +97,8 @@
   cursor: pointer;
   width: 100%;
   background-color: var(--clr-accent-300);
-  border-radius: 8px;
-  height: 8px;
+  border-radius: 4px;
+  height: 4px;
 }
 
 /* Removes default focus */
@@ -108,27 +109,27 @@
 /* slider track */
 .cropper-range::-webkit-slider-runnable-track {
   background-color: var(--clr-accent-300);
-  border-radius: 8px;
-  height: 8px;
+  border-radius: 4px;
+  height: 4px;
 }
 .cropper-range::-moz-range-track {
   background-color: var(--clr-accent-300);
-  border-radius: 8px;
-  height: 8px;
+  border-radius: 4px;
+  height: 4px;
 }
 
 /* slider thumb */
 .cropper-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  background-color: var(--clr-compl-600);
+  background-color: var(--clr-neutral-300);
   height: 16px;
   width: 16px;
   border-radius: 50%;
-  margin-top: -4px;
+  margin-top: -2px;
 }
 .cropper-range::-moz-range-thumb {
-  background-color: var(--clr-compl-600);
+  background-color: var(--clr-neutral-300);
   height: 16px;
   width: 16px;
   border: none;
