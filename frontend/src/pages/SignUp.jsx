@@ -150,6 +150,7 @@ const SignUp = () => {
                   onFocus={() => setEmailFocus(true)}
                   onBlur={() => setEmailFocus(false)}
                   required
+                  autoComplete="username"
                 />
                 <p
                   id="emailalert"
@@ -164,10 +165,11 @@ const SignUp = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="username">Display name</label>
+                <label htmlFor="display-name">Display name</label>
                 <input
                   type="text"
-                  id="username"
+                  id="display-name"
+                  name="display-name"
                   autoComplete="off"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
@@ -214,6 +216,7 @@ const SignUp = () => {
                   aria-describedby="passwordHelp passwordnote"
                   onFocus={() => setPasswordFocus(true)}
                   onBlur={() => setPasswordFocus(false)}
+                  autoComplete="new-password"
                 />
                 <p
                   id="passwordnote"
@@ -250,6 +253,7 @@ const SignUp = () => {
                   aria-describedby="confirmnote"
                   onFocus={() => setMatchFocus(true)}
                   onBlur={() => setMatchFocus(false)}
+                  autoComplete="new-password"
                 />
                 <p
                   id="confirmnote"

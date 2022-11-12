@@ -103,6 +103,7 @@ const LogIn = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 value={email}
+                autoComplete="username"
               />
             </div>
             <div className="form-group">
@@ -113,6 +114,7 @@ const LogIn = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 required
+                autoComplete="current-password"
               />
             </div>
             <button>Log In</button>
