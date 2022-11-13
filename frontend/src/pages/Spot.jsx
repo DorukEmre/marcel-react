@@ -47,6 +47,7 @@ const Spot = () => {
       setExifData(output)
 
       if (
+        output &&
         Number.isFinite(Number(output.longitude)) &&
         Number.isFinite(Number(output.latitude))
       ) {
