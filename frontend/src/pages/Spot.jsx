@@ -13,6 +13,7 @@ const Spot = () => {
   const location = useLocation()
 
   const [sendingFile, setSendingFile] = useState(false)
+  const [errorModal, setErrorModal] = useState(false)
 
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => setOpenModal(true)
@@ -25,6 +26,16 @@ const Spot = () => {
   const [gps, setGps] = useState({})
   const [exifData, setExifData] = useState({})
   const [showLocation, setShowLocation] = useState(true)
+
+  const checkIsImage = async (event) => {
+    let file = event.target.files[0]
+
+    return (
+      file.type === 'image/jpg' ||
+      file.type === 'image/jpeg' ||
+      file.type === 'image/png'
+    )
+  }
 
   const getExif = async ({
     target: {
@@ -47,8 +58,6 @@ const Spot = () => {
   }
 
   const onSelectFile = (event) => {
-    // console.log('event.target.files', event.target.files)
-    // console.log('event.target.files[0]', event.target.files[0])
     if (event.target.files && event.target.files.length > 0) {
       const reader = new FileReader()
       reader.readAsDataURL(event.target.files[0])
@@ -58,6 +67,15 @@ const Spot = () => {
     }
   }
 
+  const handleAddPhoto = async (event) => {
+    if (await checkIsImage(event)) {
+      await getExif(event)
+      onSelectFile(event)
+      handleOpenModal()
+    } else {
+      setErrorModal(true)
+    }
+  }
   const handleCropSave = async () => {
     setSelectedFile(null)
     handleCloseModal()
@@ -176,11 +194,7 @@ const Spot = () => {
                           // accept="image/*"
                           tabIndex="-1"
                           required
-                          onChange={(event) => {
-                            getExif(event)
-                            onSelectFile(event)
-                            handleOpenModal()
-                          }}
+                          onChange={(e) => handleAddPhoto(e)}
                         />
                       </button>
                       Add a photo
@@ -278,11 +292,22 @@ const Spot = () => {
       {sendingFile && (
         <BasicModal
           openModal={sendingFile}
-          handleCloseModal={() => sendingFile(false)}
           className="sending-file-modal confirmation-modal"
           modalMsg="File uploading"
           displayButton={false}
           displayAnimation={true}
+        ></BasicModal>
+      )}
+      {errorModal && (
+        <BasicModal
+          openModal={errorModal}
+          handleCloseModal={() => setErrorModal(false)}
+          className="wrong-file-modal confirmation-modal"
+          modalMsg="Please check file is jpg or png"
+          displayButton={true}
+          buttonText="OK"
+          buttonClass="close-modal"
+          displayAnimation={false}
         ></BasicModal>
       )}
     </main>
