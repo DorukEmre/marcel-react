@@ -7,8 +7,9 @@ module.exports = {
     const foundUser = await User.findOne({ email: req.user })
 
     const posts = await Post.find({
-      showLocation: true,
+      user: { $nin: foundUser.blockedUsers },
       hiddenBy: { $ne: foundUser.id },
+      showLocation: true,
     })
       .populate('user')
       .lean()

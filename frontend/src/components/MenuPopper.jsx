@@ -18,13 +18,14 @@ const MenuPopper = ({ post, currentUserId, ...props }) => {
           signal: controller.signal,
         },
       )
-      console.log('response.status', response.status)
+      // console.log('response.status', response.status)
 
       isMounted &&
         props.setPosts((oldPosts) =>
-          oldPosts.filter((post) => post._id !== postId),
+          oldPosts.filter((oldPost) => oldPost._id !== postId),
         )
-      if (props.handleClose) props.handleClose()
+
+      if (props.handleClose) props.handleClose() // close CatInfoBox
       props.setOpenMenuPopper((prev) => !prev)
     } catch (err) {
       console.error('Login again err', err)
@@ -43,9 +44,46 @@ const MenuPopper = ({ post, currentUserId, ...props }) => {
     }
   }
 
-  const handleBlockUser = (e) => {
-    console.log(e.target)
+  const handleBlockUser = async (e, postId) => {
+    e.preventDefault()
+    let isMounted = true
+    const controller = new AbortController()
+
+    try {
+      let blockedUser = post.user
+      const response = await axiosPrivate.put(
+        `api/profile/blockUser/`,
+        JSON.stringify({ currentUserId, blockedUser }),
+        {
+          signal: controller.signal,
+        },
+      )
+      // console.log('response.status', response.status)
+
+      isMounted &&
+        props.setPosts((oldPosts) =>
+          oldPosts.filter((oldPost) => oldPost.user._id !== blockedUser._id),
+        )
+
+      if (props.handleClose) props.handleClose() // close CatInfoBox
+      props.setOpenMenuPopper((prev) => !prev)
+    } catch (err) {
+      console.error('Login again err', err)
+      if (!err?.response) {
+        console.log('No Server Response')
+      } else if (err.response?.status === 403) {
+        navigate('/login', { state: { from: location }, replace: true })
+      } else {
+        console.log('Request failed')
+      }
+    }
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
   }
+
   const handleReportPost = (e) => {
     console.log(e.target)
   }
@@ -79,13 +117,13 @@ const MenuPopper = ({ post, currentUserId, ...props }) => {
       >
         Block user
       </button>
-      <button
+      {/* <button
         className="card--popup-menu--link"
         onClick={(e) => handleReportPost(e, post._id)}
         tabIndex="0"
       >
         Report
-      </button>
+      </button> */}
     </Popper>
   )
 }

@@ -12,7 +12,10 @@ module.exports = {
 
       const foundUser = await User.findOne({ email: req.user })
 
-      const posts = await Post.find({ hiddenBy: { $ne: foundUser.id } })
+      const posts = await Post.find({
+        user: { $nin: foundUser.blockedUsers },
+        hiddenBy: { $ne: foundUser.id },
+      })
         .skip((page - 1) * perPage)
         .limit(perPage)
         .sort({ createdAt: 'desc' })

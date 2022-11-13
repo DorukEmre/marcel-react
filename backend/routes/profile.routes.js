@@ -14,7 +14,9 @@ router.put(
   upload.single('file'),
   profileController.updatePicture,
 )
-// Get a user's posts oon their profile page
+// Get a user's posts on their profile page
 router.get('/getPosts', profileController.getPosts)
+
+router.put('/blockUser', profileController.blockUser)
 
 module.exports = router

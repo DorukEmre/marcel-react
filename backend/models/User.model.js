@@ -10,6 +10,12 @@ const UserSchema = new mongoose.Schema({
   refreshToken: String,
   profilePicUrl: { type: String },
   cloudinaryId: { type: String },
+  blockedUsers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 })
 
 // Password hash middleware.

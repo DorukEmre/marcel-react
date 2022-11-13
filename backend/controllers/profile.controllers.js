@@ -89,4 +89,24 @@ module.exports = {
       console.log(err)
     }
   },
+
+  blockUser: async (req, res) => {
+    // console.log('req.body', req.body)
+    // console.log('req.user', req.user)
+    try {
+      const foundUser = await User.findOne({ email: req.user })
+      const userToBlock = await User.findOne({ _id: req.body.blockedUser._id })
+
+      if (foundUser.id != req.body.currentUserId) res.sendStatus(400)
+
+      await User.findOneAndUpdate(
+        { _id: foundUser.id },
+        { $push: { blockedUsers: userToBlock.id } },
+      )
+      // const foundUser = await User.findById(req.params.userid)
+      res.sendStatus(204)
+    } catch (err) {
+      console.log(err)
+    }
+  },
 }
