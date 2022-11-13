@@ -53,7 +53,7 @@ const MenuPopper = ({ post, currentUserId, ...props }) => {
       let blockedUser = post.user
       const response = await axiosPrivate.put(
         `api/profile/blockUser/`,
-        JSON.stringify({ currentUserId, blockedUser }),
+        JSON.stringify({ currentUserId, blockedUser, postId }),
         {
           signal: controller.signal,
         },

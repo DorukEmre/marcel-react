@@ -1,6 +1,7 @@
 const resizeAndCloudinary = require('../middleware/resize')
 const User = require('../models/User.model')
 const Post = require('../models/Post.model')
+const Report = require('../models/Report.model')
 
 module.exports = {
   getMyProfile: async (req, res) => {
@@ -103,7 +104,14 @@ module.exports = {
         { _id: foundUser.id },
         { $push: { blockedUsers: userToBlock.id } },
       )
-      // const foundUser = await User.findById(req.params.userid)
+
+      await Report.create({
+        method: 'blockUser',
+        reportedBy: foundUser.id,
+        reportedPost: req.body.postId,
+        reportedUser: userToBlock.id,
+      })
+
       res.sendStatus(204)
     } catch (err) {
       console.log(err)

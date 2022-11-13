@@ -2,6 +2,7 @@ const resizeAndCloudinary = require('../middleware/resize')
 const Post = require('../models/Post.model')
 const Comment = require('../models/Comment.model')
 const User = require('../models/User.model')
+const Report = require('../models/Report.model')
 
 module.exports = {
   getFeed: async (req, res) => {
@@ -184,11 +185,20 @@ module.exports = {
       const postid = req.params.postid
       const userId = req.body.currentUserId
 
-      await Post.findOneAndUpdate(
+      const hiddenPost = await Post.findOneAndUpdate(
         { _id: postid },
         { $push: { hiddenBy: userId } },
+        { new: true },
       )
       // console.log(`---HIDDEN ${postid} to ${userId}`)
+      console.log('hiddenPost', hiddenPost)
+
+      await Report.create({
+        method: 'hidePost',
+        reportedBy: userId,
+        reportedPost: postid,
+        reportedUser: hiddenPost.user,
+      })
 
       res.sendStatus(204)
     } catch (err) {
