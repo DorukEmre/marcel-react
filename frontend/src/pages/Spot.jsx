@@ -238,7 +238,7 @@ const Spot = () => {
                     ) : (
                       <>
                         <p className="location-switch--text">
-                          Make location visible
+                          Location visible
                         </p>
                         <div className="location-switch-checkbox-wrapper">
                           <input
