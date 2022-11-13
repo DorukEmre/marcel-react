@@ -291,11 +291,14 @@ h1 span.Marcel {
   padding: 0 0 0.75rem;
 }
 .card--header-container {
-  padding: 0.75rem 0.5rem 0.75rem 0.25rem;
+  padding: 0.75rem;
   background-color: var(--clr-back-400);
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+.cat-info .card--header-container {
+  padding: 0.75rem 0.5rem 0.75rem 0.25rem;
 }
 .card--header-text {
   flex: 1;

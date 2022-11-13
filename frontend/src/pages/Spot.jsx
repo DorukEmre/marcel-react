@@ -304,7 +304,7 @@ const Spot = () => {
           openModal={errorModal}
           handleCloseModal={() => setErrorModal(false)}
           className="wrong-file-modal confirmation-modal"
-          modalMsg="Please check file is jpg or png"
+          modalMsg="Please check file is in jpg or png format"
           displayButton={true}
           buttonText="OK"
           buttonClass="close-modal"
