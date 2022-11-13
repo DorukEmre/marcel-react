@@ -1,9 +1,5 @@
 To do:
 
-Home page:
-
-- Persistent login doesn't work on main page even when user is logged in because outside PersistLogin route
-
 Feed page:
 
 - Display cats belonging to user's different groups
@@ -31,5 +27,4 @@ Groups page:
 Profile page:
 
 - Own profile: Add option to change username/email/password
-- Others profile: Show user's pics
 - Add option to report User

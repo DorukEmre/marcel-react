@@ -23,11 +23,12 @@ function App() {
         <Route path="login" element={<LogIn />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
         <Route path="/" element={<Layout />}>
-          {/* public routes */}
-          <Route path="/" element={<Home />}></Route>
-
-          {/* protected routes */}
+          {/*  */}
           <Route element={<PersistLogin />}>
+            {/* public routes */}
+            <Route path="/" element={<Home />}></Route>
+
+            {/* protected routes */}
             <Route element={<RequireAuth />}>
               <Route path="feed" element={<Feed />}></Route>
             </Route>
