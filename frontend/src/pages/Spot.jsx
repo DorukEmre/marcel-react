@@ -173,7 +173,7 @@ const Spot = () => {
                           type="file"
                           id="imageUpload"
                           className="custom-file-upload-button--input"
-                          accept="image/*"
+                          // accept="image/*"
                           tabIndex="-1"
                           required
                           onChange={(event) => {
