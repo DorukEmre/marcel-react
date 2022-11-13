@@ -15,5 +15,6 @@ router.post('/createPost', upload.single('file'), postsController.createPost)
 
 router.put('/likePost/:postid', postsController.likePost)
 router.put('/toggleLocation/:postid', postsController.toggleLocation)
+router.put('/hidePost/:postid', postsController.hidePost)
 
 module.exports = router

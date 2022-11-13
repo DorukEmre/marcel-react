@@ -10,7 +10,9 @@ module.exports = {
       const page = Number(req.params.pagenum)
       const perPage = 10
 
-      const posts = await Post.find()
+      const foundUser = await User.findOne({ email: req.user })
+
+      const posts = await Post.find({ hiddenBy: { $ne: foundUser.id } })
         .skip((page - 1) * perPage)
         .limit(perPage)
         .sort({ createdAt: 'desc' })
@@ -168,6 +170,24 @@ module.exports = {
         .lean()
 
       res.status(201).json(comments)
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  hidePost: async (req, res) => {
+    try {
+      // console.log(req.user)
+      const postid = req.params.postid
+      const userId = req.body.currentUserId
+
+      await Post.findOneAndUpdate(
+        { _id: postid },
+        { $push: { hiddenBy: userId } },
+      )
+      // console.log(`---HIDDEN ${postid} to ${userId}`)
+
+      res.sendStatus(204)
     } catch (err) {
       console.log(err)
     }

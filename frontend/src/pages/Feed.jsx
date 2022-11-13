@@ -126,6 +126,7 @@ const Feed = () => {
           {posts ? (
             <Posts
               posts={posts}
+              setPosts={setPosts}
               currentUserId={currentUserId}
               handleToggleLike={handleToggleLike}
               lastPostRef={lastPostRef}

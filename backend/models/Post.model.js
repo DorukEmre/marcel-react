@@ -26,7 +26,7 @@ const PostSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
-  greatPic: [
+  hiddenBy: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

@@ -45,6 +45,7 @@ const Posts = (props) => {
     let componentProps = {
       key: index,
       post: post,
+      setPosts: props.setPosts,
       imageXY: 800,
       handleToggleLike: props.handleToggleLike,
       handleToggleLocation: props.handleToggleLocation,

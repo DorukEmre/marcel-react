@@ -107,6 +107,7 @@ const CatInfoBox = ({
         allComments={allComments}
         setAllComments={setAllComments}
         handleClose={handleClose}
+        setCatsWithLocation={setCatsWithLocation}
       />
     </div>
   )

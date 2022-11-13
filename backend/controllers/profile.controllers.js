@@ -54,7 +54,10 @@ module.exports = {
       const page = Number(req.query.pagenum)
       const perPage = 10
 
-      const posts = await Post.find({ user: req.query.user })
+      const posts = await Post.find({
+        user: req.query.user,
+        hiddenBy: { $ne: req.query.currentUserId },
+      })
         .skip((page - 1) * perPage)
         .limit(perPage)
         .sort({ createdAt: 'desc' })

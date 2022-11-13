@@ -15,13 +15,14 @@ import Comments from '../components/Comments'
 import MenuPopper from './MenuPopper'
 
 const Card = React.forwardRef(({ post, ...props }, ref) => {
-  // const [anchorPopper, setAnchorPopper] = useState(null)
-  // const [openMenuPopper, setOpenMenuPopper] = useState(false)
+  const [anchorPopper, setAnchorPopper] = useState(null)
+  const [openMenuPopper, setOpenMenuPopper] = useState(false)
 
-  // const handleOpenMenu = (event) => {
-  //   setAnchorPopper(event.currentTarget)
-  //   setOpenMenuPopper((prev) => !prev)
-  // }
+  const handleOpenMenu = (event) => {
+    setAnchorPopper(event.currentTarget)
+    setOpenMenuPopper((prev) => !prev)
+  }
+
   let hasValidGps =
     Number.isFinite(Number(post.longitude)) &&
     Number.isFinite(Number(post.latitude))
@@ -83,21 +84,28 @@ const Card = React.forwardRef(({ post, ...props }, ref) => {
               <span className="card--username--name">{post.user.username}</span>
             </Link>
           </div>
-
-          {/* <button
-            aria-describedby="menu"
-            type="button"
-            onClick={handleOpenMenu}
-            className="popup-menu-button icon-button"
-          >
-            <img src={menuIcon} alt="" height="24px" width="24px" />
-          </button>
+          {post.user._id === props.currentUserId ? null : (
+            <button
+              aria-describedby="menu"
+              type="button"
+              onClick={handleOpenMenu}
+              className="card--popup-menu-button icon-button"
+              tabIndex="0"
+            >
+              <img src={menuIcon} alt="" height="24px" width="24px" />
+            </button>
+          )}
           <MenuPopper
             anchorPopper={anchorPopper}
             openMenuPopper={openMenuPopper}
+            setOpenMenuPopper={setOpenMenuPopper}
+            post={post}
+            setPosts={props.setPosts || props.setCatsWithLocation}
+            handleClose={props.handleClose ? props.handleClose : false}
+            currentUserId={props.currentUserId}
             id="menu"
-            className="card-popup-menu"
-          /> */}
+            className="card--popup-menu"
+          />
 
           {typeof props.handleClose !== 'undefined' ? (
             <button

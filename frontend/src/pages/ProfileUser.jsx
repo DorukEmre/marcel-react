@@ -77,6 +77,7 @@ const ProfileUser = () => {
           params: {
             user: userid,
             pagenum: pageNum,
+            currentUserId: currentUserId,
           },
           signal: controller.signal,
         })
@@ -198,6 +199,7 @@ const ProfileUser = () => {
             {posts ? (
               <Posts
                 posts={posts}
+                setPosts={setPosts}
                 currentUserId={currentUserId}
                 handleToggleLike={handleToggleLike}
                 lastPostRef={lastPostRef}
