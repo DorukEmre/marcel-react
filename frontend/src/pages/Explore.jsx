@@ -10,7 +10,7 @@ const Explore = () => {
   const currentUserId = auth.userId
 
   const axiosPrivate = useAxiosPrivate()
-  const [catsWithLocation, setCatsWithLocation] = useState([])
+  const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Explore = () => {
         })
         // console.log(response.data)
 
-        isMounted && setCatsWithLocation(response.data.catsWithLocation)
+        isMounted && setPosts(response.data.posts)
         setLoading(false)
       } catch (err) {
         console.error('Login again err', err)
@@ -49,11 +49,7 @@ const Explore = () => {
   return (
     <main id="explore-page">
       {!loading ? (
-        <Map
-          catsWithLocation={catsWithLocation}
-          setCatsWithLocation={setCatsWithLocation}
-          currentUserId={currentUserId}
-        />
+        <Map posts={posts} setPosts={setPosts} currentUserId={currentUserId} />
       ) : (
         'Tracking neighbourhood cats...'
       )}

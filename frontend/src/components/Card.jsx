@@ -100,7 +100,7 @@ const Card = React.forwardRef(({ post, ...props }, ref) => {
             openMenuPopper={openMenuPopper}
             setOpenMenuPopper={setOpenMenuPopper}
             post={post}
-            setPosts={props.setPosts || props.setCatsWithLocation}
+            setPosts={props.setPosts}
             handleClose={props.handleClose ? props.handleClose : false}
             currentUserId={props.currentUserId}
             id="menu"

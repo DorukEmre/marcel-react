@@ -3,13 +3,7 @@ import GoogleMapReact from 'google-map-react'
 import LocationMarker from './LocationMarker'
 import CatInfoBox from './CatInfoBox'
 
-const Map = ({
-  catsWithLocation,
-  setCatsWithLocation,
-  center,
-  zoom,
-  currentUserId,
-}) => {
+const Map = ({ posts, setPosts, center, zoom, currentUserId }) => {
   const [catInfo, setCatInfo] = useState(null)
 
   const URLKey =
@@ -21,8 +15,8 @@ const Map = ({
     setCatInfo(null)
   }
 
-  // console.log(catsWithLocation)
-  const markers = catsWithLocation.map((cat, index) => {
+  // console.log(posts)
+  const markers = posts.map((cat, index) => {
     return (
       <LocationMarker
         key={index}
@@ -48,7 +42,7 @@ const Map = ({
         <CatInfoBox
           post={catInfo}
           setCatInfo={setCatInfo}
-          setCatsWithLocation={setCatsWithLocation}
+          setPosts={setPosts}
           handleClose={handleClose}
           currentUserId={currentUserId}
         />

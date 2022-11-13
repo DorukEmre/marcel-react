@@ -5,7 +5,7 @@ import Card from './Card'
 const CatInfoBox = ({
   post,
   setCatInfo,
-  setCatsWithLocation,
+  setPosts,
   handleClose,
   currentUserId,
 }) => {
@@ -70,8 +70,8 @@ const CatInfoBox = ({
         }))
 
       isMounted &&
-        setCatsWithLocation((oldCats) =>
-          oldCats.map((post) =>
+        setPosts((oldPosts) =>
+          oldPosts.map((post) =>
             post._id === updatedPost._id
               ? { ...post, greatCat: updatedPost.greatCat }
               : post,
@@ -107,7 +107,7 @@ const CatInfoBox = ({
         allComments={allComments}
         setAllComments={setAllComments}
         handleClose={handleClose}
-        setCatsWithLocation={setCatsWithLocation}
+        setPosts={setPosts}
       />
     </div>
   )

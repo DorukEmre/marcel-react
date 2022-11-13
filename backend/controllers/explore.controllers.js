@@ -6,13 +6,13 @@ module.exports = {
   getExplore: async (req, res) => {
     const foundUser = await User.findOne({ email: req.user })
 
-    const catsWithLocation = await Post.find({
+    const posts = await Post.find({
       showLocation: true,
       hiddenBy: { $ne: foundUser.id },
     })
       .populate('user')
       .lean()
 
-    res.status(200).json({ catsWithLocation })
+    res.status(200).json({ posts })
   },
 }
