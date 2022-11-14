@@ -86,7 +86,7 @@ exports.postLogin = async (req, res) => {
     })
 
     // Send access token to user
-    console.log('postLogin', { accessToken, userId: foundUser.id })
+    // console.log('postLogin', { accessToken, userId: foundUser.id })
     res.json({ accessToken, userId: foundUser.id })
   } else {
     console.log('else res.sendStatus(401)')
