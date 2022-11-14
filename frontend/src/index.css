@@ -283,7 +283,8 @@ h1 span.Marcel {
   box-shadow: 0 0 3px var(--clr-compl-200);
   transition: transform 100ms ease-in;
 }
-.hero--scroll-down-icon:hover {
+.hero--scroll-down-icon:hover,
+.hero--scroll-down-icon:focus {
   transform: translate(-50%, -30%);
 }
 
@@ -1420,10 +1421,11 @@ footer a:focus {
     padding-left: 5rem;
   }
   .hero--scroll-down-icon {
-    transform: translate(-50%, -90%);
+    transform: translate(-50%, -100%);
   }
-  .hero--scroll-down-icon:hover {
-    transform: translate(-50%, -85%);
+  .hero--scroll-down-icon:hover,
+  .hero--scroll-down-icon:focus {
+    transform: translate(-50%, -95%);
   }
 
   .screenshots {
