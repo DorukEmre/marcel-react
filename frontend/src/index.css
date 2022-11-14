@@ -1419,6 +1419,12 @@ footer a:focus {
   .hero-title-container h1 > span.outdoor-cat {
     padding-left: 5rem;
   }
+  .hero--scroll-down-icon {
+    transform: translate(-50%, -90%);
+  }
+  .hero--scroll-down-icon:hover {
+    transform: translate(-50%, -85%);
+  }
 
   .screenshots {
     padding: 2rem 0;
