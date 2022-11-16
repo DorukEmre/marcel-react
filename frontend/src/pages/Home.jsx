@@ -43,7 +43,7 @@ const Home = () => {
                 Take pictures of cats
               </h3>
               <p className="screenshots--card--description">
-                Use your camera or upload pictures from the gallery
+                Use your camera or upload pictures from your gallery
               </p>
               <div className="screenshots--card--image-container">
                 <img
