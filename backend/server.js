@@ -19,9 +19,6 @@ const cookieParser = require('cookie-parser')
 //Use .env file
 require('dotenv').config()
 
-//Connect To Database
-connectDB()
-
 //Body Parsing
 // extended option: false to parse the URL-encoded data with the query string library; true allows to parse nested JSON like objects and arrays (qs library)
 app.use(express.urlencoded({ extended: true }))
@@ -46,13 +43,6 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_STRING }),
   }),
 )
-//
-// app.use((req, res, next) => {
-//   res.locals.currentUser = req.session.passport
-//     ? req.session.passport.user
-//     : undefined
-//   next()
-// })
 
 //Static Folder
 app.use(express.static('public'))
@@ -81,6 +71,18 @@ if (process.env.NODE_ENV === 'production') {
 
 //Server Running
 const port = process.env.PORT || 9191
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
+
+// Connect To Database first, then listen for requests
+connectDB().then(() => {
+  // client.connect(async (err) => {
+  //Connect To Database
+  // if (err) {
+  //   console.error(err)
+  //   return false
+  // }
+  // connection to mongo is successful, listen for requests
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`)
+  })
+  // })
 })
