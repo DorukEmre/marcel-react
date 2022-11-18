@@ -2,14 +2,10 @@ import axios from 'axios'
 
 const domain = window.location.hostname
 let serverLoc
-if (domain === 'marcel-the-outdoor-cat-react.herokuapp.com') {
-  serverLoc = 'https://marcel-the-outdoor-cat-react.herokuapp.com/'
-} else if (domain === 'marcel-the-outdoor-cat.onrender.com') {
+if (domain === 'marcel.onrender.com') {
   serverLoc = 'https://marcel.onrender.com'
-} else if (domain === 'marcel.onrender.com') {
-  serverLoc = 'https://marcel.onrender.com'
-} else if (domain === 'marcel-the-outdoor-cat.cyclic.app') {
-  serverLoc = 'https://marcel-the-outdoor-cat.cyclic.app/'
+} else if (domain === 'marcel.cyclic.app') {
+  serverLoc = 'https://marcel.cyclic.app/'
 } else if (domain === 'marcel-the-cat.up.railway.app') {
   serverLoc = 'https://marcel-the-cat.up.railway.app/'
 }
