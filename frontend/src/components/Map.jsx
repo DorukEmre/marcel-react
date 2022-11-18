@@ -8,10 +8,12 @@ const Map = ({ posts, setPosts, center, zoom, currentUserId }) => {
 
   const URLKey =
     process.env.NODE_ENV === 'production'
-      ? import.meta.env.VITE_GM_KEY_PROD
-      : import.meta.env.VITE_GM_KEY_DEV
+      ? 'VITE_GM_KEY_PROD' //import.meta.env.VITE_GM_KEY_PROD
+      : 'VITE_GM_KEY_DEV' //import.meta.env.VITE_GM_KEY_DEV
 
-  console.log('URLKey', URLKey.slice(0, 5))
+  typeof URLKey === 'undefined'
+    ? console.log('URLKey', 'undefined')
+    : console.log('URLKey', URLKey.slice(-3))
 
   const handleClose = () => {
     setCatInfo(null)
