@@ -11,6 +11,8 @@ const Map = ({ posts, setPosts, center, zoom, currentUserId }) => {
       ? import.meta.env.VITE_GM_KEY_PROD
       : import.meta.env.VITE_GM_KEY_DEV
 
+  console.log('URLKey', URLKey)
+
   const handleClose = () => {
     setCatInfo(null)
   }
