@@ -15,6 +15,7 @@ const groupsRoutes = require('./routes/groups.routes')
 const profileRoutes = require('./routes/profile.routes')
 
 const cookieParser = require('cookie-parser')
+const { Console } = require('console')
 
 //Use .env file
 require('dotenv').config()
@@ -56,9 +57,17 @@ app.use('/api/posts', postsRoutes)
 app.use('/api/groups', groupsRoutes)
 app.use('/api/profile', profileRoutes)
 
+console.log(path.resolve(__dirname))
+const testFolder = './frontend'
+const fs = require('fs')
+
+fs.readdirSync(testFolder).forEach((file) => {
+  console.log(file)
+})
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/dist')))
+  console.log(path.resolve(__dirname))
 
   app.get('*', (req, res) =>
     res.sendFile(
