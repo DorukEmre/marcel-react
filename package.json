@@ -2,14 +2,13 @@
   "name": "marcel-react",
   "version": "1.0.0",
   "private": true,
-  "description": "Marcel the Oudoor Cat to share pictures of cats",
-  "main": "server.js",
+  "description": "Marcel the Cat to share pictures of cats",
+  "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "npm run dev --prefix frontend",
-    "build": "npm install --prefix frontend && npm run build --prefix frontend",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "cd frontend && npm install && npm run build"
   },
   "author": "Doruk Emre",
   "license": "ISC",
