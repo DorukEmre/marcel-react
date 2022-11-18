@@ -15,3 +15,5 @@ desktop.ini
 
 *.pem
 https_test
+log_deploy.txt
+log_stream.txt

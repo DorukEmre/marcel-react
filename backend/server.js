@@ -96,7 +96,7 @@ connectDB().then(() => {
   // connection to mongo is successful, listen for requests
   app.listen(port, () => {
     console.log(`yes`)
-    console.log(`Server is running on port ${port}`)
+    console.log(`Server is running on port ${port} -`)
   })
   // })
 })
