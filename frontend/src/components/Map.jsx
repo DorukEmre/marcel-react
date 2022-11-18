@@ -5,7 +5,7 @@ import CatInfoBox from './CatInfoBox'
 
 const Map = ({ posts, setPosts, center, zoom, currentUserId }) => {
   const [catInfo, setCatInfo] = useState(null)
-
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
   const URLKey =
     process.env.NODE_ENV === 'production'
       ? import.meta.env.VITE_GM_KEY_PROD
