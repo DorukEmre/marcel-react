@@ -11,7 +11,8 @@ const Map = ({ posts, setPosts, center, zoom, currentUserId }) => {
       ? import.meta.env.VITE_GM_KEY_PROD
       : import.meta.env.VITE_GM_KEY_DEV
 
-  console.log('REACT_APP_TEST', process.env.REACT_APP_TEST)
+  if (process.env.NODE_ENV === 'production')
+    console.log('REACT_APP_TEST', process.env.REACT_APP_TEST)
 
   const handleClose = () => {
     setCatInfo(null)
