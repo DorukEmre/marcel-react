@@ -64,6 +64,8 @@ const fs = require('fs')
 fs.readdirSync(testFolder).forEach((file) => {
   console.log(file)
 })
+
+console.log(process.env.NODE_ENV)
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/dist')))
