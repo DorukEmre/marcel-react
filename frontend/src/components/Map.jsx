@@ -8,8 +8,8 @@ const Map = ({ posts, setPosts, center, zoom, currentUserId }) => {
 
   const URLKey =
     process.env.NODE_ENV === 'production'
-      ? 'VITE_GM_KEY_PROD' //import.meta.env.VITE_GM_KEY_PROD
-      : 'VITE_GM_KEY_DEV' //import.meta.env.VITE_GM_KEY_DEV
+      ? process.env.VITE_GM_KEY_PROD
+      : import.meta.env.VITE_GM_KEY_DEV
 
   typeof URLKey === 'undefined'
     ? console.log('URLKey', 'undefined')
