@@ -23,7 +23,8 @@ const HeaderButtonExpandable = (props) => {
 
   const getClassName = props.isProfileActive ? activeClassName : undefined
 
-  const signOut = async () => {
+  const signOut = async (e) => {
+    e.preventDefault()
     await logout()
     navigate('/')
   }
@@ -66,15 +67,15 @@ const HeaderButtonExpandable = (props) => {
               </Link>
             </li>
             <li className="profile-menu--item">
-              <p
-                onClick={() => {
+              <button
+                onClick={(e) => {
                   handleClickAway()
-                  signOut()
+                  signOut(e)
                 }}
                 className="profile-menu--item--link logout-link"
               >
                 Logout
-              </p>
+              </button>
             </li>
           </ul>
         ) : null}
