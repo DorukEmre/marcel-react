@@ -4,10 +4,12 @@ const domain = window.location.hostname
 let serverLoc
 if (domain === 'marcel.onrender.com') {
   serverLoc = 'https://marcel.onrender.com'
-} else if (domain === 'marcel.cyclic.app') {
-  serverLoc = 'https://marcel.cyclic.app/'
+} else if (domain === 'marcel-the-cat.cyclic.app') {
+  serverLoc = 'https://marcel-the-cat.cyclic.app/'
 } else if (domain === 'marcel-the-cat.up.railway.app') {
   serverLoc = 'https://marcel-the-cat.up.railway.app/'
+} else if (domain === 'marcel-the-cat.azurewebsites.net') {
+  serverLoc = 'https://marcel-the-cat.azurewebsites.net/'
 }
 
 const BASE_URL =
