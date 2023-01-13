@@ -15,6 +15,7 @@ import Missing from './pages/Missing'
 import ProfileMe from './pages/ProfileMe'
 import ProfileUser from './pages/ProfileUser'
 import ProfileSettings from './pages/ProfileSettings'
+import Goodbye from './pages/Goodbye'
 
 function App() {
   return (
@@ -56,6 +57,8 @@ function App() {
             </Route>
           </Route>
 
+          {/* account deleted */}
+          <Route path="goodbye" element={<Goodbye />}></Route>
           {/* catch all */}
           <Route path="*" element={<Missing />} />
         </Route>

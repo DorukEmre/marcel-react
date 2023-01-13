@@ -1,13 +1,4 @@
-import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  p: 4,
-}
 
 export default function BasicModal(props) {
   return (
@@ -17,10 +8,8 @@ export default function BasicModal(props) {
         onClose={props.handleCloseModal}
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className={props.className}>
-          <p id="modal-modal-description" variant="h6" component="h2">
-            {props.modalMsg}
-          </p>
+        <div className={props.className}>
+          <p id="modal-modal-description">{props.modalMsg}</p>
           {props.displayButton && (
             <>
               <button
@@ -33,7 +22,7 @@ export default function BasicModal(props) {
           )}
 
           {props.displayAnimation && <div className="dot-elastic"></div>}
-        </Box>
+        </div>
       </Modal>
     </div>
   )

@@ -32,6 +32,9 @@
   --clr-neutral-500: #7590ae; /* hsl(211, 26%, 57%) */
   --clr-neutral-600: #546a83; /* hsl(212, 22%, 42%) */
 
+  --clr-alert-300: rgb(255 92 136);
+  --clr-alert-400: rgb(227 66 110);
+
   --ff-body: 'Inter', sans-serif;
 }
 
@@ -461,7 +464,7 @@ h1 span.Marcel {
   order: -1;
 }
 .card--popup-menu {
-  background-color: var(--clr-back-400);
+  background-color: var(--clr-back-300);
   border: 1px solid var(--clr-back-300);
   border-radius: 5px;
   /* padding: 0.5rem 0; */
@@ -469,6 +472,7 @@ h1 span.Marcel {
   flex-direction: column;
   z-index: 100;
   overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }
 .card--popup-menu--link {
   background-color: inherit;
@@ -478,12 +482,12 @@ h1 span.Marcel {
   cursor: pointer;
 }
 .card--popup-menu--link:not(:first-child) {
-  border-top: 1px solid var(--clr-back-300);
+  border-top: 1px solid var(--clr-back-400);
 }
 .card--popup-menu--link:hover,
 .card--popup-menu--link:active,
 .card--popup-menu--link:focus {
-  background-color: var(--clr-back-300);
+  background-color: var(--clr-back-400);
 }
 
 .card--image-container {
@@ -773,7 +777,11 @@ form.create-comment {
   text-decoration: underline;
 }
 
-body .confirmation-modal {
+.confirmation-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: var(--clr-back-400);
   color: var(--clr-neutral-300);
   border: none;
@@ -784,7 +792,7 @@ body .confirmation-modal {
   flex-wrap: nowrap;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1rem 1.25rem;
+  padding: 2rem 2.25rem;
   border-radius: 10px;
 }
 
@@ -1224,9 +1232,11 @@ output#crop-thumbnail-container {
 .form-panel .persistCheck input {
   margin-right: 8px;
 }
+
 /* //////////////// */
 /*   Profile page   */
 /* //////////////// */
+
 .profile-page-container {
   max-width: 58rem;
   margin: 0 auto;
@@ -1322,6 +1332,38 @@ output#crop-thumbnail-container {
   text-align: center;
   /* border: 1px solid var(--clr-back-400); */
 }
+
+/* ///////////////////////// */
+/*   Profile Settings page   */
+/* ///////////////////////// */
+
+.delete-account-button--cancel,
+.delete-account-button--delete {
+  font-size: 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.delete-account-button--delete {
+  color: var(--clr-neutral-200);
+  background-color: var(--clr-alert-400);
+}
+.delete-account-button--delete:hover,
+.delete-account-button--delete:active,
+.delete-account-button--delete:focus {
+  background-color: var(--clr-alert-300);
+}
+.delete-account-button--cancel {
+}
+.delete-account-modal-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+  align-items: center;
+}
+
 /* ////////////////// */
 /* 404 - Missing page */
 /* ////////////////// */
@@ -1524,6 +1566,15 @@ footer a:focus {
   .map {
     width: 100vw;
     margin: 0;
+  }
+
+  .confirmation-modal {
+    width: 90%;
+    padding: 1.5rem;
+  }
+  .delete-account-button--cancel,
+  .delete-account-button--delete {
+    font-size: 1rem;
   }
 
   footer {
