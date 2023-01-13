@@ -1518,6 +1518,9 @@ footer a:focus {
     padding: 2rem 2rem 1rem;
   }
 
+  .tracking {
+    padding: 2rem;
+  }
   .map {
     width: 100vw;
     margin: 0;

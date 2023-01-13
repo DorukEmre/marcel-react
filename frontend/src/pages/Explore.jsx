@@ -11,6 +11,7 @@ const Explore = () => {
 
   const axiosPrivate = useAxiosPrivate()
   const [posts, setPosts] = useState([])
+  const [GMKey, setGMKey] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const Explore = () => {
         // console.log(response.data)
 
         isMounted && setPosts(response.data.posts)
+        isMounted && setGMKey(response.data.GMKey)
         setLoading(false)
       } catch (err) {
         console.error('Login again err', err)
@@ -49,9 +51,14 @@ const Explore = () => {
   return (
     <main id="explore-page">
       {!loading ? (
-        <Map posts={posts} setPosts={setPosts} currentUserId={currentUserId} />
+        <Map
+          posts={posts}
+          setPosts={setPosts}
+          currentUserId={currentUserId}
+          GMKey={GMKey}
+        />
       ) : (
-        'Tracking neighbourhood cats...'
+        <div className="tracking">Tracking neighbourhood cats...</div>
       )}
     </main>
   )

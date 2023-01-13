@@ -3,17 +3,17 @@ import GoogleMapReact from 'google-map-react'
 import LocationMarker from './LocationMarker'
 import CatInfoBox from './CatInfoBox'
 
-const Map = ({ posts, setPosts, center, zoom, currentUserId }) => {
+const Map = ({ posts, setPosts, center, zoom, currentUserId, GMKey }) => {
   const [catInfo, setCatInfo] = useState(null)
 
-  const URLKey =
-    process.env.NODE_ENV === 'production'
-      ? 'AIzaSyCzhpi1KAE9NpLvxYeIObAW4BRznXTzLnw' // import.meta.env.VITE_GM_KEY_PROD
-      : import.meta.env.VITE_GM_KEY_DEV
+  const URLKey = GMKey
+  // process.env.NODE_ENV === 'production'
+  //   ? import.meta.env.VITE_GM_KEY_PROD
+  //   : import.meta.env.VITE_GM_KEY_DEV
 
-  typeof URLKey === 'undefined'
-    ? console.log('URLKey', 'undefined')
-    : console.log('URLKey', URLKey.slice(-3))
+  // typeof URLKey === 'undefined'
+  //   ? console.log('URLKey', 'undefined')
+  //   : console.log('URLKey', URLKey.slice(-3))
 
   const handleClose = () => {
     setCatInfo(null)
