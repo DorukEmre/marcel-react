@@ -117,4 +117,23 @@ module.exports = {
       console.log(err)
     }
   },
+  deleteUser: async (req, res) => {
+    // console.log('req.user', req.user)
+    // console.log('req.params', req.params)
+    try {
+      const foundUser = await User.findOne({ email: req.user })
+      const userToDelete = await User.findOne({
+        _id: req.params.currentUserId,
+      })
+
+      if (foundUser.id != req.params.currentUserId) res.sendStatus(400)
+
+      await User.findOneAndDelete({ _id: foundUser.id })
+      const deletedUser = await User.findOne({ _id: foundUser.id })
+      deletedUser === null ? res.sendStatus(200) : res.sendStatus(400)
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(400)
+    }
+  },
 }

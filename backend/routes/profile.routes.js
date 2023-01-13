@@ -19,4 +19,6 @@ router.get('/getPosts', profileController.getPosts)
 
 router.put('/blockUser', profileController.blockUser)
 
+router.delete('/deleteUser/:currentUserId', profileController.deleteUser)
+
 module.exports = router
