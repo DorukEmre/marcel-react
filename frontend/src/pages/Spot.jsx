@@ -267,6 +267,12 @@ const Spot = () => {
                           />
                           <span className="location-switch--slider"></span>
                         </div>
+                        {showLocation && (
+                          <p style={{ color: 'red' }}>
+                            App in development! Every user can see the location
+                            of your pictures when active.
+                          </p>
+                        )}
                       </>
                     )}
                   </label>
