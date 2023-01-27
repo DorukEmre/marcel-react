@@ -1,13 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import useAuth from '../hooks/useAuth'
+import BasicModal from '../components/BasicModal'
 import EasyCropperModal from '../components/EasyCropperModal'
+
 import { SnapACatLogo } from '../assets/images'
 import { deleteIcon, galleryIcon } from '../assets/icons'
 import exifr from 'exifr'
-import BasicModal from '../components/BasicModal'
 
 const Spot = () => {
+  const { auth } = useAuth()
+  const userIsDemo = auth.userId === '63d3c10333c5e6dad3f910d9' ? true : false
+
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
   const location = useLocation()
@@ -18,6 +23,10 @@ const Spot = () => {
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => setOpenModal(true)
   const handleCloseModal = () => setOpenModal(false)
+
+  const [openDemoUserModal, setOpenDemoUserModal] = useState(false)
+  const handleOpenDemoUserModal = () => setOpenDemoUserModal(true)
+  const handleCloseDemoUserModal = () => setOpenDemoUserModal(false)
 
   const [selectedFile, setSelectedFile] = useState(null)
   const [croppedImage, setCroppedImage] = useState(null)
@@ -69,6 +78,9 @@ const Spot = () => {
   }
 
   const handleAddPhoto = async (event) => {
+    // Don't allow submit if demo user
+    if (userIsDemo) return
+
     if (await checkIsImage(event)) {
       await getExif(event)
       onSelectFile(event)
@@ -99,6 +111,9 @@ const Spot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // Don't allow submit if demo user
+    if (userIsDemo) return
+
     setSendingFile(true)
     let isMounted = true
     const controller = new AbortController()
@@ -179,25 +194,50 @@ const Spot = () => {
                       htmlFor="imageUpload"
                       className="file-upload-container--label"
                     >
-                      <button
-                        htmlFor="imageUpload"
-                        id="custom-file-upload-button"
-                        type="button"
-                      >
-                        <img
-                          src={galleryIcon}
-                          className="custom-file-upload-button--image"
-                        />
-                        <input
-                          type="file"
-                          id="imageUpload"
-                          className="custom-file-upload-button--input"
-                          // accept="image/*"
-                          tabIndex="-1"
-                          required
-                          onChange={(e) => handleAddPhoto(e)}
-                        />
-                      </button>
+                      {userIsDemo ? (
+                        <>
+                          <button
+                            htmlFor="imageUpload"
+                            id="custom-file-upload-button"
+                            type="button"
+                            onClick={handleOpenDemoUserModal}
+                          >
+                            <img
+                              src={galleryIcon}
+                              className="custom-file-upload-button--image"
+                            />
+                          </button>
+                          <BasicModal
+                            openModal={openDemoUserModal}
+                            handleCloseModal={handleCloseDemoUserModal}
+                            className="confirmation-modal"
+                            modalMsg="Feature disabled for demo user"
+                            displayButton={true}
+                            buttonClass="close-modal"
+                            buttonText="OK"
+                          />
+                        </>
+                      ) : (
+                        <button
+                          htmlFor="imageUpload"
+                          id="custom-file-upload-button"
+                          type="button"
+                        >
+                          <img
+                            src={galleryIcon}
+                            className="custom-file-upload-button--image"
+                          />
+                          <input
+                            type="file"
+                            id="imageUpload"
+                            className="custom-file-upload-button--input"
+                            // accept="image/*"
+                            tabIndex="-1"
+                            required
+                            onChange={(e) => handleAddPhoto(e)}
+                          />
+                        </button>
+                      )}
                       Add a photo
                     </label>
                   </div>
@@ -225,16 +265,6 @@ const Spot = () => {
                     </div>
                   </div>
                 </output>
-                {/* <div className="form-group">
-                  <label htmlFor="catName">Add a cat name (or nickname)</label>
-                  <input
-                    type="text"
-                    id="catName"
-                    // placeholder="Add a cat name (or nickname)"
-                    onChange={(e) => setCatName(e.target.value)}
-                    value={catName}
-                  />
-                </div> */}
                 <div className="form-group">
                   <label htmlFor="comment">Add a comment</label>
                   <input

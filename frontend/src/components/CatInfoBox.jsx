@@ -8,6 +8,7 @@ const CatInfoBox = ({
   setPosts,
   handleClose,
   currentUserId,
+  userIsDemo,
 }) => {
   const axiosPrivate = useAxiosPrivate()
   const [allComments, setAllComments] = useState([])
@@ -103,6 +104,7 @@ const CatInfoBox = ({
         imageXY="400"
         handleToggleLike={handleToggleLike}
         currentUserId={currentUserId}
+        userIsDemo={userIsDemo}
         getComments={getComments}
         allComments={allComments}
         setAllComments={setAllComments}

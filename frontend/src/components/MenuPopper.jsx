@@ -1,12 +1,20 @@
 import Popper from '@mui/material/Popper'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { useState } from 'react'
+import BasicModal from './BasicModal'
 
-const MenuPopper = ({ post, currentUserId, ...props }) => {
+const MenuPopper = ({ post, currentUserId, userIsDemo, ...props }) => {
   const axiosPrivate = useAxiosPrivate()
+
+  const [openDemoUserModal, setOpenDemoUserModal] = useState(false)
+  const handleOpenDemoUserModal = () => setOpenDemoUserModal(true)
+  const handleCloseDemoUserModal = () => setOpenDemoUserModal(false)
 
   const handleHidePost = async (e, postId) => {
     e.preventDefault()
+    // Don't allow submit if demo user
+    if (userIsDemo) return
+
     let isMounted = true
     const controller = new AbortController()
 
@@ -46,6 +54,9 @@ const MenuPopper = ({ post, currentUserId, ...props }) => {
 
   const handleBlockUser = async (e, postId) => {
     e.preventDefault()
+    // Don't allow submit if demo user
+    if (userIsDemo) return
+
     let isMounted = true
     const controller = new AbortController()
 
@@ -103,16 +114,29 @@ const MenuPopper = ({ post, currentUserId, ...props }) => {
         },
       ]}
     >
+      <BasicModal
+        openModal={openDemoUserModal}
+        handleCloseModal={handleCloseDemoUserModal}
+        className="confirmation-modal"
+        modalMsg="Feature disabled for demo user"
+        displayButton={true}
+        buttonClass="close-modal"
+        buttonText="OK"
+      />
       <button
         className="card--popup-menu--link"
-        onClick={(e) => handleHidePost(e, post._id)}
+        onClick={(e) =>
+          userIsDemo ? handleOpenDemoUserModal() : handleHidePost(e, post._id)
+        }
         tabIndex="0"
       >
         Hide post
       </button>
       <button
         className="card--popup-menu--link"
-        onClick={(e) => handleBlockUser(e, post._id)}
+        onClick={(e) =>
+          userIsDemo ? handleOpenDemoUserModal() : handleBlockUser(e, post._id)
+        }
         tabIndex="0"
       >
         Block user

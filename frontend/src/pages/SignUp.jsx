@@ -115,7 +115,8 @@ const SignUp = () => {
         </section>
         {success ? (
           <section>
-            <h1>Account created</h1>
+            <h1>Welcome to Marcel!</h1>
+            <p>Account created</p>
             <br />
             <p>
               <Link to="/login" className="global-button">
@@ -287,6 +288,9 @@ const SignUp = () => {
               <Link to="/login" className="">
                 Log in
               </Link>
+            </p>
+            <p className="alert" style={{ paddingBottom: '0' }}>
+              You can also log in as a demo user
             </p>
           </section>
         )}

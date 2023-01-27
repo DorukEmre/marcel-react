@@ -90,6 +90,11 @@ const Header = () => {
           </ul>
         ) : (
           <ul className="header-list new-session">
+            <li className="header-item demo">
+              <Link to="/login" className="header-item--link">
+                Log in as demo user
+              </Link>
+            </li>
             <li className="header-item login">
               <Link to="/login" className="header-item--link">
                 Log in

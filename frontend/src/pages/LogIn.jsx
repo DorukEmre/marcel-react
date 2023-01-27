@@ -93,6 +93,13 @@ const LogIn = () => {
           >
             {errMsg}
           </p>
+          <div className="alert">
+            <small>
+              <p>To log in as a demo user:</p>
+              <p>Email: demo@demo.com</p>
+              <p>Password: Demodemo1</p>
+            </small>
+          </div>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">Email</label>

@@ -55,9 +55,9 @@ const Card = React.forwardRef(({ post, ...props }, ref) => {
               if (!hasValidGps) {
                 return 'No GPS data available'
               } else if (post.showLocation) {
-                return 'Click to hide location on map'
+                return 'Deactivate to hide location on map'
               } else {
-                return 'Click to show location on map'
+                return 'Activate to show location on map'
               }
             })()}
           </p>
@@ -81,7 +81,15 @@ const Card = React.forwardRef(({ post, ...props }, ref) => {
                 alt="user profile picture"
                 className="card--username--avatar"
               />
-              <span className="card--username--name">{post.user.username}</span>
+              {props.userIsDemo ? (
+                <span className="card--username--name">
+                  Anonymised for demo
+                </span>
+              ) : (
+                <span className="card--username--name">
+                  {post.user.username}
+                </span>
+              )}
             </Link>
           </div>
           {post.user._id === props.currentUserId ? null : (
@@ -103,6 +111,7 @@ const Card = React.forwardRef(({ post, ...props }, ref) => {
             setPosts={props.setPosts}
             handleClose={props.handleClose ? props.handleClose : false}
             currentUserId={props.currentUserId}
+            userIsDemo={props.userIsDemo}
             id="menu"
             className="card--popup-menu"
           />
@@ -183,6 +192,7 @@ const Card = React.forwardRef(({ post, ...props }, ref) => {
                 : []
             }
             setAllComments={props.setAllComments}
+            userIsDemo={props.userIsDemo}
           />
         </Collapsible>
       </section>

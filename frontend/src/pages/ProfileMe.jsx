@@ -11,6 +11,7 @@ import Posts from '../components/Posts'
 const ProfileMe = () => {
   const { auth } = useAuth()
   const currentUserId = auth.userId
+  const userIsDemo = auth.userId === '63d3c10333c5e6dad3f910d9' ? true : false
 
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
@@ -22,6 +23,10 @@ const ProfileMe = () => {
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => setOpenModal(true)
   const handleCloseModal = () => setOpenModal(false)
+
+  const [openDemoUserModal, setOpenDemoUserModal] = useState(false)
+  const handleOpenDemoUserModal = () => setOpenDemoUserModal(true)
+  const handleCloseDemoUserModal = () => setOpenDemoUserModal(false)
 
   const [croppedImage, setCroppedImage] = useState(null)
   const [profilePicUrl, setProfilePicUrl] = useState(null)
@@ -35,6 +40,8 @@ const ProfileMe = () => {
   const [pageNum, setPageNum] = useState(1)
 
   const onSelectFile = (event) => {
+    // Don't allow submit if demo user
+    if (userIsDemo) return
     // console.log('event.target.files', event.target.files)
     if (event.target.files && event.target.files.length > 0) {
       const reader = new FileReader()
@@ -53,6 +60,9 @@ const ProfileMe = () => {
 
   const handleCropSave = async (e, croppedImage) => {
     e.preventDefault()
+    // Don't allow submit if demo user
+    if (userIsDemo) return
+
     let isMounted = true
     const controller = new AbortController()
     setSendingFile(true)
@@ -301,28 +311,54 @@ const ProfileMe = () => {
               </div>
               <div className="file-upload-container--button-wrapper">
                 <label htmlFor="imageUpload">
-                  <button
-                    htmlFor="imageUpload"
-                    id="custom-file-upload-button"
-                    type="button"
-                  >
-                    <img
-                      src={addPhoto}
-                      className="custom-file-upload-button--image"
-                    />
-                    <input
-                      type="file"
-                      id="imageUpload"
-                      className="custom-file-upload-button--input"
-                      accept="image/*"
-                      tabIndex="-1"
-                      required
-                      onChange={(event) => {
-                        onSelectFile(event)
-                        handleOpenModal()
-                      }}
-                    />
-                  </button>
+                  {userIsDemo ? (
+                    <>
+                      <button
+                        htmlFor="imageUpload"
+                        id="custom-file-upload-button"
+                        type="button"
+                        onClick={handleOpenDemoUserModal}
+                      >
+                        <img
+                          src={addPhoto}
+                          className="custom-file-upload-button--image"
+                        />
+                      </button>
+                      <BasicModal
+                        openModal={openDemoUserModal}
+                        handleCloseModal={handleCloseDemoUserModal}
+                        className="confirmation-modal"
+                        modalMsg="Feature disabled for demo user"
+                        displayButton={true}
+                        buttonClass="close-modal"
+                        buttonText="OK"
+                      ></BasicModal>
+                    </>
+                  ) : (
+                    <button
+                      htmlFor="imageUpload"
+                      id="custom-file-upload-button"
+                      type="button"
+                    >
+                      <img
+                        src={addPhoto}
+                        className="custom-file-upload-button--image"
+                      />
+                      <input
+                        type="file"
+                        id="imageUpload"
+                        className="custom-file-upload-button--input"
+                        accept="image/*"
+                        tabIndex="-1"
+                        required
+                        onChange={(e) => {
+                          //
+                          onSelectFile(e)
+                          handleOpenModal()
+                        }}
+                      />
+                    </button>
+                  )}
                 </label>
               </div>
             </div>

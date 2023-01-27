@@ -8,6 +8,8 @@ import Posts from '../components/Posts'
 const ProfileUser = () => {
   const { auth } = useAuth()
   const currentUserId = auth.userId
+  const userIsDemo = auth.userId === '63d3c10333c5e6dad3f910d9' ? true : false
+
   const params = useParams()
   const userid = params.userid
 
@@ -172,7 +174,7 @@ const ProfileUser = () => {
     <main id="profile-page">
       <div className="profile-page-container">
         <section className="profile-pic-header-container">
-          <h1>{username}</h1>
+          <h1>{userIsDemo ? 'Anonymised for demo' : username}</h1>
 
           <div className="add-profile-pic-container">
             <div className="profile-pic-image-container">
@@ -201,6 +203,7 @@ const ProfileUser = () => {
                 posts={posts}
                 setPosts={setPosts}
                 currentUserId={currentUserId}
+                userIsDemo={userIsDemo}
                 handleToggleLike={handleToggleLike}
                 lastPostRef={lastPostRef}
               />

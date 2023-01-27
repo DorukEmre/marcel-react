@@ -3,7 +3,15 @@ import GoogleMapReact from 'google-map-react'
 import LocationMarker from './LocationMarker'
 import CatInfoBox from './CatInfoBox'
 
-const Map = ({ posts, setPosts, center, zoom, currentUserId, GMKey }) => {
+const Map = ({
+  posts,
+  setPosts,
+  center,
+  zoom,
+  currentUserId,
+  userIsDemo,
+  GMKey,
+}) => {
   const [catInfo, setCatInfo] = useState(null)
 
   const URLKey = GMKey
@@ -49,6 +57,7 @@ const Map = ({ posts, setPosts, center, zoom, currentUserId, GMKey }) => {
           setPosts={setPosts}
           handleClose={handleClose}
           currentUserId={currentUserId}
+          userIsDemo={userIsDemo}
         />
       )}
     </div>

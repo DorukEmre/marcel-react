@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import BasicModal from '../components/BasicModal'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { sendCommentIcon } from '../assets/icons'
 import { profileInactive } from '../assets/nav_icons'
@@ -7,8 +8,18 @@ const Comments = (props) => {
   const axiosPrivate = useAxiosPrivate()
   const [newComment, setNewComment] = useState('')
 
+  const [openDemoUserModal, setOpenDemoUserModal] = useState(false)
+  const handleOpenDemoUserModal = (e) => {
+    e.preventDefault()
+    setOpenDemoUserModal(true)
+  }
+  const handleCloseDemoUserModal = () => setOpenDemoUserModal(false)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // Don't allow submit if demo user
+    if (props.userIsDemo) return
+
     let isMounted = true
     const controller = new AbortController()
 
@@ -78,7 +89,12 @@ const Comments = (props) => {
             </li>
           ))}
       </ul>
-      <form className="create-comment" onSubmit={handleSubmit}>
+      <form
+        className="create-comment"
+        onSubmit={(e) =>
+          props.userIsDemo ? handleOpenDemoUserModal(e) : handleSubmit(e)
+        }
+      >
         <label htmlFor="comment--input" className="create-comment--label">
           <input
             type="text"
@@ -95,6 +111,16 @@ const Comments = (props) => {
         <button className="send-button icon-button">
           <img className="" src={sendCommentIcon} height="24px" width="24px" />
         </button>
+
+        <BasicModal
+          openModal={openDemoUserModal}
+          handleCloseModal={handleCloseDemoUserModal}
+          className="confirmation-modal"
+          modalMsg="Feature disabled for demo user"
+          displayButton={true}
+          buttonClass="close-modal"
+          buttonText="OK"
+        />
       </form>
     </section>
   )

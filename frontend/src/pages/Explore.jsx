@@ -8,6 +8,7 @@ const Explore = () => {
   const { auth } = useAuth()
   // console.log('auth on Explore', auth)
   const currentUserId = auth.userId
+  const userIsDemo = auth.userId === '63d3c10333c5e6dad3f910d9' ? true : false
 
   const axiosPrivate = useAxiosPrivate()
   const [posts, setPosts] = useState([])
@@ -55,6 +56,7 @@ const Explore = () => {
           posts={posts}
           setPosts={setPosts}
           currentUserId={currentUserId}
+          userIsDemo={userIsDemo}
           GMKey={GMKey}
         />
       ) : (

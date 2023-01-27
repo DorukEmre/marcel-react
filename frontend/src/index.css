@@ -205,11 +205,17 @@ main {
 .header-list.new-session {
   justify-content: flex-end;
 }
+.header-item.demo {
+  max-width: 110px;
+  min-width: 101px;
+  padding-top: 0;
+}
 .header-item.login,
 .header-item.signup {
   max-width: 80px;
   padding-top: 0;
 }
+.header-item.demo a,
 .header-item.login a {
   color: var(--clr-accent-300);
   padding: 10px;
@@ -220,6 +226,7 @@ main {
   padding: 10px;
   border-radius: 10px;
 }
+.header-item.demo:hover a,
 .header-item.login:hover a {
   color: var(--clr-compl-700);
   text-decoration: underline var(--clr-compl-700) 2px;
@@ -1355,8 +1362,8 @@ output#crop-thumbnail-container {
 .delete-account-button--delete:focus {
   background-color: var(--clr-alert-300);
 }
-.delete-account-button--cancel {
-}
+/* .delete-account-button--cancel {
+} */
 .delete-account-modal-buttons {
   display: flex;
   gap: 1rem;

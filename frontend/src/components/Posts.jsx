@@ -50,6 +50,7 @@ const Posts = (props) => {
       handleToggleLike: props.handleToggleLike,
       handleToggleLocation: props.handleToggleLocation,
       currentUserId: props.currentUserId,
+      userIsDemo: props.userIsDemo,
       getComments: getComments,
       allComments: allComments,
       setAllComments: setAllComments,
