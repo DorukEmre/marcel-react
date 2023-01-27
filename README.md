@@ -28,3 +28,4 @@ Profile page:
 
 - Own profile: Add option to change username/email/password
 - Add option to report User
+- Add option to delete Post
