@@ -1,4 +1,6 @@
 const resizeAndCloudinary = require('../middleware/resize')
+const nodemailer = require('../middleware/sendEmail')
+
 const Post = require('../models/Post.model')
 const Comment = require('../models/Comment.model')
 const User = require('../models/User.model')
@@ -191,7 +193,7 @@ module.exports = {
         { new: true },
       )
       // console.log(`---HIDDEN ${postid} to ${userId}`)
-      console.log('hiddenPost', hiddenPost)
+      // console.log('hiddenPost', hiddenPost)
 
       await Report.create({
         method: 'hidePost',
@@ -199,6 +201,8 @@ module.exports = {
         reportedPost: postid,
         reportedUser: hiddenPost.user,
       })
+
+      await nodemailer.sendReportEmail('Post reported')
 
       res.sendStatus(204)
     } catch (err) {
