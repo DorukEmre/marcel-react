@@ -12,7 +12,7 @@ const Explore = () => {
 
   const axiosPrivate = useAxiosPrivate()
   const [posts, setPosts] = useState([])
-  const [GMKey, setGMKey] = useState([])
+  const [GMKey, setGMKey] = useState(null)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const Explore = () => {
 
   return (
     <main id="explore-page">
-      {!loading ? (
+      {!loading && GMKey != null ? (
         <Map
           posts={posts}
           setPosts={setPosts}

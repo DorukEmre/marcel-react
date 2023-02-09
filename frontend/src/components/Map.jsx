@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import GoogleMapReact from 'google-map-react'
 import LocationMarker from './LocationMarker'
 import CatInfoBox from './CatInfoBox'
@@ -14,14 +14,16 @@ const Map = ({
 }) => {
   const [catInfo, setCatInfo] = useState(null)
 
-  const URLKey = GMKey
+  // const URLKey =
   // process.env.NODE_ENV === 'production'
   //   ? import.meta.env.VITE_GM_KEY_PROD
   //   : import.meta.env.VITE_GM_KEY_DEV
 
-  // typeof URLKey === 'undefined'
-  //   ? console.log('URLKey', 'undefined')
-  //   : console.log('URLKey', URLKey.slice(-3))
+  // useEffect(() => {
+  //   URLKey === null
+  //     ? console.log('URLKey', 'null')
+  //     : console.log('URLKey', URLKey.slice(-3))
+  // }, [])
 
   const handleClose = () => {
     setCatInfo(null)
@@ -43,7 +45,7 @@ const Map = ({
   return (
     <div className="map">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: URLKey }}
+        bootstrapURLKeys={{ key: GMKey }}
         defaultCenter={center}
         defaultZoom={zoom}
         options={{ mapId: 'e3380fc948889a8' }}
