@@ -16,6 +16,7 @@ import ProfileMe from './pages/ProfileMe'
 import ProfileUser from './pages/ProfileUser'
 import ProfileSettings from './pages/ProfileSettings'
 import Goodbye from './pages/Goodbye'
+import About from './pages/About'
 
 function App() {
   return (
@@ -54,6 +55,10 @@ function App() {
                 <Route path="settings" element={<ProfileSettings />} />
               </Route>
               <Route path="profile/:userid" element={<ProfileUser />} />
+            </Route>
+
+            <Route element={<RequireAuth />}>
+              <Route path="about" element={<About />}></Route>
             </Route>
           </Route>
 

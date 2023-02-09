@@ -67,6 +67,15 @@ const HeaderButtonExpandable = (props) => {
               </Link>
             </li>
             <li className="profile-menu--item">
+              <Link
+                onClick={handleClickAway}
+                to="/about"
+                className="profile-menu--item--link"
+              >
+                About
+              </Link>
+            </li>
+            <li className="profile-menu--item">
               <button
                 onClick={(e) => {
                   handleClickAway()

@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-} */
-
 /* //////////////////////
   General styling
   /////////////////////// */
@@ -39,14 +32,19 @@
 }
 
 /* Sticky header and footer pushed down */
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 html {
   height: 100%;
 }
 body {
   position: relative;
+  height: 100%;
   min-height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 header,
 footer {
@@ -72,14 +70,8 @@ body {
   font-family: var(--ff-body), sans-serif;
 }
 
-/* ul {  
-  list-style: none;
-  margin: 0;
-  padding: 0;
-} */
 main {
   padding: 2rem;
-  /* max-width: 72rem; */
   width: 100%;
 }
 
@@ -183,6 +175,10 @@ main {
   height: fit-content;
   width: 100%;
   transition: background-color 150ms ease-in;
+}
+.profile-menu--item:nth-of-type(3),
+.profile-menu--item:nth-of-type(4) {
+  border-top: 1px solid var(--clr-neutral-600);
 }
 .profile-menu--item--link {
   color: inherit;
@@ -367,6 +363,7 @@ h1 span.Marcel {
 .tools {
   margin: 0 auto;
   padding: 3rem 2rem;
+  width: 100%;
 }
 .tools-container {
   display: flex;
@@ -1372,6 +1369,29 @@ output#crop-thumbnail-container {
 }
 
 /* ////////////////// */
+/*     About page     */
+/* ////////////////// */
+#about-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#about-page h1 {
+  font-size: 1.15rem;
+}
+#about-page a {
+  color: inherit;
+}
+
+#about-page a:hover,
+#about-page a:active,
+#about-page a:focus {
+  color: var(--clr-accent-300);
+  text-decoration: underline;
+}
+
+/* ////////////////// */
 /* 404 - Missing page */
 /* ////////////////// */
 
@@ -1526,6 +1546,10 @@ footer a:focus {
   }
   main#profile-page {
     padding: 1rem 0 0;
+  }
+  main#settings-page,
+  main#about-page {
+    padding: 1rem;
   }
   #feed-page .card,
   #profile-page .card {

@@ -137,6 +137,12 @@ const SignUp = () => {
               {errMsg}
             </p>
 
+            <div className="alert">
+              <small>
+                <p>Website under construction</p>
+                <p>Things might change. Things might break.</p>
+              </small>
+            </div>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
