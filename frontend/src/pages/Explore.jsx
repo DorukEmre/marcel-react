@@ -60,7 +60,7 @@ const Explore = () => {
           GMKey={GMKey}
         />
       ) : (
-        <div className="tracking">Tracking neighbourhood cats...</div>
+        <div className="tracking">{GMKey}Tracking neighbourhood cats...</div>
       )}
     </main>
   )
