@@ -51,7 +51,7 @@ const Explore = () => {
 
   return (
     <main id="explore-page">
-      {!loading && GMKey != null ? (
+      {!loading ? ( //&& GMKey != null
         <Map
           posts={posts}
           setPosts={setPosts}
@@ -60,7 +60,7 @@ const Explore = () => {
           GMKey={GMKey}
         />
       ) : (
-        <div className="tracking">{GMKey}Tracking neighbourhood cats...</div>
+        <div className="tracking">Tracking neighbourhood cats...</div>
       )}
     </main>
   )
