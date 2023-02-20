@@ -12,8 +12,6 @@ const About = () => {
             dorukemre.dev
           </a>
         </p>
-        <br />
-        <p>Contact: marcel-the-cat@outlook.com</p>
       </section>
       <section className="tools">
         <div className="tools-container">
