@@ -1,5 +1,5 @@
 const resizeAndCloudinary = require('../middleware/resize')
-const nodemailer = require('../middleware/sendEmail')
+// const nodemailer = require('../middleware/sendEmail')
 
 const User = require('../models/User.model')
 const Post = require('../models/Post.model')
@@ -114,7 +114,7 @@ module.exports = {
         reportedUser: userToBlock.id,
       })
 
-      await nodemailer.sendReportEmail('User reported')
+      // await nodemailer.sendReportEmail('User reported')
 
       res.sendStatus(204)
     } catch (err) {

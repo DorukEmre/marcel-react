@@ -1,5 +1,5 @@
 const resizeAndCloudinary = require('../middleware/resize')
-const nodemailer = require('../middleware/sendEmail')
+// const nodemailer = require('../middleware/sendEmail')
 
 const Post = require('../models/Post.model')
 const Comment = require('../models/Comment.model')
@@ -202,7 +202,7 @@ module.exports = {
         reportedUser: hiddenPost.user,
       })
 
-      await nodemailer.sendReportEmail('Post reported')
+      // await nodemailer.sendReportEmail('Post reported')
 
       res.sendStatus(204)
     } catch (err) {
