@@ -1,31 +1,24 @@
-To do:
+# Marcel the Cat
 
-Feed page:
+Marcel the Cat is a free photo-sharing web application that allows users to take pictures of cats and share them with people all around the world. You can also track the cats of your friend groups and explore your neighborhood cats.
 
-- Display cats belonging to user's different groups
-- Add option to report Comment
-- Add option to report Post
-- Add date to posts
-- Add date to comments
+## Usage
 
-Explore page:
+To use Marcel the Cat, simply go to [https://marcel-the-cat.cyclic.app/](https://marcel-the-cat.cyclic.app/) and start sharing your cat pictures with the world.
 
-- Connect with gps coordinates of pics of user's groups
+![Upload Pictures](frontend/src/assets/images/phone-spot.webp) ![Feed of Cats](frontend/src/assets/images/phone-feed.webp) ![Maps of Cats](frontend/src/assets/images/phone-explore.webp)
 
-Spot page:
+## Tech Stack
 
-- Resize image on user submit
+Marcel the Cat is built using the following tech stack:
 
-Groups page:
+- React
+- Node.js
+- Express
+- MongoDB
+- Vite
 
-- Add individual group page
-- Add ability to leave group
-- Add ability to remove member
-- Add ability to approve pending members
-- Show notification of pending member
+## Contributing
 
-Profile page:
-
-- Own profile: Add option to change username/email/password
-- Add option to report User
-- Add option to delete Post
+If you would like to contribute to Marcel the Cat, feel free to submit a pull request. We welcome any contributions, whether they are bug fixes, feature requests, or general improvements to the codebase.
+Check the [To-Do list](./TODO.md)
