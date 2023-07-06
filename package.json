@@ -13,7 +13,7 @@
   "author": "Doruk Emre",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.0.1",
     "cloudinary": "^1.32.0",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
@@ -31,6 +31,6 @@
     "streamifier": "^0.1.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^1.14.9"
   }
 }
