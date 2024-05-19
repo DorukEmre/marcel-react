@@ -43,7 +43,6 @@ const Posts = (props) => {
   // console.log(props.posts)
   const cards = props.posts.map((post, index) => {
     let componentProps = {
-      key: index,
       post: post,
       setPosts: props.setPosts,
       imageXY: 800,
@@ -57,9 +56,9 @@ const Posts = (props) => {
       ownProfile: props.ownProfile ? props.ownProfile : false,
     }
     if (index === props.posts.length - 2) {
-      return <Card ref={props.lastPostRef} {...componentProps} />
+      return <Card key={index} ref={props.lastPostRef} {...componentProps} />
     }
-    return <Card {...componentProps} />
+    return <Card key={index} {...componentProps} />
   })
   // console.log(cards)
 
