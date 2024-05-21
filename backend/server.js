@@ -26,7 +26,24 @@ require('dotenv').config()
 app.use(express.urlencoded({ extended: true }))
 
 // Helmet middleware for setting security headers
-app.use(helmet())
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:', 'https://res.cloudinary.com'],
+        connectSrc: ["'self'", 'https://res.cloudinary.com'],
+        fontSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'"],
+        frameSrc: ["'none'"],
+      },
+    },
+  }),
+)
+
 // Redirect HTTP to HTTPS
 if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
