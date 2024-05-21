@@ -28,16 +28,17 @@ app.use(express.urlencoded({ extended: true }))
 // Helmet middleware for setting security headers
 app.use(helmet())
 // Redirect HTTP to HTTPS
-app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(301, 'https://' + req.headers.host + req.url)
-  }
-  next()
-})
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(301, 'https://' + req.headers.host + req.url)
+    }
+    next()
+  })
+}
 
 // Cross Origin Resource Sharing
-//app.use(cors(corsOptions))
-app.use(cors())
+app.use(cors(corsOptions))
 
 app.use(express.json())
 
