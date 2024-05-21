@@ -6,8 +6,8 @@ import CatInfoBox from './CatInfoBox'
 const Map = ({
   posts,
   setPosts,
-  center,
-  zoom,
+  center = { lat: 51.507543, lng: -0.084638 },
+  zoom = 11,
   currentUserId,
   userIsDemo,
   GMKey,
@@ -64,14 +64,6 @@ const Map = ({
       )}
     </div>
   )
-}
-
-Map.defaultProps = {
-  center: {
-    lat: 51.507543,
-    lng: -0.084638,
-  },
-  zoom: 11,
 }
 
 export default Map
