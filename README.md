@@ -4,7 +4,7 @@ Marcel the Cat is a free photo-sharing web application that allows users to take
 
 ## Usage
 
-To use Marcel the Cat, simply go to [https://marcel-the-cat.cyclic.app/](https://marcel-the-cat.cyclic.app/) and start sharing your cat pictures with the world.
+To use Marcel the Cat, simply go to [https://www.marcelthecat.com/](https://www.marcelthecat.com/) and start sharing your cat pictures with the world.
 
 ![Homepage of Marcel the Cat app displaying three snapshots of the app on mobile](frontpage.jpg)
 
