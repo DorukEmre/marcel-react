@@ -14,16 +14,17 @@ const Map = ({
 }) => {
   const [catInfo, setCatInfo] = useState(null)
 
-  // const URLKey =
-  // process.env.NODE_ENV === 'production'
-  //   ? import.meta.env.VITE_GM_KEY_PROD
-  //   : import.meta.env.VITE_GM_KEY_DEV
+  const URLKey =
+    process.env.NODE_ENV === 'production'
+      ? import.meta.env.VITE_GM_KEY_PROD
+      : import.meta.env.VITE_GM_KEY_DEV
 
-  // useEffect(() => {
-  //   URLKey === null
-  //     ? console.log('URLKey', 'null')
-  //     : console.log('URLKey', URLKey.slice(-3))
-  // }, [])
+  useEffect(() => {
+    URLKey === null
+      ? console.log('URLKey', 'null')
+      : console.log('URLKey', URLKey.slice(-3))
+    console.log('GMKey', GMKey.slice(-3))
+  }, [])
 
   const handleClose = () => {
     setCatInfo(null)
@@ -45,7 +46,7 @@ const Map = ({
   return (
     <div className="map">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: GMKey }}
+        bootstrapURLKeys={{ key: URLKey }}
         defaultCenter={center}
         defaultZoom={zoom}
         options={{ mapId: 'e3380fc948889a8' }}
