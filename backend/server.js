@@ -9,6 +9,7 @@ const helmet = require('helmet')
 
 const connectDB = require('./config/database')
 const corsOptions = require('./config/corsOptions')
+const cspDirectives = require('./config/cspConfig')
 
 const authRoutes = require('./routes/auth.routes')
 const mainRoutes = require('./routes/main.routes')
@@ -26,23 +27,7 @@ require('dotenv').config()
 app.use(express.urlencoded({ extended: true }))
 
 // Helmet middleware for setting security headers
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", 'data:', 'https://res.cloudinary.com'],
-        connectSrc: ["'self'", 'https://res.cloudinary.com'],
-        fontSrc: ["'self'"],
-        objectSrc: ["'none'"],
-        mediaSrc: ["'self'"],
-        frameSrc: ["'none'"],
-      },
-    },
-  }),
-)
+app.use(helmet({ contentSecurityPolicy: cspDirectives }))
 
 // Redirect HTTP to HTTPS
 if (process.env.NODE_ENV === 'production') {
