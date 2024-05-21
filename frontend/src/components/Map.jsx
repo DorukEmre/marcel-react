@@ -19,12 +19,15 @@ const Map = ({
       ? import.meta.env.VITE_GM_KEY_PROD
       : import.meta.env.VITE_GM_KEY_DEV
 
-  useEffect(() => {
-    URLKey === null
-      ? console.log('URLKey', 'null')
-      : console.log('URLKey', URLKey.slice(-3))
-    console.log('GMKey', GMKey.slice(-3))
-  }, [])
+  // useEffect(() => {
+  //   URLKey === null
+  //     ? console.log('URLKey', 'null')
+  //     : console.log('URLKey', URLKey.slice(-3))
+
+  //   GMKey === null
+  //     ? console.log('GMKey', 'null')
+  //     : console.log('GMKey', GMKey.slice(-3))
+  // }, [])
 
   const handleClose = () => {
     setCatInfo(null)
