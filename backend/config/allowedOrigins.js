@@ -7,6 +7,9 @@ const allowedOrigins = [
   // Heroku
   'https://www.marcelthecat.com',
   'https://res.cloudinary.com',
+  // Google Maps
+  'https://maps.googleapis.com',
+  'https://maps.gstatic.com',
 ]
 
 module.exports = allowedOrigins

@@ -15,6 +15,7 @@ const cspDirectives = {
       'data:',
       'https://res.cloudinary.com',
       'https://maps.gstatic.com',
+      'https://maps.googleapis.com',
     ],
     connectSrc: [
       "'self'",
