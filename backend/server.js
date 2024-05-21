@@ -5,6 +5,8 @@ const MongoStore = require('connect-mongo')
 const logger = require('morgan')
 const path = require('path')
 const cors = require('cors')
+const helmet = require('helmet')
+
 const connectDB = require('./config/database')
 const corsOptions = require('./config/corsOptions')
 
@@ -23,15 +25,26 @@ require('dotenv').config()
 // extended option: false to parse the URL-encoded data with the query string library; true allows to parse nested JSON like objects and arrays (qs library)
 app.use(express.urlencoded({ extended: true }))
 
+// Helmet middleware for setting security headers
+app.use(helmet())
+// Redirect HTTP to HTTPS
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(301, 'https://' + req.headers.host + req.url)
+  }
+  next()
+})
+
 // Cross Origin Resource Sharing
-app.use(cors(corsOptions))
+//app.use(cors(corsOptions))
+app.use(cors())
 
 app.use(express.json())
 
-//Logging
+// Logging
 app.use(logger('dev'))
 
-//middleware for cookies
+// Cookies
 app.use(cookieParser())
 
 // Setup Sessions - stored in MongoDB
@@ -50,7 +63,7 @@ app.use(express.static('public'))
 //Setup Routes For Which The Server Is Listening
 app.use('/api/', authRoutes)
 app.use('/api/', mainRoutes)
-// Every route after will use verifyJWT, added directly to route file instead
+// (Every route after will use verifyJWT) - added directly to routes files instead
 // app.use(verifyJWT)
 app.use('/api/posts', postsRoutes)
 app.use('/api/groups', groupsRoutes)
@@ -72,17 +85,9 @@ if (process.env.NODE_ENV === 'production') {
 //Server Running
 const port = process.env.PORT || 9191
 
-// Connect To Database first, then listen for requests
+// If connection to database is successful, listen for requests
 connectDB().then(() => {
-  // client.connect(async (err) => {
-  //Connect To Database
-  // if (err) {
-  //   console.error(err)
-  //   return false
-  // }
-  // connection to mongo is successful, listen for requests
   app.listen(port, () => {
     console.log(`Server is running on port ${port} -`)
   })
-  // })
 })
