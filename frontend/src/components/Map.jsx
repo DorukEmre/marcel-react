@@ -10,7 +10,7 @@ const Map = ({
   zoom = 11,
   currentUserId,
   userIsDemo,
-  GMKey,
+  //  GMKey,
 }) => {
   const [catInfo, setCatInfo] = useState(null)
 

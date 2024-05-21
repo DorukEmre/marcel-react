@@ -14,11 +14,12 @@ module.exports = {
       .populate('user')
       .lean()
 
-    const GMKey =
-      process.env.NODE_ENV === 'production'
-        ? process.env.GM_KEY_PROD
-        : process.env.GM_KEY_DEV
+    // const GMKey =
+    //   process.env.NODE_ENV === 'production'
+    //     ? process.env.GM_KEY_PROD
+    //     : process.env.GM_KEY_DEV
+    //res.status(200).json({ posts, GMKey })
 
-    res.status(200).json({ posts, GMKey })
+    res.status(200).json({ posts })
   },
 }
