@@ -5,6 +5,7 @@ const allowedOrigins = require('./allowedOrigins')
 const corsOptions = {
   origin: (origin, callback) => {
     console.log(`debugging CORS origin: ${origin}`)
+    console.log(`allowedOrigins: ${allowedOrigins}`)
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       // if (1) {
       // set origin to true to reflect the request origin, as defined by req.header('Origin')

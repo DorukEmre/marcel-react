@@ -7,6 +7,7 @@ const allowedOrigins = [
   // Heroku
   'https://marcelthecat.com/',
   'https://www.marcelthecat.com/',
+  'https://www.marcelthecat.com',
   'https://res.cloudinary.com',
 ]
 
