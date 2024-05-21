@@ -5,7 +5,8 @@ const allowedOrigins = [
   'http://localhost:4173',
   'http://localhost:9191',
   // Heroku
-  'https://marcel-the-cat-cd7179963758.herokuapp.com/',
+  'https://www.marcelthecat.com/',
+  'https://res.cloudinary.com',
 ]
 
 module.exports = allowedOrigins

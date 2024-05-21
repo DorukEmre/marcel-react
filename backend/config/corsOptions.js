@@ -4,8 +4,8 @@ const allowedOrigins = require('./allowedOrigins')
 //  This function will be passed a string that is the origin (or undefined if the request has no origin), and a callback with the signature callback(error, origin).
 const corsOptions = {
   origin: (origin, callback) => {
-    // if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-    if (1) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      // if (1) {
       // set origin to true to reflect the request origin, as defined by req.header('Origin')
       callback(null, true)
     } else {
@@ -16,6 +16,8 @@ const corsOptions = {
 
   credentials: true,
   optionsSuccessStatus: 200,
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }
 
 module.exports = corsOptions
