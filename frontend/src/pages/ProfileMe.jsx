@@ -7,6 +7,8 @@ import { addPhoto } from '../assets/icons'
 import EasyCropperModal from '../components/EasyCropperModal'
 import BasicModal from '../components/BasicModal'
 import Posts from '../components/Posts'
+import dataUrlToBlob from '../utils/dataUrlToBlob'
+
 
 const ProfileMe = () => {
   const { auth } = useAuth()
@@ -68,14 +70,9 @@ const ProfileMe = () => {
     setSendingFile(true)
 
     // console.log(croppedImage)
-    const formData = new FormData()
-    await fetch(croppedImage)
-      .then((res) => res.blob())
-      .then((blob) => {
-        // console.log(blob)
-        formData.append('file', blob)
-      })
-    // formData.append(name, value)
+    const blob = dataUrlToBlob(croppedImage)
+    // console.log(blob)
+    formData.append('file', blob)
 
     try {
       // axios.post(url[, data[, config]])
@@ -301,8 +298,8 @@ const ProfileMe = () => {
                   src={
                     profilePicUrl
                       ? profilePicUrl.slice(0, 49) +
-                        '/w_300,h_300,c_scale' +
-                        profilePicUrl.slice(49)
+                      '/w_300,h_300,c_scale' +
+                      profilePicUrl.slice(49)
                       : profileInactive
                   }
                   alt="profile-pic"

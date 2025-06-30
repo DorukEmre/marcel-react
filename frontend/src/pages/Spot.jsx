@@ -4,6 +4,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import useAuth from '../hooks/useAuth'
 import BasicModal from '../components/BasicModal'
 import EasyCropperModal from '../components/EasyCropperModal'
+import dataUrlToBlob from '../utils/dataUrlToBlob'
 
 import { SnapACatLogo } from '../assets/images'
 import { deleteIcon, galleryIcon } from '../assets/icons'
@@ -120,21 +121,20 @@ const Spot = () => {
 
     const formData = new FormData()
     // formData.append(name, value)
-    await fetch(croppedImage)
-      .then((res) => res.blob())
-      .then((blob) => {
-        // console.log(blob)
-        formData.append('file', blob)
-      })
-    // formData.append('file', croppedImage)
+
+    // console.log(croppedImage)
+    const blob = dataUrlToBlob(croppedImage)
+    // console.log(blob)
+    formData.append('file', blob)
+
     formData.append('catName', catName)
     formData.append('comment', comment)
     formData.append('longitude', gps.longitude)
     formData.append('latitude', gps.latitude)
     let checkShowLocation =
       typeof gps.longitude === 'number' &&
-      typeof gps.latitude === 'number' &&
-      showLocation === true
+        typeof gps.latitude === 'number' &&
+        showLocation === true
         ? true
         : false
     formData.append('showLocation', checkShowLocation)
@@ -278,7 +278,7 @@ const Spot = () => {
                 <div className="form-group">
                   <label htmlFor="show-location" className="location-switch">
                     {typeof gps.latitude !== 'number' ||
-                    typeof gps.longitude !== 'number' ? (
+                      typeof gps.longitude !== 'number' ? (
                       <p>No location data available for this picture</p>
                     ) : (
                       <>
