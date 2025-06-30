@@ -6,8 +6,10 @@ import CatInfoBox from './CatInfoBox'
 const Map = ({
   posts,
   setPosts,
-  center = { lat: 51.507543, lng: -0.084638 },
-  zoom = 11,
+  // center = { lat: 51.507543, lng: -0.084638 }, // London
+  // center = { lat: 40.4380986, lng: -3.8443454 }, // Madrid
+  center = { lat: 36.718258, lng: -4.6051592 }, // Malaga
+  zoom = 8,
   currentUserId,
   userIsDemo,
   //  GMKey,
